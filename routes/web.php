@@ -23,3 +23,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Auth::routes();
 Auth::routes(['verify' => true]);
 Route::resource('users', App\Http\Controllers\UserController::class);
+
+
+Route::resource('fakultas', App\Http\Controllers\FakultasController::class);
+
+
+Route::resource('programStudis', App\Http\Controllers\ProgramStudiController::class);
