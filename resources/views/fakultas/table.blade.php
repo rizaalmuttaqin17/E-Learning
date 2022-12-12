@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table class="table" id="fakultas-table">
-        <thead>
+        <thead class=" text-center">
             <tr>
                 <th>No.</th>
                 <th>@lang('models/fakultas.fields.kode')</th>
@@ -11,8 +11,8 @@
         <tbody>
         @foreach($fakultas as $fakultas)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $fakultas->kode }}</td>
+                <td class=" text-center">{{ $loop->iteration }}</td>
+                <td class=" text-center">{{ $fakultas->kode }}</td>
                 <td>{{ $fakultas->nama }}</td>
                 <td class=" text-center">
                     {!! Form::open(['route' => ['fakultas.destroy', $fakultas->id], 'method' => 'delete']) !!}

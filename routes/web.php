@@ -52,10 +52,13 @@ Route::resource('pilihans', App\Http\Controllers\PilihanController::class);
 Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);
 
 
-Route::resource('roles', App\Http\Controllers\RoleController::class);
+Route::resource('roles', App\Http\Controllers\RolesController::class);
 
 
-Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+Route::resource('permissions', App\Http\Controllers\PermissionsController::class);
 
 
 Route::resource('jawabans', App\Http\Controllers\JawabanController::class);
+
+
+Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);

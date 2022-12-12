@@ -89,6 +89,9 @@ class UjianDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
+                return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
+            }],
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
             'tipe_ujian' => new Column(['title' => __('models/ujians.fields.tipe_ujian'), 'data' => 'tipe_ujian']),
             'sifat_ujian' => new Column(['title' => __('models/ujians.fields.sifat_ujian'), 'data' => 'sifat_ujian']),

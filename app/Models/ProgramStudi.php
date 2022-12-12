@@ -67,8 +67,8 @@ class ProgramStudi extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idFakultas()
+    public function fakultas()
     {
-        return $this->belongsTo(\App\Models\Fakulta::class, 'id_fakultas');
+        return $this->belongsTo(\App\Models\Fakultas::class, 'id_fakultas');
     }
 }

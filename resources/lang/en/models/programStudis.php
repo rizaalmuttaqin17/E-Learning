@@ -1,14 +1,14 @@
 <?php
 
 return array (
-  'singular' => 'ProgramStudi',
-  'plural' => 'ProgramStudis',
+  'singular' => 'Program Studi',
+  'plural' => 'Program Studi',
   'fields' => 
   array (
     'id' => 'Id',
-    'id_fakultas' => 'Id Fakultas',
+    'id_fakultas' => 'Fakultas',
     'kode' => 'Kode',
-    'nama' => 'Nama',
+    'nama' => 'Program Studi',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'deleted_at' => 'Deleted At',

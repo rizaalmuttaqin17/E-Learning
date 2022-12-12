@@ -1,8 +1,9 @@
 <div class="table-responsive">
     <table class="table" id="programStudis-table">
-        <thead>
+        <thead class=" text-center">
             <tr>
                 <th>No.</th>
+                <th>@lang('models/programStudis.fields.id_fakultas')</th>
                 <th>@lang('models/programStudis.fields.kode')</th>
                 <th>@lang('models/programStudis.fields.nama')</th>
                 <th colspan="3">Action</th>
@@ -11,8 +12,9 @@
         <tbody>
         @foreach($programStudis as $programStudi)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $programStudi->kode }}</td>
+                <td class=" text-center">{{ $loop->iteration }}</td>
+                <td>{{ $programStudi['fakultas']['nama'] }}</td>
+                <td class=" text-center">{{ $programStudi->kode }}</td>
                 <td>{{ $programStudi->nama }}</td>
                 <td class=" text-center">
                     {!! Form::open(['route' => ['programStudis.destroy', $programStudi->id], 'method' => 'delete']) !!}

@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Role;
+use Spatie\Permission\Models\Permission;
 
-class CreateRoleRequest extends FormRequest
+class UpdatePermissionsRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,7 @@ class CreateRoleRequest extends FormRequest
      */
     public function rules()
     {
-        return Role::$rules;
+        $rules = Permission::$rules;
+        return $rules;
     }
 }

@@ -15,7 +15,7 @@
         "name": "name",
         "dbType": "string,255",
         "htmlType": "text",
-        "validations": "required|string|max:255",
+        "validations": "required|string|max:255|string|max:255",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -27,7 +27,7 @@
         "name": "guard_name",
         "dbType": "string,255",
         "htmlType": "text",
-        "validations": "required|string|max:255",
+        "validations": "required|string|max:255|string|max:255",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -39,7 +39,7 @@
         "name": "created_at",
         "dbType": "datetime:nullable",
         "htmlType": "date",
-        "validations": "nullable",
+        "validations": "nullable|nullable",
         "searchable": false,
         "fillable": false,
         "primary": false,
@@ -51,7 +51,7 @@
         "name": "updated_at",
         "dbType": "datetime:nullable",
         "htmlType": "date",
-        "validations": "nullable",
+        "validations": "nullable|nullable",
         "searchable": false,
         "fillable": false,
         "primary": false,
@@ -61,10 +61,10 @@
     },
     {
         "type": "relation",
-        "relation": "1t1,ModelHasRole"
+        "relation": "1t1,ModelHasPermission"
     },
     {
         "type": "relation",
-        "relation": "mtm,Permission,role_has_permissions"
+        "relation": "mtm,Role,role_has_permissions"
     }
 ]

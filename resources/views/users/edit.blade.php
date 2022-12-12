@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-@lang('crud.edit') @lang('models/users.singular')
+    @lang('crud.edit') @lang('models/users.singular')
 @endsection
 @section('content')
     <section class="section">

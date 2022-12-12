@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 /**
  * Class MataKuliahRepository
  * @package App\Repositories
- * @version December 12, 2022, 12:02 am UTC
+ * @version December 12, 2022, 7:17 am UTC
 */
 
 class MataKuliahRepository extends BaseRepository

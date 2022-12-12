@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'singular' => 'Role',
+  'singular' => 'Roles',
   'plural' => 'Roles',
   'fields' => 
   array (

@@ -1,28 +1,24 @@
 @extends('layouts.app')
-@section('title')
-     Verifikasi Email
-@endsection
+
 @section('content')
-    <section class="section">
-        <div class="section-header">
-            <h1>Verifikasi Email</h1>
-        </div>
-        <div class="section-body">
-            <div class="card">
-                <div class="card-body">
-                    @if (session('resent'))
-                    <div class="alert alert-success" role="alert">A fresh verification link has been sent to your email address</div>
-                    @endif
-                    <p>Before proceeding, please check your email for a verification link.If you did not receive the email,</p>
-                    
-                    <form id="email-form" action="{{ route('verification.resend') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                            click here to request another
-                        </button>
-                    </form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7" style="margin-top: 2%">
+                <div class="box">
+                    <h3 class="box-title" style="padding: 2%">Verify Your Email Address</h3>
+
+                    <div class="box-body">
+                        @if (session('resent'))
+                            <div class="alert alert-success" role="alert">A fresh verification link has been sent to
+                                your email address
+                            </div>
+                        @endif
+                        <p>Before proceeding, please check your email for a verification link.If you did not receive
+                            the email,</p>
+                        <a href="{{ route('verification.resend') }}">click here to request another'</a>.
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection

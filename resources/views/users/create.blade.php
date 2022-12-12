@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-@lang('crud.add_new') @lang('models/users.singular')
+    @lang('crud.add_new') @lang('models/users.singular')
 @endsection
 @section('content')
     <section class="section">
@@ -13,19 +13,19 @@
         <div class="content">
             @include('stisla-templates::common.errors')
             <div class="section-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body ">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <div class="card">
+                           <div class="card-body ">
                                 {!! Form::open(['route' => 'users.store']) !!}
                                     <div class="row">
                                         @include('users.fields')
                                     </div>
                                 {!! Form::close() !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
     </section>

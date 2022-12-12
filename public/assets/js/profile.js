@@ -163,7 +163,7 @@ $(document).on('submit', '#editProfileForm', function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Web\UNU Kaltim\E-Learning2\resources\assets\js\profile.js */"./resources/assets/js/profile.js");
+module.exports = __webpack_require__(/*! D:\Project\E-Learning\resources\assets\js\profile.js */"./resources/assets/js/profile.js");
 
 
 /***/ })

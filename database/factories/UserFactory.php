@@ -22,23 +22,20 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'id_prodi' => $this->faker->randomDigitNotNull,
-        'name' => $this->faker->word,
+            'name' => $this->faker->word,
         'email' => $this->faker->word,
         'email_verified_at' => $this->faker->date('Y-m-d H:i:s'),
         'password' => $this->faker->word,
         'remember_token' => $this->faker->word,
-        'nim_nip' => $this->faker->word,
-        'tempat_lahir' => $this->faker->word,
-        'tanggal_lahir' => $this->faker->word,
-        'alamat' => $this->faker->text,
-        'telepon' => $this->faker->word,
-        'jenis_kelamin' => $this->faker->word,
         'foto' => $this->faker->word,
         'agama' => $this->faker->word,
+        'alamat' => $this->faker->text,
+        'telepon' => $this->faker->word,
+        'tempat_lahir' => $this->faker->word,
+        'tanggal_lahir' => $this->faker->word,
+        'no_induk' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
-        'deleted_at' => $this->faker->date('Y-m-d H:i:s')
+        'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];
     }
 }

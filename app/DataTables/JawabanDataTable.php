@@ -89,6 +89,9 @@ class JawabanDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
+                return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
+            }],
             'id_soal' => new Column(['title' => __('models/jawabans.fields.id_soal'), 'data' => 'id_soal']),
             'id_user' => new Column(['title' => __('models/jawabans.fields.id_user'), 'data' => 'id_user']),
             'jawaban' => new Column(['title' => __('models/jawabans.fields.jawaban'), 'data' => 'jawaban']),

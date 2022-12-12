@@ -6,7 +6,7 @@ return array (
   'fields' => 
   array (
     'id' => 'Id',
-    'id_mata_kuliah' => 'Id Mata Kuliah',
+    'id_mata_kuliah' => 'Mata Kuliah',
     'tipe_ujian' => 'Tipe Ujian',
     'sifat_ujian' => 'Sifat Ujian',
     'tanggal_ujian' => 'Tanggal Ujian',

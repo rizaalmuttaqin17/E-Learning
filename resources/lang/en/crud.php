@@ -7,4 +7,5 @@ return array (
   'cancel' => 'Cancel',
   'back' => 'Back',
   'details' => 'Details',
+  'action' => 'Action',
 );

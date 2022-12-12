@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class MataKuliah
  * @package App\Models
- * @version December 12, 2022, 12:02 am UTC
+ * @version December 12, 2022, 7:17 am UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection $ujians
  * @property string $kode_mk

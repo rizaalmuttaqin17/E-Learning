@@ -17,7 +17,7 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-body ">
-                                    {!! Form::model($role, ['route' => ['roles.update', $role->id], 'method' => 'patch']) !!}
+                                    {!! Form::model($roles, ['route' => ['roles.update', $roles->id], 'method' => 'patch']) !!}
                                         <div class="row">
                                             @include('roles.fields')
                                         </div>
