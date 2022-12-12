@@ -110,7 +110,6 @@ $.extend($.fn.dataTable.defaults, {
     customSearch();
   }
 });
-
 function customSearch() {
   $('.dataTables_filter input').addClass("form-control");
   $('.dataTables_filter input').attr("placeholder", "Search");
@@ -125,7 +124,7 @@ function customSearch() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Project\Web\UNU Kaltim\Homepage\resources\assets\js\custom\custom-datatable.js */"./resources/assets/js/custom/custom-datatable.js");
+module.exports = __webpack_require__(/*! D:\Project\Web\UNU Kaltim\E-Learning2\resources\assets\js\custom\custom-datatable.js */"./resources/assets/js/custom/custom-datatable.js");
 
 
 /***/ })

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProgramStudiRequest;
 use App\Repositories\ProgramStudiRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\Models\Fakultas;
 use Flash;
 use Response;
 
@@ -42,7 +43,8 @@ class ProgramStudiController extends AppBaseController
      */
     public function create()
     {
-        return view('program_studis.create');
+        $fakultas = Fakultas::pluck('nama', 'id');
+        return view('program_studis.create', compact('fakultas'));
     }
 
     /**
