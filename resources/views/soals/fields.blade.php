@@ -1,13 +1,18 @@
 <!-- Id Ujian Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('id_ujian', __('models/soals.fields.id_ujian').':') !!}
-    {!! Form::number('id_ujian', null, ['class' => 'form-control']) !!}
+    {{-- {!! Form::select('id_ujian', $ujian, null, ['class' => 'id_ujian form-control', 'required', 'placeholder'=>'Pilih Ujian']) !!} --}}
+    <select name="id_ujian" id="id_ujian" class="id_ujian form-control">
+        @foreach ($ujian as $item)
+            <option value="{{ $item['id'] }}">{{ $item['matkul']['nama'] }} - {{ $item['tipe_ujian'] }} Semester</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Id Tipe Soal Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('id_tipe_soal', __('models/soals.fields.id_tipe_soal').':') !!}
-    {!! Form::number('id_tipe_soal', null, ['class' => 'form-control']) !!}
+    {!! Form::select('id_tipe_soal', $tipeSoal, null, ['class' => 'id_tipe_soal form-control', 'required', 'placeholder'=>'Pilih Tipe Soal']) !!}
 </div>
 
 <!-- Pertanyaan Field -->

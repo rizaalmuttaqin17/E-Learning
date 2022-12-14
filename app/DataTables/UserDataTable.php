@@ -89,6 +89,9 @@ class UserDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
+                return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
+            }],
             'name' => new Column(['title' => __('models/users.fields.name'), 'data' => 'name']),
             'email' => new Column(['title' => __('models/users.fields.email'), 'data' => 'email']),
             'email_verified_at' => new Column(['title' => __('models/users.fields.email_verified_at'), 'data' => 'email_verified_at']),

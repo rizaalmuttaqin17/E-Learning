@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Ujian;
+use Carbon\Carbon;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
@@ -19,7 +20,15 @@ class UjianDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'ujians.datatables_actions');
+        return $dataTable
+        ->addColumn('action', 'ujians.datatables_actions')
+        ->editColumn('tanggal_ujian', function($query){
+            if($query['tanggal_ujian']==null){
+                return '-';
+            } else {
+                return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
+            }
+        });
     }
 
     /**

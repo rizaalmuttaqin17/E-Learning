@@ -90,6 +90,9 @@ class MataKuliahDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
+                return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
+            }],
             'kode_mk' => new Column(['title' => __('models/mataKuliahs.fields.kode_mk'), 'data' => 'kode_mk']),
             'nama' => new Column(['title' => __('models/mataKuliahs.fields.nama'), 'data' => 'nama']),
             'dosen_pengampu' => new Column(['title' => __('models/mataKuliahs.fields.dosen_pengampu'), 'data' => 'dosen_pengampu'])

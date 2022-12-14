@@ -40,6 +40,8 @@ class Ujian extends Model
         'tipe_ujian',
         'sifat_ujian',
         'tanggal_ujian',
+        'percobaan',
+        'jumlah_soal',
         'selesai'
     ];
 
@@ -53,6 +55,8 @@ class Ujian extends Model
         'id_mata_kuliah' => 'integer',
         'tipe_ujian' => 'string',
         'sifat_ujian' => 'string',
+        'percobaan' => 'integer',
+        'jumlah_soal' => 'integer',
         'tanggal_ujian' => 'date',
         'selesai' => 'string'
     ];
@@ -76,7 +80,7 @@ class Ujian extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idMataKuliah()
+    public function matkul()
     {
         return $this->belongsTo(\App\Models\MataKuliah::class, 'id_mata_kuliah');
     }

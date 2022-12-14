@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUjianRequest;
 use App\Repositories\UjianRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\MataKuliah;
 use Response;
 
 class UjianController extends AppBaseController
@@ -39,7 +40,8 @@ class UjianController extends AppBaseController
      */
     public function create()
     {
-        return view('ujians.create');
+        $matkul = MataKuliah::pluck('nama', 'id');
+        return view('ujians.create', compact('matkul'));
     }
 
     /**
@@ -52,7 +54,9 @@ class UjianController extends AppBaseController
     public function store(CreateUjianRequest $request)
     {
         $input = $request->all();
-
+        if($request['selesai'] == null){
+            $input['selesai'] = 'false';
+        }
         $ujian = $this->ujianRepository->create($input);
 
         Flash::success(__('messages.saved', ['model' => __('models/ujians.singular')]));

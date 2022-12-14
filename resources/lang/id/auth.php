@@ -16,5 +16,12 @@ return [
     'failed' => 'Data yang diberikan tidak cocok dengan database kami.',
     'password' => 'Password Salah.',
     'throttle' => 'Percobaan login gagal. Coba lagi dalam :seconds seconds.',
+    'app' => array(
+        'create' => 'Tambah',
+        'export' => 'Export',
+        'print' => 'Cetak',
+        'reset' => 'Reset',
+        'reload' => 'Muat Ulang',
+    )
 
 ];

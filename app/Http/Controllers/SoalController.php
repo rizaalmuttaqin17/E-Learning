@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateSoalRequest;
 use App\Repositories\SoalRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\TipeSoal;
+use App\Models\Ujian;
 use Response;
 
 class SoalController extends AppBaseController
@@ -39,7 +41,10 @@ class SoalController extends AppBaseController
      */
     public function create()
     {
-        return view('soals.create');
+        // $ujian = Ujian::with('matkul')->get()->pluck('matkul.nama', 'id');
+        $ujian = Ujian::all();
+        $tipeSoal = TipeSoal::pluck('nama', 'id');
+        return view('soals.create', compact('ujian', 'tipeSoal'));
     }
 
     /**
