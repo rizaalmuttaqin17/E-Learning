@@ -17,11 +17,10 @@ class JawabanRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'id_soal',
+        'id_pilihan',
         'id_user',
         'jawaban',
-        'jawaban_benar',
-        'nilai_jawaban'
+        'nilai_jwb'
     ];
 
     /**

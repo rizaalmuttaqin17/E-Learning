@@ -22,11 +22,10 @@ class JawabanFactory extends Factory
     public function definition()
     {
         return [
-            'id_soal' => $this->faker->word,
+            'id_pilihan' => $this->faker->word,
         'id_user' => $this->faker->word,
         'jawaban' => $this->faker->word,
-        'jawaban_benar' => $this->faker->word,
-        'nilai_jawaban' => $this->faker->randomDigitNotNull,
+        'nilai_jwb' => $this->faker->randomDigitNotNull,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s'),
         'deleted_at' => $this->faker->date('Y-m-d H:i:s')

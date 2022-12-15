@@ -7,7 +7,13 @@
 <!-- Tipe Ujian Field -->
 <div class="form-group col-sm-4">
     {!! Form::label('tipe_ujian', __('models/ujians.fields.tipe_ujian').':') !!}
-    {!! Form::select('tipe_ujian', array('Tengah' => 'Ujian Tengah Semester', 'Akhir'=>'Ujian Akhir Semester'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Tipe Ujian']) !!}
+    {!! Form::select('tipe_ujian', array('UTS' => 'Ujian Tengah Semester', 'UAS'=>'Ujian Akhir Semester'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Tipe Ujian']) !!}
+</div>
+
+<!-- Tipe Ujian Field -->
+<div class="form-group col-sm-2">
+    {!! Form::label('semester', __('models/ujians.fields.semester').':') !!}
+    {!! Form::select('semester', array('Ganjil' => 'Ganjil', 'Genap'=>'Genap'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Semester']) !!}
 </div>
 
 <!-- Sifat Ujian Field -->

@@ -92,11 +92,10 @@ class JawabanDataTable extends DataTable
             'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            'id_soal' => new Column(['title' => __('models/jawabans.fields.id_soal'), 'data' => 'id_soal']),
+            'id_pilihan' => new Column(['title' => __('models/jawabans.fields.id_pilihan'), 'data' => 'id_pilihan']),
             'id_user' => new Column(['title' => __('models/jawabans.fields.id_user'), 'data' => 'id_user']),
             'jawaban' => new Column(['title' => __('models/jawabans.fields.jawaban'), 'data' => 'jawaban']),
-            'jawaban_benar' => new Column(['title' => __('models/jawabans.fields.jawaban_benar'), 'data' => 'jawaban_benar']),
-            'nilai_jawaban' => new Column(['title' => __('models/jawabans.fields.nilai_jawaban'), 'data' => 'nilai_jawaban'])
+            'nilai_jwb' => new Column(['title' => __('models/jawabans.fields.nilai_jwb'), 'data' => 'nilai_jwb'])
         ];
     }
 

@@ -1,15 +1,15 @@
 <li class="side-menus {{ Request::is('home') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('home') }}">
-        <i class=" fas fa-building"></i><span>Dashboard</span>
+        <i class="fas fa-building"></i><span>Dashboard</span>
     </a>
 </li>
 
 <li class="{{ Request::is('ujians*') ? 'active' : '' }}">
-    <a href="{{ route('ujians.index') }}"><i class="fa fa-edit"></i><span>@lang('models/ujians.plural')</span></a>
+    <a href="{{ route('ujians.index') }}"><i class="fas fa-edit"></i><span>@lang('models/ujians.plural')</span></a>
 </li>
 
 <li class="dropdown">
-    <a href="#" class="nav-link has-dropdown"><i class="fa fa-cogs"></i> Soal</a>
+    <a href="#" class="nav-link has-dropdown"><i class="fas fa-cogs"></i><span>Soal</span></a>
     <ul class="dropdown-menu">
         <li class="{{ Request::is('soals*') ? 'active' : '' }}">
             <a href="{{ route('soals.index') }}"><span>@lang('models/soals.plural')</span></a>
@@ -34,7 +34,7 @@
 </li>
 
 <li class="dropdown">
-    <a href="#" class="nav-link has-dropdown"><i class="fa fa-cogs"></i> Settings</a>
+    <a href="#" class="nav-link has-dropdown"><i class="fas fa-cogs"></i><span>Settings</span></a>
     <ul class="dropdown-menu">
         <li class="{{ Request::is('fakultas*') ? 'active' : '' }}">
             <a href="{{ route('fakultas.index') }}"><span>@lang('models/fakultas.plural')</span></a>

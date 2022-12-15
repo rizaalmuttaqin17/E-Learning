@@ -19,7 +19,14 @@ class SoalDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'soals.datatables_actions');
+        return $dataTable
+        ->addColumn('action', 'soals.datatables_actions')
+        ->editColumn('id_ujian', function($query){
+            return $query['ujian']['matkul']['nama'] ." - ". $query['ujian']['tipe_ujian'] ." ". $query['ujian']['semester'];
+        })
+        ->editColumn('id_tipe_soal', function($query){
+            return $query['tipeSoal']['nama'];
+        });
     }
 
     /**
@@ -92,9 +99,9 @@ class SoalDataTable extends DataTable
             'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            'id_ujian' => new Column(['title' => __('models/soals.fields.id_ujian'), 'data' => 'id_ujian']),
-            'id_tipe_soal' => new Column(['title' => __('models/soals.fields.id_tipe_soal'), 'data' => 'id_tipe_soal']),
             'pertanyaan' => new Column(['title' => __('models/soals.fields.pertanyaan'), 'data' => 'pertanyaan']),
+            'id_tipe_soal' => new Column(['title' => __('models/soals.fields.id_tipe_soal'), 'data' => 'id_tipe_soal']),
+            'id_ujian' => new Column(['title' => __('models/soals.fields.id_ujian'), 'data' => 'id_ujian']),
             'nilai' => new Column(['title' => __('models/soals.fields.nilai'), 'data' => 'nilai'])
         ];
     }

@@ -6,7 +6,7 @@ return array (
   'fields' => 
   array (
     'id' => 'Id',
-    'kode' => 'Kode',
+    'kode' => 'Kode Fakultas',
     'nama' => 'Nama',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',

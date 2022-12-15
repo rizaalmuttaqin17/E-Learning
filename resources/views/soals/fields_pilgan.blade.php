@@ -3,7 +3,7 @@
     {!! Form::label('id_tipe_soal', __('models/soals.fields.id_tipe_soal').':') !!}
     {{-- {!! Form::select('id_tipe_soal', $tipeSoal, null, ['class' => 'id_tipe_soal form-control', 'required', 'placeholder'=>'Pilih Tipe Soal']) !!} --}}
     <select name="id_tipe_soal" id="id_tipe_soal" class="id_tipe_soal form-control">
-        <option value="2" selected>Essay</option>
+        <option value="1" selected>Pilihan Ganda</option>
     </select>
 </div>
 
@@ -21,6 +21,26 @@
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('pertanyaan', __('models/soals.fields.pertanyaan').':') !!}
     {!! Form::textarea('pertanyaan', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6 col-lg-6">
+    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan1').':') !!}
+    {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6 col-lg-6">
+    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan2').':') !!}
+    {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6 col-lg-6">
+    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan3').':') !!}
+    {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6 col-lg-6">
+    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan4').':') !!}
+    {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Nilai Field -->

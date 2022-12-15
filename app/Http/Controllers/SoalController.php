@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateSoalRequest;
 use App\Repositories\SoalRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Pilihan;
+use App\Models\Soal;
 use App\Models\TipeSoal;
 use App\Models\Ujian;
 use Response;
@@ -57,11 +59,21 @@ class SoalController extends AppBaseController
     public function store(CreateSoalRequest $request)
     {
         $input = $request->all();
-
-        $soal = $this->soalRepository->create($input);
+        // return $input['pertanyaan'];
+        if($request['id_tipe_soal'] == 1){
+            $soal = $this->soalRepository->create($input);
+            for($i=0; $i<COUNT($request['pilihan']); $i++){
+                $pilihan = new Pilihan;
+                $soals = Soal::orderBy('id', 'desc')->first();
+                $pilihan['id_soal'] = $soals['id'];
+                $pilihan['pilihan'] = $request['pilihan'][$i];
+                $pilihan->save();
+            }
+        } else {
+            $soal = $this->soalRepository->create($input);
+        }
 
         Flash::success(__('messages.saved', ['model' => __('models/soals.singular')]));
-
         return redirect(route('soals.index'));
     }
 
@@ -95,14 +107,14 @@ class SoalController extends AppBaseController
     public function edit($id)
     {
         $soal = $this->soalRepository->find($id);
-
         if (empty($soal)) {
             Flash::error(__('messages.not_found', ['model' => __('models/soals.singular')]));
-
             return redirect(route('soals.index'));
         }
+        $ujian = Ujian::all();
+        $tipeSoal = TipeSoal::pluck('nama', 'id');
 
-        return view('soals.edit')->with('soal', $soal);
+        return view('soals.edit', compact('ujian', 'tipeSoal'))->with('soal', $soal);
     }
 
     /**

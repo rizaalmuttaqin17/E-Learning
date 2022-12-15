@@ -74,7 +74,7 @@ class Soal extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idTipeSoal()
+    public function tipeSoal()
     {
         return $this->belongsTo(\App\Models\TipeSoal::class, 'id_tipe_soal');
     }
@@ -82,7 +82,7 @@ class Soal extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idUjian()
+    public function ujian()
     {
         return $this->belongsTo(\App\Models\Ujian::class, 'id_ujian');
     }
@@ -90,7 +90,7 @@ class Soal extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function jawabans()
+    public function jawaban()
     {
         return $this->hasMany(\App\Models\Jawaban::class, 'id_soal');
     }
@@ -98,7 +98,7 @@ class Soal extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function pilihans()
+    public function pilihan()
     {
         return $this->hasMany(\App\Models\Pilihan::class, 'id_soal');
     }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @property \App\Models\Soal $idSoal
  * @property \App\Models\User $idUser
- * @property integer $id_soal
+ * @property integer $id_pilihan
  * @property integer $id_user
  * @property string $jawaban
  * @property string $jawaban_benar
@@ -36,11 +36,10 @@ class Jawaban extends Model
 
 
     public $fillable = [
-        'id_soal',
+        'id_pilihan',
         'id_user',
         'jawaban',
-        'jawaban_benar',
-        'nilai_jawaban'
+        'nilai_jwb'
     ];
 
     /**
@@ -50,11 +49,10 @@ class Jawaban extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'id_soal' => 'integer',
+        'id_pilihan' => 'integer',
         'id_user' => 'integer',
         'jawaban' => 'string',
-        'jawaban_benar' => 'string',
-        'nilai_jawaban' => 'integer'
+        'nilai_jwb' => 'integer'
     ];
 
     /**
@@ -63,11 +61,10 @@ class Jawaban extends Model
      * @var array
      */
     public static $rules = [
-        'id_soal' => 'nullable',
+        'id_pilihan' => 'nullable',
         'id_user' => 'nullable',
         'jawaban' => 'nullable|string|max:145',
-        'jawaban_benar' => 'nullable|string|max:145',
-        'nilai_jawaban' => 'nullable|integer',
+        'nilai_jwb' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
@@ -76,15 +73,15 @@ class Jawaban extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idSoal()
+    public function pilihan()
     {
-        return $this->belongsTo(\App\Models\Soal::class, 'id_soal');
+        return $this->belongsTo(\App\Models\Pilihan::class, 'id_pilihan');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function idUser()
+    public function users()
     {
         return $this->belongsTo(\App\Models\User::class, 'id_user');
     }
