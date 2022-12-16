@@ -29,37 +29,19 @@
     {!! Form::textarea('pertanyaan', null, ['class' => 'form-control']) !!}
 </div>
 
+@for($i = 4; $i >= 1; $i--)
 <div class="form-group col-sm-12 col-lg-12">
-    <div class="table-responsive">  
-        <table class="table table-bordered" id="dynamicTable">
-            @php
-                $j = 1;
-            @endphp
-            <tr>
-                {{-- <th>No.</th> --}}
-                <th style="width: 80%">Pilihan</th>
-                <th>Benar</th>
-                <th>Tambah Pilihan</th>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" name="pilihan[0]" class="form-control">
-                </td>
-                <td>
-                    <input type="radio" name="benar[0]" class="form-control">
-                </td>
-                <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>  
-            </tr>
-        </table>  
+    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan1').':') !!}
+    <div class="row">
+        <div class="col-sm-11 col-lg-11">
+            {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="col-sm-1 col-lg-1 align-self-center">
+            <input type="radio" name="benar[]" id="benar[{{ $i }}]" class="benar form-control">
+        </div>
     </div>
-    {{-- {!! Form::label('pilihan[]', __('models/soals.fields.pilihan1').':') !!}
-    <div class="col-sm-10 col-lg-10">
-        {!! Form::text('pilihan[1]', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="col-sm-2 col-lg-2 align-self-center">
-        <input type="radio" name="benar[]" id="benar[]" value="benar[]" class="benar form-control">
-    </div> --}}
 </div>
+@endfor
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
@@ -69,43 +51,17 @@
 
 @push('scripts')
 <script type="text/javascript">
-    var i = 0;
-        $("#add").click(function(){
-            ++i;
-            $("#dynamicTable").append(
-            `<tbody>
-                <tr>
-                    <td>
-                        <input type="text" name="pilihan[`+i+`]" placeholder="Pilihan `+i+`" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="radio" name="benar[`+i+`]" placeholder="Bidang" class="form-control" />
-                    </td>
-                    <td>
-                        <button type="button" name="addDetail" id="addDetail" class="btn btn-success addDetail">+</button>
-                    </td>
-                </tr>
-            </tbody>`);
-        });
-
-        /* $("#addDetail").click(function(){
-            ++i;
-            $("#dynamicTable").append(
-            '<tr><td></td><td><input type="text" name="addBarang['+i+'][no_telepon]" placeholder="No. Telepon" class="form-control" /></td><td><input type="text" name="addBarang['+i+'][bidang_id]" placeholder="Bidang" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr-detail">-</button></td></tr>');
-        });
-   
-        $(document).on('click', '.remove-tr', function(){  
-             $(this).parents('tbody').remove();
-        });
-
-        $(document).on('click', '.remove-tr-detail', function(){  
-            $(this).parents('tr').remove();
-        });
-
-        $(document).on('click', '.addDetail', function(){  
-            ++i;
-            $(this).parents('tbody').append(
-            '<tr><td></td><td><input type="text" name="addmore['+i+'][no_telepon]" placeholder="No. Telepon" class="form-control" /></td><td><input type="text" name="addmore['+i+'][bidang_id]" placeholder="Bidang" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr-detail">-</button></td></tr>');
-        }); */
+    $("input[type='radio']").click(function(e) {
+        var checked = $(this).attr("checked");
+        if(!checked){
+            $("input[type='radio']").not(this).removeAttr("value");
+            $("input[type='radio']").not(this).removeAttr("checked");
+            $(this).attr("checked", true);
+            $(this).val('true');
+        } else {
+            $("input[type='radio']").not(this).removeAttr("value");
+            $("input[type='radio']").not(this).removeAttr("checked");
+        }
+    });
 </script>
 @endpush
