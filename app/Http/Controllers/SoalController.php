@@ -63,11 +63,18 @@ class SoalController extends AppBaseController
         if($request['id_tipe_soal'] == 1){
             $soal = $this->soalRepository->create($input);
             for($i=0; $i<COUNT($request['pilihan']); $i++){
-                $pilihan = new Pilihan;
-                $soals = Soal::orderBy('id', 'desc')->first();
-                $pilihan['id_soal'] = $soals['id'];
-                $pilihan['pilihan'] = $request['pilihan'][$i];
-                $pilihan->save();
+                for($j=0; $j <COUNT($request['benar']); $j++){
+                    $pilihan = new Pilihan;
+                    $soals = Soal::orderBy('id', 'desc')->first();
+                    $pilihan['id_soal'] = $soals['id'];
+                    $pilihan['pilihan'] = $request['pilihan'][$i];
+                    if($request['benar'][$j] == 'checked'){
+                        $pilihan['benar'] = 'true';
+                    } else {
+                        $pilihan['benar'] = 'false';
+                    }
+                    $pilihan->save();
+                }
             }
         } else {
             $soal = $this->soalRepository->create($input);
