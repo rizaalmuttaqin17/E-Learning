@@ -59,7 +59,7 @@ class SoalController extends AppBaseController
     public function store(CreateSoalRequest $request)
     {
         $input = $request->all();
-        // return $input['pertanyaan'];
+        // return $request['benar'];
         if($request['id_tipe_soal'] == 1){
             $soal = $this->soalRepository->create($input);
             for($i=0; $i<COUNT($request['pilihan']); $i++){
@@ -68,7 +68,11 @@ class SoalController extends AppBaseController
                     $soals = Soal::orderBy('id', 'desc')->first();
                     $pilihan['id_soal'] = $soals['id'];
                     $pilihan['pilihan'] = $request['pilihan'][$i];
-                    $pilihan['benar'] = $benar;
+                    if(in_array($i, $request['benar'])) {
+                        $pilihan['benar'] = "true";
+                    } else {
+                        $pilihan['benar'] = "false";
+                    }
                     $pilihan->save();
                 }
             }

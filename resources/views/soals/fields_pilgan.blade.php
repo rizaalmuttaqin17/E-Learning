@@ -29,15 +29,16 @@
     {!! Form::textarea('pertanyaan', null, ['class' => 'form-control']) !!}
 </div>
 
-@for($i = 4; $i >= 1; $i--)
+@for($i = 0; $i <= 4; $i++)
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('pilihan[]', __('models/soals.fields.pilihan1').':') !!}
     <div class="row">
         <div class="col-sm-11 col-lg-11">
-            {!! Form::text('pilihan[]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('pilihan['.$i.']', null, ['class' => 'form-control']) !!}
         </div>
         <div class="col-sm-1 col-lg-1 align-self-center">
-            <input type="radio" name="benar[]" id="benar[{{ $i }}]" class="benar form-control">
+            {!! Form::checkbox('benar['.$i.']', false, false, ['class' => 'form-control']) !!}
+            {{-- <input type="radio" name="benar[]" id="benar[{{ $i }}]" class="benar form-control" required> --}}
         </div>
     </div>
 </div>
@@ -51,16 +52,16 @@
 
 @push('scripts')
 <script type="text/javascript">
-    $("input[type='radio']").click(function(e) {
+    $("input[type='checkbox']").click(function(e) {
         var checked = $(this).attr("checked");
         if(!checked){
-            $("input[type='radio']").not(this).removeAttr("value");
-            $("input[type='radio']").not(this).removeAttr("checked");
-            $(this).attr("checked", true);
+            $("input[type='checkbox']").not(this).attr("value", 'false');
+            $("input[type='checkbox']").not(this).prop("checked", false);
+            $(this).prop("checked", true);
             $(this).val('true');
         } else {
-            $("input[type='radio']").not(this).removeAttr("value");
-            $("input[type='radio']").not(this).removeAttr("checked");
+            $("input[type='checkbox']").not(this).attr("value", 'false');
+            $("input[type='checkbox']").not(this).prop("checked", false);
         }
     });
 </script>
