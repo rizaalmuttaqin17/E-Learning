@@ -199,7 +199,7 @@
 						<div class="row align-items-center">
 							<div class="col-lg-6 col-md-12">
 								<div class="hero-content">
-                                    <span><i class="far fa-dot-circle"></i> E-Learning UNU Kaltim</span>
+                                    <span><i class="far fa-dot-circle"></i> E- UNU Kaltim</span>
 									<h1>Achieve Your Goals With <b>Strong Mind</b></h1>
                                     <p>Kuliah jadi asik dengan e-learning yang dapat diakses dimana saja dan kapan saja</p>
                                     <div class="startup-btn">
