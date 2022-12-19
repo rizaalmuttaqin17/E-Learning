@@ -10,6 +10,8 @@ use App\Repositories\UjianRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use App\Models\MataKuliah;
+use App\Models\Ujian;
+use Illuminate\Http\Request;
 use Response;
 
 class UjianController extends AppBaseController
@@ -58,9 +60,7 @@ class UjianController extends AppBaseController
             $input['selesai'] = 'false';
         }
         $ujian = $this->ujianRepository->create($input);
-
         Flash::success(__('messages.saved', ['model' => __('models/ujians.singular')]));
-
         return redirect(route('ujians.index'));
     }
 
@@ -77,10 +77,8 @@ class UjianController extends AppBaseController
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
-
             return redirect(route('ujians.index'));
         }
-
         return view('ujians.show')->with('ujian', $ujian);
     }
 
@@ -97,10 +95,8 @@ class UjianController extends AppBaseController
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
-
             return redirect(route('ujians.index'));
         }
-
         return view('ujians.edit')->with('ujian', $ujian);
     }
 
@@ -118,14 +114,11 @@ class UjianController extends AppBaseController
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
-
             return redirect(route('ujians.index'));
         }
 
         $ujian = $this->ujianRepository->update($request->all(), $id);
-
         Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-
         return redirect(route('ujians.index'));
     }
 
@@ -139,17 +132,22 @@ class UjianController extends AppBaseController
     public function destroy($id)
     {
         $ujian = $this->ujianRepository->find($id);
-
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
-
             return redirect(route('ujians.index'));
         }
 
         $this->ujianRepository->delete($id);
-
         Flash::success(__('messages.deleted', ['model' => __('models/ujians.singular')]));
-
         return redirect(route('ujians.index'));
+    }
+    
+    public function changeStatus(Request $request)
+    {
+        $ujian = $this->ujianRepository->find($request['id']);
+        $ujian->selesai = $request->selesai;
+        $ujian->save();
+
+        return response()->json(['success'=>'Ujian Telah Selesai.']);
     }
 }

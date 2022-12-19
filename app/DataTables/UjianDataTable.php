@@ -28,7 +28,11 @@ class UjianDataTable extends DataTable
             } else {
                 return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
             }
-        });
+        })
+        ->addColumn('selesai', 'ujians.selesai')
+        ->rawColumns(['action', 'selesai']);
+        // ->addIndexColumn()
+        // ->make(true);
     }
 
     /**
