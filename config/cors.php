@@ -31,4 +31,5 @@ return [
 
     'supports_credentials' => false,
 
+    'Access-Control-Allow-Headers' => 'X-CSRF-Token'
 ];

@@ -20,23 +20,32 @@
     
     </section>
 @endsection
+
 @push('scripts')
-<script>
-    $(function() {
-      $('.toggle-class').change(function() {
-          var selesai = $(this).prop('checked') == true ? 1 : 0; 
-          var user_id = $(this).data('id'); 
-           
-          $.ajax({
-              type: "GET",
-              dataType: "json",
-              url: '/changeStatus',
-              data: {'selesai': selesai, 'id': user_id},
-              success: function(data){
-                console.log(data.success)
-              }
-          });
-      })
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.toggle').click(function () {
+            var status = $(this).children().prop('checked') == true ? 'false' : 'true';
+            var id = $(this).children().data('id');
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: "changeStatus",
+                data: {
+                    'status': status,
+                    'id': id
+                },
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function (data) {
+                    Swal.fire(
+                        'GREAT!', 'Status changed successfully', 'success')
+                    location.reload();
+                    console.log(data.success);
+                }
+            });
+        });
     })
-  </script>
+</script>
 @endpush

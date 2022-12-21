@@ -12,6 +12,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\MataKuliah;
 use App\Models\Ujian;
 use Illuminate\Http\Request;
+use DB;
 use Response;
 
 class UjianController extends AppBaseController
@@ -142,12 +143,12 @@ class UjianController extends AppBaseController
         return redirect(route('ujians.index'));
     }
     
-    public function changeStatus(Request $request)
-    {
-        $ujian = $this->ujianRepository->find($request['id']);
-        $ujian->selesai = $request->selesai;
-        $ujian->save();
+    public function changeStatus(Request $request){
+        return $request;
+        $ujian = Ujian::find($request->id);
+        $ujian->selesai = $request->status; 
+        $ujian->save(); 
 
-        return response()->json(['success'=>'Ujian Telah Selesai.']);
+        return response()->json(['success'=>' status change successfully.']);
     }
 }

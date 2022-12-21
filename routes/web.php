@@ -37,5 +37,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionsController::class);
     Route::resource('jawabans', App\Http\Controllers\JawabanController::class);
     Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);
-    Route::get('changeStatus', 'UjianController@changeStatus');
+    Route::post('changeStatus', [App\Http\Controllers\UjianController::class, 'changeStatus']);
 });
