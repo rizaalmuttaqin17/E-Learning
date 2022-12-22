@@ -143,12 +143,11 @@ class UjianController extends AppBaseController
         return redirect(route('ujians.index'));
     }
     
-    public function changeStatus(Request $request){
-        return $request;
-        $ujian = Ujian::find($request->id);
-        $ujian->selesai = $request->status; 
-        $ujian->save(); 
+    public function changeStatus($id, UpdateUjianRequest $request){
+        $ujian = $this->ujianRepository->find($id);
+        // return $request['status'];
+        $ujian = $this->ujianRepository->update($request->all(), $id);
         
-        return response()->json(['success'=>' status change successfully.']);
+        return redirect(route('ujians.index'));
     }
 }

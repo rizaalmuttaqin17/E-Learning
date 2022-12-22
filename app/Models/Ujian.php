@@ -42,7 +42,7 @@ class Ujian extends Model
         'tanggal_ujian',
         'percobaan',
         'jumlah_soal',
-        'selesai'
+        'status'
     ];
 
     /**
@@ -58,7 +58,7 @@ class Ujian extends Model
         'percobaan' => 'integer',
         'jumlah_soal' => 'integer',
         'tanggal_ujian' => 'date',
-        'selesai' => 'string'
+        'status' => 'integer'
     ];
 
     /**
@@ -71,7 +71,7 @@ class Ujian extends Model
         'tipe_ujian' => 'nullable|string',
         'sifat_ujian' => 'nullable|string|max:45',
         'tanggal_ujian' => 'nullable',
-        'selesai' => 'nullable|string',
+        'status' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'

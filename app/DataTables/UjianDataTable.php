@@ -29,8 +29,8 @@ class UjianDataTable extends DataTable
                 return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
             }
         })
-        ->addColumn('selesai', 'ujians.selesai')
-        ->rawColumns(['action', 'selesai']);
+        ->addColumn('status', 'ujians.status')
+        ->rawColumns(['action', 'status']);
         // ->addIndexColumn()
         // ->make(true);
     }
@@ -109,7 +109,7 @@ class UjianDataTable extends DataTable
             'tipe_ujian' => new Column(['title' => __('models/ujians.fields.tipe_ujian'), 'data' => 'tipe_ujian']),
             'sifat_ujian' => new Column(['title' => __('models/ujians.fields.sifat_ujian'), 'data' => 'sifat_ujian']),
             'tanggal_ujian' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'tanggal_ujian']),
-            'selesai' => new Column(['title' => __('models/ujians.fields.selesai'), 'data' => 'selesai'])
+            'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];
     }
 

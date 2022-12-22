@@ -1,3 +1,4 @@
+@role('Admin')
 {!! Form::open(['route' => ['ujians.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
     <a href="{{ route('ujians.show', $id) }}" class='btn btn-default btn-xs'>
@@ -13,3 +14,7 @@
     ]) !!}
 </div>
 {!! Form::close() !!}
+@endrole
+@role('Mahasiswa')
+    
+@endrole

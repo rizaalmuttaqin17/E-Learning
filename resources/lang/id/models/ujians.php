@@ -11,7 +11,7 @@ return array (
     'sifat_ujian' => 'Sifat Ujian',
     'tanggal_ujian' => 'Tanggal Ujian',
     'percobaan' => 'Percobaan',
-    'selesai' => 'Selesai',
+    'status' => 'Status',
     'jumlah_soal' => 'Jumlah Soal ',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',

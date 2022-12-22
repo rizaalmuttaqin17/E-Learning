@@ -21,7 +21,7 @@ class UjianRepository extends BaseRepository
         'tipe_ujian',
         'sifat_ujian',
         'tanggal_ujian',
-        'selesai'
+        'status'
     ];
 
     /**

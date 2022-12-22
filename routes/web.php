@@ -18,7 +18,6 @@ Route::get('/', function () {
     return view('elearning');
 });
 
-
 // Auth::routes();
 Auth::routes(['verify' => true]);
 Route::group(['middleware' => 'auth'], function () {
@@ -37,5 +36,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('permissions', App\Http\Controllers\PermissionsController::class);
     Route::resource('jawabans', App\Http\Controllers\JawabanController::class);
     Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);
-    Route::post('changeStatus', [App\Http\Controllers\UjianController::class, 'changeStatus']);
+    Route::post('ujians/changeStatus/{id}', [App\Http\Controllers\UjianController::class, 'changeStatus'])->name('ujians.changeStatus');
 });
