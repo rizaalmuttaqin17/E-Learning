@@ -35,15 +35,18 @@
                     'status': status,
                     'id': id
                 },
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
+                
                 success: function (data) {
                     Swal.fire(
                         'GREAT!', 'Status changed successfully', 'success')
                     location.reload();
                     console.log(data.success);
                 }
+            });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
             });
         });
     })

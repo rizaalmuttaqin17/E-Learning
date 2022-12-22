@@ -148,7 +148,7 @@ class UjianController extends AppBaseController
         $ujian = Ujian::find($request->id);
         $ujian->selesai = $request->status; 
         $ujian->save(); 
-
+        
         return response()->json(['success'=>' status change successfully.']);
     }
 }

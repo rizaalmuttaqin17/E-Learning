@@ -115,7 +115,7 @@ return [
      * JsonResponse header and options config.
      */
     'json'           => [
-        'header'  => ['X-CSRF-TOKEN' => '{{ csrf_token() }}'],
+        'header'  => [],
         'options' => 0,
     ],
 
