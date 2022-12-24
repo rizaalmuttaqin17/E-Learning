@@ -23,14 +23,15 @@ class UjianDataTable extends DataTable
         return $dataTable
         ->addColumn('action', 'ujians.datatables_actions')
         ->editColumn('tanggal_ujian', function($query){
-            if($query['tanggal_ujian']==null){
+            if($query['tanggal_ujian'] == null){
                 return '-';
             } else {
                 return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
             }
         })
+        ->editColumn('id_mata_kuliah', 'ujians.matkul')
         ->addColumn('status', 'ujians.status')
-        ->rawColumns(['action', 'status']);
+        ->rawColumns(['action', 'status', 'id_mata_kuliah']);
         // ->addIndexColumn()
         // ->make(true);
     }
@@ -106,8 +107,6 @@ class UjianDataTable extends DataTable
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
-            'tipe_ujian' => new Column(['title' => __('models/ujians.fields.tipe_ujian'), 'data' => 'tipe_ujian']),
-            'sifat_ujian' => new Column(['title' => __('models/ujians.fields.sifat_ujian'), 'data' => 'sifat_ujian']),
             'tanggal_ujian' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'tanggal_ujian']),
             'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];

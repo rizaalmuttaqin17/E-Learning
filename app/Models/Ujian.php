@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Ujian extends Model
 {
     use SoftDeletes;
-
     use HasFactory;
 
     public $table = 'ujian';
@@ -30,10 +29,7 @@ class Ujian extends Model
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
     protected $dates = ['deleted_at'];
-
-
 
     public $fillable = [
         'id_mata_kuliah',
@@ -42,7 +38,9 @@ class Ujian extends Model
         'tanggal_ujian',
         'percobaan',
         'jumlah_soal',
-        'status'
+        'status',
+        'nilai',
+        'durasi'
     ];
 
     /**
@@ -58,7 +56,8 @@ class Ujian extends Model
         'percobaan' => 'integer',
         'jumlah_soal' => 'integer',
         'tanggal_ujian' => 'date',
-        'status' => 'integer'
+        'status' => 'integer',
+        'nilai' => 'integer',
     ];
 
     /**
@@ -71,7 +70,9 @@ class Ujian extends Model
         'tipe_ujian' => 'nullable|string',
         'sifat_ujian' => 'nullable|string|max:45',
         'tanggal_ujian' => 'nullable',
+        'jumlah_soal' => 'nullable|integer',
         'status' => 'nullable|integer',
+        'nilai' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'

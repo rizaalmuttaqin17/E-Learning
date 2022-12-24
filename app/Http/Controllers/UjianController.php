@@ -93,12 +93,13 @@ class UjianController extends AppBaseController
     public function edit($id)
     {
         $ujian = $this->ujianRepository->find($id);
+        $matkul = MataKuliah::pluck('nama', 'id');
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.edit')->with('ujian', $ujian);
+        return view('ujians.edit', compact('matkul'))->with('ujian', $ujian);
     }
 
     /**

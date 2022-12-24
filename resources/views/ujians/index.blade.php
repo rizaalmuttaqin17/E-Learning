@@ -20,4 +20,22 @@
     </div>
 
 </section>
+
+@push('scripts')
+<script type="module">
+    import swal from 'sweetalert;
+
+     $('#status_selesai').on('click', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            swal({
+                title: 'Are you sure ?',
+                text: "You won't be able to revert this !",
+                icon: 'warning',
+                buttons: "true"
+            })
+        });
+</script>
+@endpush
+
 @endsection
