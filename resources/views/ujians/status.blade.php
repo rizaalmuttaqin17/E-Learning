@@ -4,10 +4,15 @@
 @else
     <input type="text" name="status" value="1" id="status" hidden>
 @endif
+@role(['Admin', 'Dosen'])
     {!! Form::button($status == '1' ? 'Ujian Selesai' : 'Berjalan', [
         'id' => 'status_selesai',
         'type' => 'submit',
-        'class' => ['btn',  $status == '1' ? 'btn-success' : 'btn-danger', 'showSweetAlert' ],
-        'onclick' => 'return false'
+        'class' => ['btn',  $status == '1' ? 'btn-success' : 'btn-danger' ],
+        'onclick' => 'return confirm("'.__('crud.are_you_sure').'")'
     ]) !!}
+@endrole
+@role('Mahasiswa')
+    <div class="badge {{ $status == '1' ? 'badge-success' : 'badge-danger' }}"> {{ $status == '1' ? 'Selesai' : 'Berjalan' }}</div>
+@endrole
 {!! Form::close() !!}

@@ -44,8 +44,9 @@ class SoalController extends AppBaseController
     public function create()
     {
         // $ujian = Ujian::with('matkul')->get()->pluck('matkul.nama', 'id');
-        $ujian = Ujian::all();
+        $ujian = Ujian::all(['id', 'id_mata_kuliah', 'tipe_ujian', 'semester']);
         $tipeSoal = TipeSoal::pluck('nama', 'id');
+        // return $ujian;
         return view('soals.create', compact('ujian', 'tipeSoal'));
     }
 

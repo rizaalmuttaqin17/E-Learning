@@ -37,4 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('jawabans', App\Http\Controllers\JawabanController::class);
     Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);
     Route::post('ujians/changeStatus/{id}', [App\Http\Controllers\UjianController::class, 'changeStatus'])->name('ujians.changeStatus');
+    Route::get('ujians/createSoal/{id}', [App\Http\Controllers\UjianController::class, 'createSoal'])->name('ujians.createSoal');
+    Route::patch('ujians/updateSoal/{id}', [App\Http\Controllers\UjianController::class, 'updateSoal'])->name('ujians.updateSoal');
+    Route::get('ujians/mahasiswa-ujian/{id}', [App\Http\Controllers\UjianController::class, 'ujiansMahasiswa'])->name('ujians.mahasiswa-ujian');
 });

@@ -102,7 +102,6 @@ class SoalDataTable extends DataTable
             'pertanyaan' => new Column(['title' => __('models/soals.fields.pertanyaan'), 'data' => 'pertanyaan']),
             'id_tipe_soal' => new Column(['title' => __('models/soals.fields.id_tipe_soal'), 'data' => 'id_tipe_soal']),
             'id_ujian' => new Column(['title' => __('models/soals.fields.id_ujian'), 'data' => 'id_ujian']),
-            'nilai' => new Column(['title' => __('models/soals.fields.nilai'), 'data' => 'nilai'])
         ];
     }
 

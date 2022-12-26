@@ -16,5 +16,7 @@
 {!! Form::close() !!}
 @endrole
 @role('Mahasiswa')
-    
+    <a href="{{ route('ujians.mahasiswa-ujian', $id) }}" class='btn btn-default btn-xs'>
+        <i class="fa fa-edit"></i> Ujian
+    </a>
 @endrole

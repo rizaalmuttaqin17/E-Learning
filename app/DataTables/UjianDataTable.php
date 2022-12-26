@@ -30,8 +30,9 @@ class UjianDataTable extends DataTable
             }
         })
         ->editColumn('id_mata_kuliah', 'ujians.matkul')
+        ->editColumn('jumlah_soal', 'ujians.jml_soal')
         ->addColumn('status', 'ujians.status')
-        ->rawColumns(['action', 'status', 'id_mata_kuliah']);
+        ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
         // ->addIndexColumn()
         // ->make(true);
     }
@@ -107,6 +108,7 @@ class UjianDataTable extends DataTable
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
+            'jumlah_soal' => new Column(['title' => __('models/ujians.fields.jumlah_soal'), 'data' => 'jumlah_soal']),
             'tanggal_ujian' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'tanggal_ujian']),
             'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];

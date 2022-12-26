@@ -12,6 +12,7 @@ return array (
     'tanggal_ujian' => 'Tanggal Ujian',
     'percobaan' => 'Percobaan',
     'status' => 'Status',
+    'nilai' => 'Nilai',
     'jumlah_soal' => 'Jumlah Soal ',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',

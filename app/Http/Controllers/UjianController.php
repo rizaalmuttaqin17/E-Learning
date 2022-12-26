@@ -10,6 +10,8 @@ use App\Repositories\UjianRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use App\Models\MataKuliah;
+use App\Models\Pilihan;
+use App\Models\Soal;
 use App\Models\Ujian;
 use Illuminate\Http\Request;
 use DB;
@@ -150,5 +152,58 @@ class UjianController extends AppBaseController
         $ujian = $this->ujianRepository->update($request->all(), $id);
         
         return redirect(route('ujians.index'));
+    }
+
+    public function createSoal($id){
+        $ujian = $this->ujianRepository->find($id);
+
+        $matkul = MataKuliah::pluck('nama', 'id');
+        return view('ujians.createSoal', compact('matkul', 'ujian'));
+    }
+
+    public function updateSoal($id, Request $request)
+    {
+        $input = $request->all();
+        // return $request['benar'];
+        $ujian = $this->ujianRepository->find($id);
+        
+        if($request['id_tipe_soal'] == 1){
+            $soal = new Soal;
+            $soal['id_ujian'] = $id;
+            $soal['id_tipe_soal'] = $request['id_tipe_soal'];
+            $soal['pertanyaan'] = $request['pertanyaan'];
+            $soal->save();
+            for($i=0; $i<COUNT($request['pilihan']); $i++){
+                $pilihan = new Pilihan;
+                $soals = Soal::orderBy('id', 'desc')->first();
+                $pilihan['id_soal'] = $soals['id'];
+                $pilihan['pilihan'] = $request['pilihan'][$i];
+                if(array_key_exists($i, $request['benar']) == true) {
+                    // return $request['benar'];
+                    $pilihan['benar'] = "true";
+                } else {
+                    // return $request['benar'];
+                    $pilihan['benar'] = "false";
+                }
+                $pilihan->save();
+            }
+            if($ujian['soals']->count() != $ujian['jumlah_soal']){
+                $matkul = MataKuliah::pluck('nama', 'id');
+                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
+                return view('ujians.createSoal', compact('matkul', 'ujian'));
+            } else {
+                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
+                return redirect(route('ujians.index'));
+            }
+        } else {
+            $soal = $this->soalRepository->create($input);
+        }
+    }
+
+    public function ujiansMahasiswa($id){
+        $ujian = $this->ujianRepository->find($id);
+
+        $matkul = MataKuliah::pluck('nama', 'id');
+        return view('ujians.createSoal', compact('matkul', 'ujian'));
     }
 }
