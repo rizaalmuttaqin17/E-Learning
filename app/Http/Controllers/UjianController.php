@@ -202,8 +202,8 @@ class UjianController extends AppBaseController
 
     public function ujiansMahasiswa($id){
         $ujian = $this->ujianRepository->find($id);
-
+        $soal = Soal::where('id_ujian', $id)->get();
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.createSoal', compact('matkul', 'ujian'));
+        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal'));
     }
 }
