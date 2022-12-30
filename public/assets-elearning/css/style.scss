@@ -603,18 +603,45 @@ Navbar Area CSS
                 }
                 &:hover {
                     background-color: $black-color;
+                    // color: $white-color !important;
+                }
+            }
+            .saas-nav-btn-outline {
+                background-color: $main-color;
+                color: $white-color;
+                padding: 10px 20px;
+                border-radius:  4px;
+                margin-left: 10px;
+                transition: all 0.5s;
+                font-size: 16px;
+                font-weight: 600;
+                i {
+                    font-size: 14px;
+                }
+                &:hover {
+                    background-color: $black-color;
                     color: $white-color !important;
                 }
             }
             &.saas-option {
                 margin: 0;
                 .saas-nav-btn {
-                    background-color: transparent;
-                    border: 1px solid $white-color;
+                    background-color: $hover-color;
+                    border: 1px solid $hover-color;
+                    color: $white-color;
                     &:hover {
-                        background-color: $main-color;
-                        color: $white-color;
-                        border: 1px solid $main-color;
+                        background-color: transparent;
+                        color: $hover-color;
+                        border: 1px solid $hover-color;
+                    }
+                }
+                .saas-nav-btn-outline {
+                    background-color: transparent;
+                    border: 1px solid $hover-color;
+                    color: $hover-color;
+                    &:hover {
+                        background-color: $hover-color;
+                        border: 1px solid $hover-color;
                     }
                 }
             }

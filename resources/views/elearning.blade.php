@@ -94,20 +94,9 @@
                                     <a href="contact.html" class="nav-link">Contact</a>
                                 </li>
                             </ul>
-                            <div class="others-options startup-option">
-                                <div class="language-list">
-                                    <div class="select-box">
-                                        <select>
-                                            <option value="0">Ina</option>
-                                            <option value="1">Eng</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="sidebar-menu" data-bs-toggle="modal" data-bs-target="#myModal2">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
+                            <div class="others-options saas-option">
+                                <a class="saas-nav-btn" href="{{ route('login') }}">Login</a>
+                                <a class="saas-nav-btn-outline" href="{{ route('register') }}">Register</a>
                             </div>
                         </div>
                     </nav>
@@ -115,81 +104,6 @@
             </div>
         </div>
         <!-- End Navbar Area -->
-
-        <!-- Start Sidebar Modal -->
-		<div class="sidebar-modal">
-			<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">
-									<i class="fa fa-times"></i>
-								</span>
-							</button>
-							<h2 class="modal-title" id="myModalLabel2">
-								<a href="index.html">
-									<img src="{{ asset('assets-elearning/img/logo/logo.png') }}" alt="Logo">
-								</a>
-							</h2>
-						</div>
-						<div class="modal-body">
-							<div class="sidebar-modal-widget">
-                                <h3 class="title">Welcome To Exto</h3>
-                                <img src="{{ asset('assets-elearning/img/about.jpg') }}" alt="">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dolore saepe exercitationem alias unde, blanditiis non error</p>
-							</div>
-							<div class="sidebar-modal-widget">
-								<h3 class="title">Contact Info</h3>
-								<ul class="contact-info">
-									<li>
-										<i class="fa fa-map-marker"></i>
-										Address
-										<span>121 King St, VIC 3000, Australia</span>
-									</li>
-									<li>
-										<i class="fa fa-phone"></i>
-										Email
-										<span>info@exto.com</span>
-									</li>
-									<li>
-										<i class="fa fa-envelope"></i>
-										Phone
-										<span>098-123-23455</span>
-                                    </li>
-								</ul>
-							</div>
-							<div class="sidebar-modal-widget">
-								<h3 class="title">Connect With Us</h3>
-								<ul class="social-list">
-									<li>
-										<a href="#">
-											<i class="fab fa-facebook-f"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fab fa-twitter"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fab fa-linkedin-in"></i>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fab fa-instagram"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-        <!-- End Sidebar Modal -->
 
         <!-- Start Startup Home Area -->
         <div class="startup-home-area">
@@ -199,7 +113,7 @@
 						<div class="row align-items-center">
 							<div class="col-lg-6 col-md-12">
 								<div class="hero-content">
-                                    <span><i class="far fa-dot-circle"></i> E- UNU Kaltim</span>
+                                    <span><i class="far fa-dot-circle"></i>E-Learning UNU Kaltim</span>
 									<h1>Achieve Your Goals With <b>Strong Mind</b></h1>
                                     <p>Kuliah jadi asik dengan e-learning yang dapat diakses dimana saja dan kapan saja</p>
                                     <div class="startup-btn">

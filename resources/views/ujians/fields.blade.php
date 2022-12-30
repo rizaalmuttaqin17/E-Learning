@@ -43,7 +43,7 @@
 <!-- Durasi Ujian Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('durasi', __('models/ujians.fields.durasi')) !!}
-    {!! Form::time('durasi', null, ['class' => 'form-control']) !!}
+    {!! Form::number('durasi', null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-2">

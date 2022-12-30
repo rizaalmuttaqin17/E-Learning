@@ -16,6 +16,7 @@ use App\Models\Ujian;
 use Illuminate\Http\Request;
 use DB;
 use Response;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UjianController extends AppBaseController
 {
@@ -142,7 +143,8 @@ class UjianController extends AppBaseController
         }
 
         $this->ujianRepository->delete($id);
-        Flash::success(__('messages.deleted', ['model' => __('models/ujians.singular')]));
+        Alert::success('Sukses', 'Data '.$ujian['matkul']['nama'].' Telah Berhasil di Hapus');
+        // Flash::success(__('messages.deleted', ['model' => __('models/ujians.singular')]));
         return redirect(route('ujians.index'));
     }
     

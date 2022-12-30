@@ -19,16 +19,14 @@
     padding-top: 0;
   }
   .navbar-area {
-    -webkit-box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-            box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
   }
   .navbar-area-two {
-    -webkit-box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-            box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-    background-color: #8a8a8a;
+    box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
+    background-color: rgb(138, 138, 138);
   }
   .navbar-area-two.is-sticky {
-    background: #8a8a8a !important;
+    background: rgb(138, 138, 138) !important;
   }
   .default-btn {
     padding: 10px 15px;
@@ -178,8 +176,7 @@
     margin: 12px auto 0;
   }
   .benefit-area-content {
-    -webkit-box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
-            box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
+    box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
     padding: 15px;
     text-align: center;
   }
@@ -223,9 +220,7 @@
     margin-bottom: 30px;
   }
   .software-list-tab .tabs li {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 48%;
-            flex: 0 0 48%;
+    flex: 0 0 48%;
     max-width: 46%;
     padding-top: 10px;
   }
@@ -719,9 +714,7 @@
     font-size: 26px;
   }
   .specialty-content-area .specialty-list li {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 80%;
-            flex: 0 0 80%;
+    flex: 0 0 80%;
     max-width: 80%;
     font-size: 16px;
     margin-top: 14px;
@@ -862,8 +855,6 @@
     margin-top: 25px;
   }
   .projects-details-desc .project-details-info .single-info-box {
-    -ms-flex: unset;
-    -webkit-box-flex: unset;
     flex: unset;
     max-width: unset;
     padding-bottom: 14px;
@@ -1386,7 +1377,6 @@
     font-size: 12px;
   }
 }
-
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .saas-home-area {
     height: 100%;
@@ -1483,7 +1473,6 @@
     font-size: 14px;
   }
 }
-
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .pt-70 {
     padding-top: 20px;
@@ -1506,16 +1495,14 @@
     font-size: 15px;
   }
   .navbar-area {
-    -webkit-box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-            box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
   }
   .navbar-area-two {
-    -webkit-box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-            box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
-    background-color: #8a8a8a;
+    box-shadow: 0 7px 13px 0 rgba(0, 0, 0, 0.1);
+    background-color: rgb(138, 138, 138);
   }
   .navbar-area-two.is-sticky {
-    background: #8a8a8a !important;
+    background: rgb(138, 138, 138) !important;
   }
   .mean-container a.meanmenu-reveal {
     width: 35px;
@@ -1668,8 +1655,7 @@
     margin: 12px auto 0;
   }
   .benefit-area-content {
-    -webkit-box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
-            box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
+    box-shadow: 1px 1px 20px 7px rgba(0, 0, 0, 0.07);
     padding-left: 75px;
   }
   .benefit-area-content i::before {
@@ -1713,8 +1699,6 @@
     margin-bottom: 30px;
   }
   .software-list-tab .tabs li {
-    -ms-flex: 0 0 50%;
-    -webkit-box-flex: 0;
     flex: 0 0 48%;
     max-width: 46%;
     padding-top: 10px;
@@ -2173,9 +2157,7 @@
     font-size: 26px;
   }
   .specialty-content-area .specialty-list li {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 80%;
-            flex: 0 0 80%;
+    flex: 0 0 80%;
     max-width: 80%;
     font-size: 16px;
     margin-top: 14px;
@@ -2307,8 +2289,6 @@
     font-size: 16px;
   }
   .projects-details-desc .project-details-info .single-info-box {
-    -ms-flex: unset;
-    -webkit-box-flex: unset;
     flex: unset;
     max-width: unset;
     padding-left: 5px;
@@ -2652,7 +2632,6 @@
     font-size: 12px;
   }
 }
-
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .saas-home-area .hero-content h1 {
     font-size: 40px;
@@ -2683,8 +2662,6 @@
     margin-bottom: 30px;
   }
   .software-list-tab .tabs li {
-    -ms-flex: 0 0 50%;
-    -webkit-box-flex: 0;
     flex: 0 0 48%;
     max-width: 23%;
     padding-top: 10px;
@@ -2898,7 +2875,6 @@
     left: 137px;
   }
 }
-
 @media only screen and (min-width: 1300px) {
   .startup-home-area .startup-shape img {
     position: absolute;
@@ -2907,7 +2883,6 @@
     width: 850px;
   }
 }
-
 @media only screen and (min-width: 1200px) and (max-width: 1390px) {
   .startup-home-area .startup-shape img {
     position: absolute;
@@ -2919,7 +2894,6 @@
     max-width: 545px;
   }
 }
-
 @media only screen and (min-width: 1800px) {
   .startup-home-area .startup-image {
     position: relative;
@@ -2968,5 +2942,4 @@
     bottom: -450px;
     left: 200px;
   }
-}
-/*# sourceMappingURL=responsive.css.map */
+}/*# sourceMappingURL=responsive.css.map */

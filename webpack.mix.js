@@ -39,8 +39,6 @@ mix.copy('node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
 mix.copy('node_modules/datatables.net-dt/images', 'public/assets/images');
 mix.copy('node_modules/select2/dist/css/select2.min.css',
     'public/assets/css/select2.min.css');
-mix.copy('node_modules/sweetalert/dist/sweetalert.css',
-    'public/assets/css/sweetalert.css');
 mix.copy('node_modules/izitoast/dist/css/iziToast.min.css',
     'public/assets/css/iziToast.min.css');
 
@@ -61,7 +59,5 @@ mix.babel('node_modules/datatables.net/js/jquery.dataTables.min.js',
     'public/assets/js/jquery.dataTables.min.js');
 mix.babel('node_modules/select2/dist/js/select2.min.js',
     'public/assets/js/select2.min.js');
-mix.babel('node_modules/sweetalert/dist/sweetalert.min.js',
-    'public/assets/js/sweetalert.min.js');
 mix.babel('node_modules/izitoast/dist/js/iziToast.min.js',
     'public/assets/js/iziToast.min.js');

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @package App\Models
  * @version December 12, 2022, 12:07 am UTC
  *
+ * @property \App\Models\Pilihan $idPilihan
  * @property \App\Models\Soal $idSoal
  * @property \App\Models\User $idUser
  * @property integer $id_pilihan
@@ -37,6 +38,7 @@ class Jawaban extends Model
 
     public $fillable = [
         'id_pilihan',
+        'id_soal',
         'id_user',
         'jawaban',
         'nilai_jwb'
@@ -50,6 +52,7 @@ class Jawaban extends Model
     protected $casts = [
         'id' => 'integer',
         'id_pilihan' => 'integer',
+        'id_soal' => 'integer',
         'id_user' => 'integer',
         'jawaban' => 'string',
         'nilai_jwb' => 'integer'
@@ -62,6 +65,7 @@ class Jawaban extends Model
      */
     public static $rules = [
         'id_pilihan' => 'nullable',
+        'id_soal' => 'nullable',
         'id_user' => 'nullable',
         'jawaban' => 'nullable|string|max:145',
         'nilai_jwb' => 'nullable|integer',
@@ -76,6 +80,14 @@ class Jawaban extends Model
     public function pilihan()
     {
         return $this->belongsTo(\App\Models\Pilihan::class, 'id_pilihan');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function soals()
+    {
+        return $this->belongsTo(\App\Models\Soal::class, 'id_soal');
     }
 
     /**

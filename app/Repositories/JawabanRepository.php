@@ -18,6 +18,7 @@ class JawabanRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id_pilihan',
+        'id_soal',
         'id_user',
         'jawaban',
         'nilai_jwb'

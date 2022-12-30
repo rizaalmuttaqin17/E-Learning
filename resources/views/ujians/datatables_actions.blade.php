@@ -1,5 +1,5 @@
 @role('Admin')
-{!! Form::open(['route' => ['ujians.destroy', $id], 'method' => 'delete']) !!}
+{!! Form::open(['route' => ['ujians.destroy', $id], 'method' => 'delete', 'onsubmit' => 'return confirmDelete()']) !!}
 <div class='btn-group'>
     <a href="{{ route('ujians.show', $id) }}" class='btn btn-light btn-xs'>
         <i class="fa fa-eye"></i>
@@ -10,7 +10,6 @@
     {!! Form::button('<i class="fa fa-trash"></i>', [
         'type' => 'submit',
         'class' => 'btn btn-danger btn-xs',
-        'onclick' => 'return confirm("'.__('crud.are_you_sure').'")'
     ]) !!}
 </div>
 {!! Form::close() !!}

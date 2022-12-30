@@ -13,9 +13,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-
-@yield('page_css')
-<!-- Template CSS -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('page_css')
+    <!-- Template CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.0.7/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('web/css/components.css')}}">
     @yield('page_css')
@@ -44,11 +45,12 @@
         </footer>
     </div>
 </div>
-
+@include('sweetalert::alert')
 @include('profile.change_password')
 @include('profile.edit_profile')
 
 </body>
+<script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
