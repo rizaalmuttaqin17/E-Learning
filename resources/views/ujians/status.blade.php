@@ -13,6 +13,6 @@
     ]) !!}
 @endrole
 @role('Mahasiswa')
-    <div class="badge {{ $status == '1' ? 'badge-success' : 'badge-danger' }}"> {{ $status == '1' ? 'Selesai' : 'Berjalan' }}</div>
+    <div class="badge {{ $status == '1' ? 'badge-success' : 'badge-info' }}"><i class="fa fa-book-open"></i> &nbsp; {{ $status == '1' ? ' Selesai' : ' Berjalan' }}</div>
 @endrole
 {!! Form::close() !!}

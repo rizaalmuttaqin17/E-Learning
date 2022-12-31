@@ -40,4 +40,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('ujians/createSoal/{id}', [App\Http\Controllers\UjianController::class, 'createSoal'])->name('ujians.createSoal');
     Route::patch('ujians/updateSoal/{id}', [App\Http\Controllers\UjianController::class, 'updateSoal'])->name('ujians.updateSoal');
     Route::get('ujians/mahasiswa-ujian/{id}', [App\Http\Controllers\UjianController::class, 'ujiansMahasiswa'])->name('ujians.mahasiswa-ujian');
+    Route::patch('ujians/next-soal/{id}', [App\Http\Controllers\UjianController::class, 'nextSoal'])->name('ujians.next-soal');
 });

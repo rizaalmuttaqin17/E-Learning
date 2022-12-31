@@ -25,18 +25,16 @@
 <script type="text/javascript">
     function confirmDelete() {
         swal({
-            title: "Are you sure you want to delete this record?",
-            text: "If you delete this, it will be gone forever.",
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
             icon: "warning",
-            type: "warning",
-            buttons: ["Cancel","Yes!"],
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((willDelete) => {
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
             if (willDelete) {
-                form.submit();
-            }
+                $('#form_id').submit();
+            } 
         });
     }
 </script>

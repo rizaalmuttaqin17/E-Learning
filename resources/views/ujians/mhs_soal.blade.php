@@ -1,7 +1,7 @@
 <div class="card-header">
     <h4 style="color: unset">{!! $soal['pertanyaan'] !!}</h4>
 </div>
-{!! Form::model($ujian, ['route' => ['ujians.next-soal', $ujian->id], 'method' => 'patch', 'autocomplete' => 'off']) !!}
+{!! Form::model($soal, ['route' => ['ujians.next-soal', $soal->id], 'method' => 'patch', 'autocomplete' => 'off']) !!}
 <div class="card-body">
     <div class="row">
         @foreach ($soal['pilihan']->split($soal['pilihan']->count()/2) as $row)

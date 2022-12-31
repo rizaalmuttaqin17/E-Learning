@@ -9,12 +9,14 @@ use App\Http\Requests\UpdateUjianRequest;
 use App\Repositories\UjianRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Jawaban;
 use App\Models\MataKuliah;
 use App\Models\Pilihan;
 use App\Models\Soal;
 use App\Models\Ujian;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Response;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -204,9 +206,34 @@ class UjianController extends AppBaseController
 
     public function ujiansMahasiswa($id){
         $ujian = $this->ujianRepository->find($id);
+        $jawaban = Jawaban::where('id_user', Auth::id())->first();
+        $jawabans = Jawaban::where('id_user', Auth::id())->get();
+        $soals = Soal::where('id_ujian', $id)->get()->random();
+
+        if($jawaban == null){
+            $soal = $soals;
+        } else {
+            if(count($jawabans) == $ujian['jumlah_soal']){
+                return redirect()->back();
+            } else {
+                $soal = Soal::where('id_ujian', $id)->where('id', '!=', $jawaban['id_soal'])->get()->random();
+            }
+        }
+        // return $soal;
         
-        $soal = Soal::where('id_ujian', $id)->get()->random();
         $matkul = MataKuliah::pluck('nama', 'id');
         return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal'));
+    }
+
+    public function nextSoal($id, Request $request){
+        $soal = Soal::where('id', $id)->first();
+
+        $jawab = new Jawaban;
+        $jawab['id_user'] = Auth::id();
+        $jawab['id_soal'] = $soal['id'];
+        $jawab['id_pilihan'] = $request['answer'];
+        $jawab->save();
+
+        return redirect()->back();
     }
 }
