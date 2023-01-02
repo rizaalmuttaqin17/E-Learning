@@ -38,6 +38,7 @@ class UjianController extends AppBaseController
      */
     public function index(UjianDataTable $ujianDataTable)
     {
+        // return $soal;
         return $ujianDataTable->render('ujians.index');
     }
 
@@ -206,17 +207,22 @@ class UjianController extends AppBaseController
 
     public function ujiansMahasiswa($id){
         $ujian = $this->ujianRepository->find($id);
-        $jawaban = Jawaban::where('id_user', Auth::id())->first();
         $jawabans = Jawaban::where('id_user', Auth::id())->get();
         $soals = Soal::where('id_ujian', $id)->get()->random();
-
-        if($jawaban == null){
-            $soal = $soals;
-        } else {
-            if(count($jawabans) == $ujian['jumlah_soal']){
-                return redirect()->back();
+        
+        foreach($soals as $item){
+            $jawaban = Jawaban::where('id_user', Auth::id())->where('id_soal', $item)->first();
+            $jawabanTotal = Jawaban::where('id_user', Auth::id())->orWhere('id_soal', $soals['id'])->get();
+            // return $jawabanTotal;
+            if($jawaban == null){
+                $soal = $soals;
             } else {
-                $soal = Soal::where('id_ujian', $id)->where('id', '!=', $jawaban['id_soal'])->get()->random();
+                if(count($jawabanTotal) == $ujian['jumlah_soal']){
+                    Alert::warning('Gagal', 'Anda Telah Mengambil Ujian Ini!');
+                    return redirect(route('ujians.index'));
+                } else {
+                    $soal = Soal::where('id_ujian', $id)->orWhere('id', '!=', $jawaban['id_soal'])->get()->random();
+                }
             }
         }
         // return $soal;
