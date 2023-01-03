@@ -38,7 +38,6 @@ class UjianController extends AppBaseController
      */
     public function index(UjianDataTable $ujianDataTable)
     {
-        // return $soal;
         return $ujianDataTable->render('ujians.index');
     }
 
@@ -218,7 +217,7 @@ class UjianController extends AppBaseController
                 $soal = $soals;
             } else {
                 if(count($jawabanTotal) == $ujian['jumlah_soal']){
-                    Alert::warning('Gagal', 'Anda Telah Mengambil Ujian Ini!');
+                    Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
                     return redirect(route('ujians.index'));
                 } else {
                     $soal = Soal::where('id_ujian', $id)->orWhere('id', '!=', $jawaban['id_soal'])->get()->random();

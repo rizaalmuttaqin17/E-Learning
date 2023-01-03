@@ -1,4 +1,4 @@
-p@role('Admin')
+@role('Admin')
 {!! Form::open(['route' => ['ujians.destroy', $id], 'method' => 'delete', 'id' => 'form_id']) !!}
 <div class='btn-group'>
     <a href="{{ route('ujians.show', $id) }}" class='btn btn-light btn-xs'>
@@ -17,17 +17,23 @@ p@role('Admin')
 @endrole
 @role('Mahasiswa')
     @php
-        $soal = App\Models\Soal::select('id')->where('id_ujian', $id)->first();
-        $pilihan = App\Models\Pilihan::select('id', 'benar')->where('id_soal', $soal['id'])->get();
-        foreach ($pilihan as $item) {
-            $jawaban = App\Models\Jawaban::select('id', 'id_pilihan')->where('id_user', \Auth::user()->id)->orWhere('id_soal', $soal['id'])->orWhere('id_pilihan', $item['id'])->get();
-        }
+        $jawaban = DB::table('soal')
+                ->where('id_ujian', $id)
+                ->join('pilihan', 'pilihan.id_soal', '=', 'soal.id')
+                ->join('jawaban', 'jawaban.id_pilihan', '=', 'pilihan.id')
+                ->where('pilihan.benar', 'true')
+                ->where('jawaban.id_user', Auth::id())->get();
+        $soal = DB::table('soal')
+                ->where('id_ujian', $id)
+                ->join('pilihan', 'pilihan.id_soal', '=', 'soal.id')
+                ->join('jawaban', 'jawaban.id_pilihan', '=', 'pilihan.id')
+                ->where('jawaban.id_user', Auth::id())->get();
     @endphp
     @if ($jawaban != null)
+        <p>{{ $nilai/count($soal)*count($jawaban) }}</p>
+    @else
         <a href="{{ route('ujians.mahasiswa-ujian', $id) }}" class='btn btn-light btn-xs'>
             <i class="fa fa-edit"></i> Ujian
         </a>
-    @else
-        <p>{{ $nilai/count($jawaban) }}</p>
     @endif
 @endrole
