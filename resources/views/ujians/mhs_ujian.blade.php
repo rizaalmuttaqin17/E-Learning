@@ -56,11 +56,11 @@ Ujian {{ $ujian['matkul']['nama'] }}
         }
         tick();
     }
-    countdown('<?php echo $ujian->durasi; ?>');
+    countdown('<?php echo $durasi; ?>');
 </script>
 <!-- script for disable url -->
 <script type="text/javascript">
-    var durasi = '<?php echo $ujian->durasi; ?>';
+    var durasi = '<?php echo $durasi; ?>';
     var realtime = durasi * 60000;
     setTimeout(function () {
             alert('Time Out');

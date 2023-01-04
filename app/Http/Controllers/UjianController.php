@@ -204,11 +204,12 @@ class UjianController extends AppBaseController
         }
     }
 
-    public function ujiansMahasiswa($id){
+    public function ujiansMahasiswa($id, Request $request){
         $ujian = $this->ujianRepository->find($id);
         $jawabans = Jawaban::where('id_user', Auth::id())->get();
         $soals = Soal::where('id_ujian', $id)->get()->random();
-        
+        $durasi = $ujian['durasi'];
+
         foreach($soals as $item){
             $jawaban = Jawaban::where('id_user', Auth::id())->where('id_soal', $item)->first();
             $jawabanTotal = Jawaban::where('id_user', Auth::id())->orWhere('id_soal', $soals['id'])->get();
@@ -227,7 +228,7 @@ class UjianController extends AppBaseController
         // return $soal;
         
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal'));
+        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi'));
     }
 
     public function nextSoal($id, Request $request){

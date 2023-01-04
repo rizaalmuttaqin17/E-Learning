@@ -29,7 +29,7 @@
                 ->join('jawaban', 'jawaban.id_pilihan', '=', 'pilihan.id')
                 ->where('jawaban.id_user', Auth::id())->get();
     @endphp
-    @if ($jawaban != null)
+    @if (count($jawaban) != 0)
         <p>{{ $nilai/count($soal)*count($jawaban) }}</p>
     @else
         <a href="{{ route('ujians.mahasiswa-ujian', $id) }}" class='btn btn-light btn-xs'>
