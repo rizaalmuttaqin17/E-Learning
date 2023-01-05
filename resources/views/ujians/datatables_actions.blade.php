@@ -30,7 +30,7 @@
                 ->where('jawaban.id_user', Auth::id())->get();
     @endphp
     @if (count($jawaban) != 0)
-        <p>{{ $nilai/count($soal)*count($jawaban) }}</p>
+        <p>{{ ($nilai/count($soal)) * count($jawaban) }}</p>
     @else
         <a href="{{ route('ujians.mahasiswa-ujian', $id) }}" class='btn btn-light btn-xs'>
             <i class="fa fa-edit"></i> Ujian

@@ -56,12 +56,13 @@ Ujian {{ $ujian['matkul']['nama'] }}
         }
         tick();
     }
-    countdown('<?php echo $durasi; ?>');
+    countdown('<?php echo $durasi/$soal->count(); ?>');
 </script>
 <!-- script for disable url -->
 <script type="text/javascript">
-    var durasi = '<?php echo $durasi; ?>';
-    var realtime = durasi * 60000;
+    var durasi = '<?php echo (int)$durasi; ?>';
+    var soal = '<?php echo $soal->count(); ?>';
+    var realtime = (durasi/soal) * 60000;
     setTimeout(function () {
             alert('Time Out');
             window.location.href = '/ujians';

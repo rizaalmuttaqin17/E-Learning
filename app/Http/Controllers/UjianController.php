@@ -206,40 +206,32 @@ class UjianController extends AppBaseController
 
     public function ujiansMahasiswa($id, Request $request){
         $ujian = $this->ujianRepository->find($id);
-        $jawabans = Jawaban::where('id_user', Auth::id())->get();
-        $soals = Soal::where('id_ujian', $id)->get()->random();
         $durasi = $ujian['durasi'];
-
-        foreach($soals as $item){
-            $jawaban = Jawaban::where('id_user', Auth::id())->where('id_soal', $item)->first();
-            $jawabanTotal = Jawaban::where('id_user', Auth::id())->orWhere('id_soal', $soals['id'])->get();
-            // return $jawabanTotal;
-            if($jawaban == null){
-                $soal = $soals;
-            } else {
-                if(count($jawabanTotal) == $ujian['jumlah_soal']){
-                    Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
-                    return redirect(route('ujians.index'));
-                } else {
-                    $soal = Soal::where('id_ujian', $id)->orWhere('id', '!=', $jawaban['id_soal'])->get()->random();
-                }
-            }
+        $soalsId = Soal::where('id_ujian', $id)->select('id')->get();
+        $jawabanTotal = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
+        $jawabansoal = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
+        
+        if(count($jawabanTotal) == $ujian['jumlah_soal']){
+            Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
+            return redirect(route('ujians.index'));
+        } else {
+            // $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->get()->random();
+            $soal = Soal::where('id_ujian', $id)->get()->random();
+            $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->first();
+            $prevSoal = Soal::where('id', '<', $soal['id'])->max('id');
+            $nextSoal = Soal::where('id', '>', $soal['id'])->min('id');
         }
-        // return $soal;
         
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi'));
+        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi', 'prevSoal', 'nextSoal', 'jawaban'));
     }
 
     public function nextSoal($id, Request $request){
-        $soal = Soal::where('id', $id)->first();
-
-        $jawab = new Jawaban;
-        $jawab['id_user'] = Auth::id();
-        $jawab['id_soal'] = $soal['id'];
-        $jawab['id_pilihan'] = $request['answer'];
-        $jawab->save();
-
+        $jawab = Jawaban::updateOrCreate([
+            'id_user' => Auth::id(),
+            'id_soal' => $id,
+            'id_pilihan' => $request['answer']
+        ]);
         return redirect()->back();
     }
 }

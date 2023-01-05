@@ -38,6 +38,12 @@
         });
     }
 </script>
+<script type="text/javascript">
+    function show(id) {
+        $('.soals').addClass('hidden');
+        $('#' + id).removeClass('hidden');
+    }
+</script>
 @endpush
 
 @endsection

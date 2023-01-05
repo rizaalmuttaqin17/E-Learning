@@ -9,13 +9,13 @@
             @foreach ($row as $pilihan)
                 {!! Form::text('id_user', Auth::id(), ['hidden']) !!}
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" name="answer" value="{{ $pilihan['id'] }}">
+                    @if($jawaban == null)
+                        <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" name="answer" value="{{ $pilihan['id'] }}">
+                    @else
+                        <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" name="answer" value="{{ $pilihan['id'] }}" {{ $jawaban['id_soal'] == $pilihan['id'] ? "checked=checked" : ''}}>
+                    @endif
                     <label class="form-check-label" for="answer{{ $pilihan['id'] }}">{{ $pilihan['pilihan'] }}</label>
                 </div>
-            {{-- <input type="hidden" name="student_id" value="{{$student_id}}">
-            <input type="hidden" name="true_answer" value="{{$question->answer}}">
-            <input type="submit" name="submit" value="submit" class="btn btn-primary" id="submitbtn"> --}}
-            
             @endforeach
             <!-- Submit Field -->
         </div>

@@ -24,8 +24,8 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="login-brand">
-                        <img src="{{ asset('img/logo.png') }}" alt="logo" width="100"
-                             class="shadow-light">
+                        <img src="{{ asset('assets-elearning/img/logo/unu-footer.png') }}" alt="logo" width="500"
+                             class="shadow-light text-center">
                     </div>
                     @yield('content')
                     <div class="simple-footer">
