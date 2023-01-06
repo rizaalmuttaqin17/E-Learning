@@ -20,7 +20,7 @@ Ujian {{ $ujian['matkul']['nama'] }}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        @include('ujians.mhs_soal')
+                        @livewire('ujian', ['id' => $id])
                     </div>
                 </div>
             </div>

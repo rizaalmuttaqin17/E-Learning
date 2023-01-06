@@ -215,15 +215,14 @@ class UjianController extends AppBaseController
             Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
             return redirect(route('ujians.index'));
         } else {
-            // $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->get()->random();
-            $soal = Soal::where('id_ujian', $id)->get()->random();
+            $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->paginate(1);
+            // $soal = Soal::where('id_ujian', $id)->paginate(1);
+            // return $soal->total();
             $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->first();
-            $prevSoal = Soal::where('id', '<', $soal['id'])->max('id');
-            $nextSoal = Soal::where('id', '>', $soal['id'])->min('id');
         }
         
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi', 'prevSoal', 'nextSoal', 'jawaban'));
+        return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi', 'jawaban', 'id'));
     }
 
     public function nextSoal($id, Request $request){
@@ -232,6 +231,8 @@ class UjianController extends AppBaseController
             'id_soal' => $id,
             'id_pilihan' => $request['answer']
         ]);
+        toast('Success Menyimpan Jawaban','success');
         return redirect()->back();
+
     }
 }
