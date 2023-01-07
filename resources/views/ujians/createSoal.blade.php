@@ -12,7 +12,7 @@
         </div>
         <div class="section-body">
             <h3 class="section-title">Soal Terisi {{ $ujian['soals']->count() }} dari {{ $ujian['jumlah_soal'] }}</h3>
-            <p class="section-lead">Tambahkan Soal, Sistem akan otomatis berpindah halaman jika sudah terisi semua</p>
+            <p class="section-lead">Tambahkan Soal, Sistem akan otomatis berpindah halaman jika sudah memenuhi kuota</p>
         </div>
         <div class="content">
             @include('stisla-templates::common.errors')

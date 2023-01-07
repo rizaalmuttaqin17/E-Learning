@@ -28,9 +28,9 @@ Ujian {{ $ujian['matkul']['nama'] }}
     </div>
 </section>
 
-@push('scripts')
+{{-- @push('scripts') --}}
 <!-- script for time limitation of exam -->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     var timeoutHandle;
 
     function countdown(minutes) {
@@ -75,5 +75,5 @@ Ujian {{ $ujian['matkul']['nama'] }}
     .section-body .card .card-header p{
         margin-bottom: 0;
     }
-</style>
-@endsection
+</style> --}}
+@stop

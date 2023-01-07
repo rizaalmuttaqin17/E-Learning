@@ -191,13 +191,13 @@ class UjianController extends AppBaseController
                 }
                 $pilihan->save();
             }
-            if($ujian['soals']->count() != $ujian['jumlah_soal']){
+            if($ujian['soals']->count() == $ujian['jumlah_soal']){
+                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
+                return redirect(route('ujians.index'));
+            } else {
                 $matkul = MataKuliah::pluck('nama', 'id');
                 Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
                 return view('ujians.createSoal', compact('matkul', 'ujian'));
-            } else {
-                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return redirect(route('ujians.index'));
             }
         } else {
             $soal = $this->soalRepository->create($input);
@@ -210,6 +210,7 @@ class UjianController extends AppBaseController
         $soalsId = Soal::where('id_ujian', $id)->select('id')->get();
         $jawabanTotal = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
         $jawabansoal = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
+        // return $ujian->soals;
         
         if(count($jawabanTotal) == $ujian['jumlah_soal']){
             Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');

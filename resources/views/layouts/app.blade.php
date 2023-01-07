@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('web/css/components.css')}}">
     @yield('page_css')
-
-
     @yield('css')
+    @livewireStyles
+
 </head>
 <body>
 
@@ -65,7 +65,8 @@
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<script src="/livewire/livewire.js"></script>
+@livewireScripts
+
 @yield('page_js')
 @stack('scripts')
 <script>
