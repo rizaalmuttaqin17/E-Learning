@@ -99,12 +99,13 @@ class UjianController extends AppBaseController
     {
         $ujian = $this->ujianRepository->find($id);
         $matkul = MataKuliah::pluck('nama', 'id');
+        $soal = Soal::where('id_ujian', $id)->get();
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.edit', compact('matkul'))->with('ujian', $ujian);
+        return view('ujians.edit', compact('matkul', 'soal'))->with('ujian', $ujian);
     }
 
     /**
@@ -210,15 +211,12 @@ class UjianController extends AppBaseController
         $soalsId = Soal::where('id_ujian', $id)->select('id')->get();
         $jawabanTotal = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
         $jawabansoal = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
-        // return $ujian->soals;
-        
         if(count($jawabanTotal) == $ujian['jumlah_soal']){
             Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
             return redirect(route('ujians.index'));
         } else {
             $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->paginate(1);
             // $soal = Soal::where('id_ujian', $id)->paginate(1);
-            // return $soal->total();
             $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->first();
         }
         

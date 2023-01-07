@@ -7,7 +7,7 @@
 <li class="{{ Request::is('ujians*') ? 'active' : '' }}">
     <a href="{{ route('ujians.index') }}"><i class="fas fa-edit"></i><span>@lang('models/ujians.plural')</span></a>
 </li>
-
+@role('Admin')
 <li class="dropdown">
     <a href="#" class="nav-link has-dropdown"><i class="fas fa-cogs"></i><span>Soal</span></a>
     <ul class="dropdown-menu">
@@ -53,3 +53,4 @@
         </li>
     </ul>
 </li>
+@endrole

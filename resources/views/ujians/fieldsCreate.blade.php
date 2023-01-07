@@ -57,30 +57,6 @@
     {!! Form::number('nilai', null, ['class' => 'form-control', 'min' => '10', 'max' => '100']) !!}
 </div>
 
-@foreach ($soal as $item)
-<div class="form-group col-sm-12">
-    {!! Form::label('pertanyaan', __('models/soals.fields.pertanyaan').' Ke '.$loop->iteration.'') !!}
-    {!! Form::textarea('pertanyaan[]', isset($item['pertanyaan'])&&!is_null($item['pertanyaan'])?$item['pertanyaan']:null, ['class' => 'form-control pertanyaan', 'id'=>'pertanyaan']) !!}
-    @if ($item['id_tipe_soal'] == 1)
-    @foreach($item['pilihan'] as $pilihan)
-    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan'.$loop->index.'')) !!}
-    <div class="row">
-        <div class="col-sm-5 col-lg-5">
-            {!! Form::textarea('pilihan['.$loop->index.']', isset($pilihan['pilihan'])&&!is_null($pilihan['pilihan'])?$pilihan['pilihan']:null, ['class' => 'form-control pilihan']) !!}
-        </div>
-        <div class="col-sm-1 col-lg-1 align-self-center">
-            @if ($pilihan['benar'] == 'true')
-                {!! Form::checkbox('benar['.$loop->index.']', false, true, ['class' => 'form-control']) !!}
-            @else
-                {!! Form::checkbox('benar['.$loop->index.']', false, false, ['class' => 'form-control']) !!}
-            @endif
-        </div>
-    </div>
-    @endforeach
-    @endif
-</div>
-@endforeach
-
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit(__('crud.update'), ['class' => 'btn btn-primary']) !!}
@@ -105,25 +81,12 @@
     });
 </script>
 <script type="text/javascript">
-    $("input[type='checkbox']").click(function(e) {
-        var checked = $(this).attr("checked");
-        if(!checked){
-            $("input[type='checkbox']").not(this).attr("value", 'false');
-            $("input[type='checkbox']").not(this).prop("checked", false);
-            $(this).prop("checked", true);
-            $(this).val('true');
-        } else {
-            $("input[type='checkbox']").not(this).attr("value", 'false');
-            $("input[type='checkbox']").not(this).prop("checked", false);
-        }
-    });
-</script>
-<script type="text/javascript">
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){
             $(".id_mata_kuliah").select2({
                 placeholder: "Pilih Mata Kuliah...",
                 tags: true,
+                focus: true
             });
         });
 </script>

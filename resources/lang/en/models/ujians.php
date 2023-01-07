@@ -16,6 +16,7 @@ return array (
     'nilai' => 'Nilai',
     'percobaan' => 'Percobaan',
     'jumlah_soal' => 'Jumlah Soal',
+    'updateSoal' => 'Update Soal',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'deleted_at' => 'Deleted At',

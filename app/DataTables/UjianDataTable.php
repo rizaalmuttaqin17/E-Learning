@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Ujian;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
@@ -18,23 +19,38 @@ class UjianDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $dataTable = new EloquentDataTable($query);
-
-        return $dataTable
-        ->addColumn('action', 'ujians.datatables_actions')
-        ->editColumn('tanggal_ujian', function($query){
-            if($query['tanggal_ujian'] == null){
-                return '-';
-            } else {
-                return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
-            }
-        })
-        ->editColumn('id_mata_kuliah', 'ujians.matkul')
-        ->editColumn('jumlah_soal', 'ujians.jml_soal')
-        ->addColumn('status', 'ujians.status')
-        ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
-        // ->addIndexColumn()
-        // ->make(true);
+        
+        if(Auth::user()->hasRole('Admin|Dosen')){
+            $dataTable = new EloquentDataTable($query);
+            return $dataTable
+            ->addColumn('action', 'ujians.datatables_actions')
+            ->editColumn('tanggal_ujian', function($query){
+                if($query['tanggal_ujian'] == null){
+                    return '-';
+                } else {
+                    return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
+                }
+            })
+            ->editColumn('id_mata_kuliah', 'ujians.matkul')
+            ->editColumn('jumlah_soal', 'ujians.jml_soal')
+            ->addColumn('status', 'ujians.status')
+            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
+        } else {
+            $dataTable = new EloquentDataTable($query);
+            return $dataTable
+            ->addColumn('action', 'ujians.datatables_actions')
+            ->editColumn('tanggal_ujian', function($query){
+                if($query['tanggal_ujian'] == null){
+                    return '-';
+                } else {
+                    return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
+                }
+            })
+            ->editColumn('id_mata_kuliah', 'ujians.matkul')
+            ->editColumn('jumlah_soal', 'ujians.jml_soal')
+            ->addColumn('status', 'ujians.status')
+            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
+        }
     }
 
     /**
