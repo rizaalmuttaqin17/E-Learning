@@ -2,16 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Jawaban;
+use App\Models\Soal;
+use App\Models\Ujian;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Jawaban;
-use App\Models\Pilihan;
-use App\Models\Soal;
-use App\Models\Ujian as Ujians;
-use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class Ujian extends Component
+class EditSoal extends Component
 {
     use WithPagination;
 
@@ -19,7 +17,6 @@ class Ujian extends Component
     public $idSoals;
     public $totalSoal;
     public $jawabanTerpilih = [];
-    protected $listeners = ['endTimer' => 'saveJawaban'];
 
     public function mount($id)
     {
@@ -27,16 +24,15 @@ class Ujian extends Component
     }
 
     public function soal(){
-        $ujian = Ujians::findOrFail($this->idUjian);
+        $ujian = Ujian::findOrFail($this->idUjian);
         $soalUjian = $ujian['soals'];
         $idSoal = Soal::where('id_ujian', $this->idUjian)->select('id')->get();
-        $jawaban = Jawaban::select('id_soal')->where('id_user', Auth()->id())->whereIn('id_soal', $idSoal)->first();
         $jumlahSoal = $ujian['jml_pg']+$ujian['jml_essay'];
 
         $this->totalSoal = $soalUjian->count();
 
         if($this->totalSoal >= $jumlahSoal){
-            $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
+            $soal = $ujian->soals()->take($ujian->jumlah_soal)->paginate(1);
         } else if($this->totalSoal < $jumlahSoal) {
             $soal = $ujian->soals()->take($this->totalSoal)->paginate(1);
         }
@@ -48,7 +44,7 @@ class Ujian extends Component
     }
 
     public function saveJawaban(){
-        $ujian = Ujians::findOrFail($this->idUjian);
+        $ujian = Ujian::findOrFail($this->idUjian);
         $soalUjian = $ujian['soals'];
 
         if(!empty($this->jawabanTerpilih)){
@@ -67,8 +63,8 @@ class Ujian extends Component
 
     public function render()
     {
-        return view('livewire.ujian', [
-            'ujian'     =>  Ujians::findOrFail($this->idUjian),
+        return view('livewire.edit-soal', [
+            'ujian'     =>  Ujian::findOrFail($this->idUjian),
             'soal'      =>  $this->soal(),
         ]);
     }

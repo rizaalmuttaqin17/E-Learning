@@ -4,32 +4,20 @@
     {!! Form::select('id_mata_kuliah', $matkul, null, ['class' => 'form-control id_mata_kuliah', 'placeholder'=>'Pilih Mata Kuliah', 'id'=>'id_mata_kuliah']) !!}
 </div>
 
-<!-- Tipe Ujian Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('tipe_ujian', __('models/ujians.fields.tipe_ujian')) !!}
-    {!! Form::select('tipe_ujian', array('UTS' => 'Ujian Tengah Semester', 'UAS'=>'Ujian Akhir Semester'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Tipe Ujian']) !!}
-</div>
-
-<!-- Tipe Ujian Field -->
+<!-- Tanggal Ujian Field -->
 <div class="form-group col-sm-2">
-    {!! Form::label('semester', __('models/ujians.fields.semester')) !!}
-    {!! Form::select('semester', array('Ganjil' => 'Ganjil', 'Genap'=>'Genap'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Semester']) !!}
-</div>
-
-<!-- Sifat Ujian Field -->
-<div class="form-group col-sm-2">
-    {!! Form::label('sifat_ujian', __('models/ujians.fields.sifat_ujian')) !!}
-    {!! Form::text('sifat_ujian', null, ['class' => 'form-control']) !!}
+    {!! Form::label('start', __('models/ujians.fields.start')) !!}
+    {!! Form::datetimeLocal('start', isset($ujian['start'])&&!is_null($ujian['start'])?$ujian['start']:null, ['class' => 'form-control','id'=>'start']) !!}
 </div>
 
 <!-- Tanggal Ujian Field -->
 <div class="form-group col-sm-2">
-    {!! Form::label('tanggal_ujian', __('models/ujians.fields.tanggal_ujian')) !!}
-    {!! Form::date('tanggal_ujian', null, ['class' => 'form-control','id'=>'tanggal_ujian']) !!}
+    {!! Form::label('end', __('models/ujians.fields.end')) !!}
+    {!! Form::datetimeLocal('end', isset($ujian['end'])&&!is_null($ujian['end'])?$ujian['end']:null, ['class' => 'form-control','id'=>'end']) !!}
 </div>
 
 <!-- Percobaan Ujian Field -->
-<div class="form-group col-sm-2">
+<div class="form-group col-sm-1">
     {!! Form::label('percobaan', __('models/ujians.fields.percobaan')) !!}
     {!! Form::number('percobaan', null, ['class' => 'form-control']) !!}
 </div>
@@ -42,44 +30,17 @@
 
 <!-- Jumlah Pilihan Ganda Ujian Field -->
 <div class="form-group col-sm-1">
-    {!! Form::label('jml_essay', __('models/ujians.fields.jml_pg')) !!}
+    {!! Form::label('jml_essay', __('models/ujians.fields.jml_essay')) !!}
     {!! Form::number('jml_essay', null, ['class' => 'form-control', 'min' => '1', 'max' => '100']) !!}
 </div>
 
 <!-- Durasi Ujian Field -->
-<div class="form-group col-sm-2">
+<div class="form-group col-sm-1">
     {!! Form::label('durasi', __('models/ujians.fields.durasi')) !!}
     {!! Form::number('durasi', null, ['class' => 'form-control']) !!}
 </div>
 
-<div class="form-group col-sm-2">
-    {!! Form::label('nilai', __('models/ujians.fields.nilai')) !!}
-    {!! Form::number('nilai', null, ['class' => 'form-control', 'min' => '10', 'max' => '100']) !!}
-</div>
 
-@foreach ($soal as $item)
-<div class="form-group col-sm-12">
-    {!! Form::label('pertanyaan', __('models/soals.fields.pertanyaan').' Ke '.$loop->iteration.'') !!}
-    {!! Form::textarea('pertanyaan[]', isset($item['pertanyaan'])&&!is_null($item['pertanyaan'])?$item['pertanyaan']:null, ['class' => 'form-control pertanyaan', 'id'=>'pertanyaan']) !!}
-    @if ($item['id_tipe_soal'] == 1)
-    @foreach($item['pilihan'] as $pilihan)
-    {!! Form::label('pilihan[]', __('models/soals.fields.pilihan'.$loop->index.'')) !!}
-    <div class="row">
-        <div class="col-sm-5 col-lg-5">
-            {!! Form::textarea('pilihan['.$loop->index.']', isset($pilihan['pilihan'])&&!is_null($pilihan['pilihan'])?$pilihan['pilihan']:null, ['class' => 'form-control pilihan']) !!}
-        </div>
-        <div class="col-sm-1 col-lg-1 align-self-center">
-            @if ($pilihan['benar'] == 'true')
-                {!! Form::checkbox('benar['.$loop->index.']', false, true, ['class' => 'form-control']) !!}
-            @else
-                {!! Form::checkbox('benar['.$loop->index.']', false, false, ['class' => 'form-control']) !!}
-            @endif
-        </div>
-    </div>
-    @endforeach
-    @endif
-</div>
-@endforeach
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
@@ -88,36 +49,6 @@
 </div>
 
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        $('.pertanyaan').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 200,
-            focus: true
-        });
-        $('.pilihan').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 50,
-            focus: true
-        });
-    });
-</script>
-<script type="text/javascript">
-    $("input[type='checkbox']").click(function(e) {
-        var checked = $(this).attr("checked");
-        if(!checked){
-            $("input[type='checkbox']").not(this).attr("value", 'false');
-            $("input[type='checkbox']").not(this).prop("checked", false);
-            $(this).prop("checked", true);
-            $(this).val('true');
-        } else {
-            $("input[type='checkbox']").not(this).attr("value", 'false');
-            $("input[type='checkbox']").not(this).prop("checked", false);
-        }
-    });
-</script>
 <script type="text/javascript">
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function(){

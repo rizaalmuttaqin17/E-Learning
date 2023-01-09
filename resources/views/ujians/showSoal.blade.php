@@ -15,20 +15,7 @@
     <div class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Durasi Ujian : {{ $ujian['durasi'] }} Menit</li>
-            @php
-                if ($ujian['jml_pg'] != null || $ujian['jml_pg'] != 0 || $ujian['jml_pg'] != '0') {
-                    $jml_pg = $ujian['jml_pg'];
-                } else {
-                    $jml_pg = 0;
-                }
-
-                if ($ujian['jml_essay'] != null || $ujian['jml_essay'] != 0 || $ujian['jml_essay'] != '0') {
-                    $jml_essay = $ujian['jml_essay'];
-                } else {
-                    $jml_essay = 0;
-                }
-            @endphp
-            <li class="list-group-item">Durasi Jumlah Soal : {{ $jml_pg + $jml_essay }} buah</li>
+            <li class="list-group-item">Durasi Jumlah Soal : {{ $ujian['jml_pg'] + $ujian['jml_essay'] }} buah</li>
             <li class="list-group-item">Ujian dibuka : {{ TanggalID($ujian->start) }}</li>
             <li class="list-group-item">Ujian ditutup : {{ TanggalID($ujian->end) }}</li>
         </ul>

@@ -161,9 +161,10 @@ class UjianController extends AppBaseController
 
     public function createSoal($id){
         $ujian = $this->ujianRepository->find($id);
-
+        $soalPG = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 1)->get();
+        $soalEssay = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 2)->get();
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.createSoal', compact('matkul', 'ujian'));
+        return view('ujians.createSoal', compact('matkul', 'ujian', 'soalPG', 'soalEssay'));
     }
 
     public function updateSoal($id, Request $request)
@@ -211,12 +212,13 @@ class UjianController extends AppBaseController
         $soalsId = Soal::where('id_ujian', $id)->select('id')->get();
         $jawabanTotal = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
         $jawabansoal = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->get();
-        if(count($jawabanTotal) == $ujian['jumlah_soal']){
+        $jumlahSoal = $ujian['jml_pg']+$ujian['jml_essay'];
+        if(count($jawabanTotal) == $jumlahSoal){
             Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
             return redirect(route('ujians.index'));
         } else {
-            $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->paginate(1);
-            // $soal = Soal::where('id_ujian', $id)->paginate(1);
+            // $soal = Soal::whereNotIn('id', $jawabansoal)->where('id_ujian', $id)->paginate(1);
+            $soal = Soal::where('id_ujian', $id)->paginate()->random();
             $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $soalsId)->first();
         }
         
@@ -224,14 +226,26 @@ class UjianController extends AppBaseController
         return view('ujians.mhs_ujian', compact('matkul', 'ujian', 'soal', 'durasi', 'jawaban', 'id'));
     }
 
-    public function nextSoal($id, Request $request){
-        $jawab = Jawaban::updateOrCreate([
-            'id_user' => Auth::id(),
-            'id_soal' => $id,
-            'id_pilihan' => $request['answer']
-        ]);
-        toast('Success Menyimpan Jawaban','success');
-        return redirect()->back();
+    public function kodeUjian($id, Request $request){
+        $ujian = Ujian::where('id', $id)->first();
+        // return $request['kode_ujian'];
+        if($ujian['kode'] == $request['kode_ujian']){
+            return redirect(route('ujians.mahasiswa-ujian', $id));
+        } else {
+            Alert::error('Gagal', 'Kode Ujian Yang Anda Masukkan Salah');
+            return redirect()->back();
+        }
+    }
 
+    public function editSoal($id)
+    {
+        $ujian = $this->ujianRepository->find($id);
+        $soal = Soal::where('id_ujian', $id)->get();
+        $matkul = MataKuliah::pluck('nama', 'id');
+        if (empty($ujian)) {
+            Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
+            return redirect(route('ujians.index'));
+        }
+        return view('ujians.edit', compact('soal', 'id', 'matkul'))->with('ujian', $ujian);
     }
 }

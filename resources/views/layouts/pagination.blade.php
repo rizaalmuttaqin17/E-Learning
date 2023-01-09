@@ -1,20 +1,54 @@
 @if ($soal->hasPages())
+<nav>
     <ul class="pagination">
         {{-- Previous Page Link --}}
         @if ($soal->onFirstPage())
-            <li class="disabled"><span>{{ __('Prev') }}</span></li>
+        <li class="disabled page-item" aria-disabled="true" aria-label="@lang('pagination.previous')">
+            <span class="page-link" aria-hidden="true">&lsaquo;</span>
+        </li>
         @else
-            <li><a href="{{ $soal->previousPageUrl() }}" rel="prev">{{ __('Prev') }}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="{{ $soal->previousPageUrl() }}" rel="prev"
+                aria-label="@lang('pagination.previous')">&lsaquo;</a>
+        </li>
         @endif
-        
-        {{ "Page " . $soal->currentPage() . "  of  " . $soal->lastPage() }}
-       
-        
+
+        {{-- Pagination Elements --}}
+        @foreach ($elements as $element)
+
+        @if (is_string($element))
+        <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
+        @endif
+
+
+
+        @if (is_array($element))
+        @foreach ($element as $page => $url)
+        @if ($page == $paginator->currentPage())
+        <li class="page-item disabled"><span class="page-link">{{ $page }}</span></li>
+        @else
+        <li class="page-item">
+            <button type="button" wire:click="gotoPage({{ $page }}, 'page')" class="page-link" aria-label="Go to page 2">
+                {{ $page }}
+            </button>
+            {{-- <a class="page-link" href="{{ $url }}">{{ $page }}</a> --}}
+        </li>
+        @endif
+        @endforeach
+        @endif
+        @endforeach
+
         {{-- Next Page Link --}}
         @if ($soal->hasMorePages())
-            <li><a href="{{ $soal->nextPageUrl() }}" rel="next">{{ __('Next') }}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="{{ $soal->nextPageUrl() }}" rel="next"
+                aria-label="@lang('pagination.next')">&rsaquo;</a>
+        </li>
         @else
-            <li class="disabled"><span>{{ __('Next') }}</span></li>
+        <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+            <span class="page-link" aria-hidden="true">&rsaquo;</span>
+        </li>
         @endif
     </ul>
+</nav>
 @endif

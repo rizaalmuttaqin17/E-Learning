@@ -13,7 +13,7 @@
     @foreach ($soal as $question)
     <div class="card-body">
         <b>Soal No. {{ $soal->currentPage() }}</b>
-        <p>{{ $question['pertanyaan'] }}</p>
+        <p>{!! $question['pertanyaan'] !!}</p>
         <br>
         <i>Pilih salah satu jawaban dibawah ini:</i> 
         <br>
@@ -46,7 +46,8 @@
     @endforeach --}}
     
     <div class="d-flex justify-content-center">
-        {{$soal->links()}}
+        {{$soal->links('layouts.pagination', ['soal'=>$soal])}}
+        {{-- {{$soal->links()}} --}}
     </div>
     <div class="card-footer">
         @if ($soal->currentPage() == $soal->lastPage())

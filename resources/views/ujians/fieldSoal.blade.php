@@ -18,7 +18,7 @@
     {!! Form::label('pilihan[]', __('models/soals.fields.pilihan'.$i.'').'') !!}
     <div class="row">
         <div class="col-sm-11 col-lg-11">
-            {!! Form::text('pilihan['.$i.']', null, ['class' => 'form-control']) !!}
+            {!! Form::text('pilihan['.$i.']', null, ['class' => 'form-control pilihan']) !!}
         </div>
         <div class="col-sm-1 col-lg-1 align-self-center">
             {!! Form::checkbox('benar['.$i.']', false, false, ['class' => 'form-control']) !!}

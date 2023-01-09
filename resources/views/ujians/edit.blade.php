@@ -21,7 +21,6 @@
                             <div class="row">
                                 @include('ujians.fields')
                             </div>
-
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -30,5 +29,4 @@
         </div>
     </div>
 </section>
-
 @endsection

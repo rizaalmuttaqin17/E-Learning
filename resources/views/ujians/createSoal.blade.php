@@ -11,7 +11,8 @@
             </div>
         </div>
         <div class="section-body">
-            <h3 class="section-title">Soal Terisi {{ $ujian['soals']->count() }} dari {{ $ujian['jumlah_soal'] }}</h3>
+            <h3 class="section-title">Soal Terisi {{ $ujian['soals']->count() }} dari {{ $ujian['jml_pg'] + $ujian['jml_essay'] }}</h3>
+            <p class="section-lead">Rincian : Soal Pilihan Ganda = <b>{{ count($soalPG) }}</b> & Soal Essay = <b>{{ count($soalEssay) }}</b></p>
             <p class="section-lead">Tambahkan Soal, Sistem akan otomatis berpindah halaman jika sudah memenuhi kuota</p>
         </div>
         <div class="content">
@@ -26,7 +27,7 @@
                             <div class="card-body ">
                             {!! Form::model($ujian, ['route' => ['ujians.updateSoal', $ujian->id], 'method' => 'patch', 'autocomplete' => 'off']) !!}
                                 <div class="row">
-                                    @include('ujians.soal')
+                                    @include('ujians.fieldSoal')
                                 </div>
                             {!! Form::close() !!}
                             </div>
@@ -44,6 +45,12 @@
             tabsize: 5,
             dialogsInBody: true,
             height: 200,
+            focus: true
+        });
+        $('.pilihan').summernote({
+            tabsize: 3,
+            dialogsInBody: true,
+            height: 100,
             focus: true
         });
     });
