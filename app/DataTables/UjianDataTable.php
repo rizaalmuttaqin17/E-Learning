@@ -19,38 +19,18 @@ class UjianDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        
-        if(Auth::user()->hasRole('Admin|Dosen')){
             $dataTable = new EloquentDataTable($query);
             return $dataTable
             ->addColumn('action', 'ujians.datatables_actions')
-            ->editColumn('tanggal_ujian', function($query){
-                if($query['tanggal_ujian'] == null){
-                    return '-';
-                } else {
-                    return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
-                }
+            ->editColumn('jml_pg', 'ujians.jml_soal')
+            ->editColumn('start', function($query){
+                return TanggalID($query['start']).'<br><span class="badge badge-info">Sampai</span><br>'.TanggalID($query['end']);
             })
-            ->editColumn('id_mata_kuliah', 'ujians.matkul')
-            ->editColumn('jumlah_soal', 'ujians.jml_soal')
-            ->addColumn('status', 'ujians.status')
-            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
-        } else {
-            $dataTable = new EloquentDataTable($query);
-            return $dataTable
-            ->addColumn('action', 'ujians.datatables_actions')
-            ->editColumn('tanggal_ujian', function($query){
-                if($query['tanggal_ujian'] == null){
-                    return '-';
-                } else {
-                    return Carbon::parse($query['tanggal_ujian'])->locale('id')->isoFormat('DD MMMM Y');
-                }
+            ->editColumn('id_mata_kuliah', function($query){
+                return "<u>".$query['matkul']['nama']."</u>";
             })
-            ->editColumn('id_mata_kuliah', 'ujians.matkul')
-            ->editColumn('jumlah_soal', 'ujians.jml_soal')
-            ->addColumn('status', 'ujians.status')
-            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jumlah_soal']);
-        }
+            ->editColumn('status', 'ujians.status')
+            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jml_pg', 'start']);
     }
 
     /**
@@ -61,7 +41,13 @@ class UjianDataTable extends DataTable
      */
     public function query(Ujian $model)
     {
-        return $model->newQuery();
+        if(Auth::user()->hasRole('Admin')){
+            return $model->newQuery();
+        } else if(Auth::user()->hasRole('Dosen')){
+            return $model->where('id_user', Auth::id())->newQuery();
+        } else {
+            return $model->newQuery();
+        }
     }
 
     /**
@@ -81,34 +67,14 @@ class UjianDataTable extends DataTable
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
                     [
-                       'extend' => 'create',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-plus"></i> ' .__('auth.app.create').''
-                    ],
-                    [
-                       'extend' => 'export',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
-                    ],
-                    [
-                       'extend' => 'print',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-print"></i> ' .__('auth.app.print').''
-                    ],
-                    [
-                       'extend' => 'reset',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reset').''
-                    ],
-                    [
-                       'extend' => 'reload',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-refresh"></i> ' .__('auth.app.reload').''
+                        'extend' => 'reload',
+                        'className' => 'btn btn-default btn-sm no-corner',
+                        'text' => '<i class="fa fa-sync"></i> ' .__('auth.app.reload').''
                     ],
                 ],
-                 'language' => [
-                   'url' => url('//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json'),
-                 ],
+                'language' => [
+                    'url' => url('//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json'),
+                ],
             ]);
     }
 
@@ -124,8 +90,8 @@ class UjianDataTable extends DataTable
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
-            'jumlah_soal' => new Column(['title' => __('models/ujians.fields.jumlah_soal'), 'data' => 'jumlah_soal']),
-            'tanggal_ujian' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'tanggal_ujian']),
+            'jml_pg' => new Column(['title' => 'Jumlah Soal', 'data' => 'jml_pg']),
+            'start' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'start', 'class'=>'text-center']),
             'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];
     }

@@ -39,7 +39,6 @@ class Ujian extends Model
         'percobaan',
         'jml_pg',
         'jml_essay',
-        'jumlah_soal',
         'status',
         'nilai',
         'durasi'
@@ -58,7 +57,6 @@ class Ujian extends Model
         'percobaan' => 'integer',
         'jml_pg' => 'integer',
         'jml_essay' => 'integer',
-        'jumlah_soal' => 'integer',
         'tanggal_ujian' => 'date',
         'status' => 'integer',
         'nilai' => 'integer',
@@ -76,7 +74,6 @@ class Ujian extends Model
         'tanggal_ujian' => 'nullable',
         'jml_pg' => 'nullable|integer',
         'jml_essay' => 'nullable|integer',
-        'jumlah_soal' => 'nullable|integer',
         'status' => 'nullable|integer',
         'nilai' => 'nullable|integer',
         'created_at' => 'nullable',

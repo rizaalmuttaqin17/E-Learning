@@ -6,6 +6,7 @@ use App\Models\User;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
+use Carbon\Carbon;
 
 class UserDataTable extends DataTable
 {
@@ -19,7 +20,19 @@ class UserDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'users.datatables_actions');
+        return $dataTable
+        ->editColumn('name', function($query){
+            return $query['name']."</br><span class='badge badge-info'>".$query['email']."</span>";
+        })
+        ->editColumn('tempat_lahir', function($query){
+            if($query['tanggal_lahir'] == null){
+                return '-';
+            } else {
+                return $query['tempat_lahir'].', '.Carbon::parse($query['tanggal_lahir'])->locale('id')->isoFormat('DD MMMM Y');
+            }
+        })
+        ->addColumn('action', 'users.datatables_actions')
+        ->rawColumns(['name','action']);
     }
 
     /**
@@ -50,29 +63,14 @@ class UserDataTable extends DataTable
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
                     [
-                       'extend' => 'create',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-plus"></i> ' .__('auth.app.create').''
+                        'extend' => 'export',
+                        'className' => 'btn btn-icon btn-warning btn-sm',
+                        'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
                     ],
                     [
-                       'extend' => 'export',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
-                    ],
-                    [
-                       'extend' => 'print',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-print"></i> ' .__('auth.app.print').''
-                    ],
-                    [
-                       'extend' => 'reset',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reset').''
-                    ],
-                    [
-                       'extend' => 'reload',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-refresh"></i> ' .__('auth.app.reload').''
+                        'extend' => 'reload',
+                        'className' => 'btn btn-icon btn-success btn-sm',
+                        'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reload').''
                     ],
                 ],
                  'language' => [
@@ -93,17 +91,10 @@ class UserDataTable extends DataTable
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
             'name' => new Column(['title' => __('models/users.fields.name'), 'data' => 'name']),
-            'email' => new Column(['title' => __('models/users.fields.email'), 'data' => 'email']),
-            'email_verified_at' => new Column(['title' => __('models/users.fields.email_verified_at'), 'data' => 'email_verified_at']),
-            'password' => new Column(['title' => __('models/users.fields.password'), 'data' => 'password']),
-            'remember_token' => new Column(['title' => __('models/users.fields.remember_token'), 'data' => 'remember_token']),
-            'foto' => new Column(['title' => __('models/users.fields.foto'), 'data' => 'foto']),
-            'agama' => new Column(['title' => __('models/users.fields.agama'), 'data' => 'agama']),
             'alamat' => new Column(['title' => __('models/users.fields.alamat'), 'data' => 'alamat']),
             'telepon' => new Column(['title' => __('models/users.fields.telepon'), 'data' => 'telepon']),
             'tempat_lahir' => new Column(['title' => __('models/users.fields.tempat_lahir'), 'data' => 'tempat_lahir']),
-            'tanggal_lahir' => new Column(['title' => __('models/users.fields.tanggal_lahir'), 'data' => 'tanggal_lahir']),
-            'no_induk' => new Column(['title' => __('models/users.fields.no_induk'), 'data' => 'no_induk'])
+            'foto' => new Column(['title' => __('models/users.fields.foto'), 'data' => 'foto']),
         ];
     }
 

@@ -24,7 +24,6 @@ class UjianRepository extends BaseRepository
         'percobaan',
         'jml_pg',
         'jml_essay',
-        'jumlah_soal',
         'status',
         'nilai',
         'durasi'
