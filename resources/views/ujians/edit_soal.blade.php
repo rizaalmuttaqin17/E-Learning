@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="section-body">
-        <h3 class="section-title">Ujian {{ $ujian['matkul']['nama'] }}</h3>
+        <h3 class="section-title">Edit Soal Ujian Mata Kuliah {{ $ujian['matkul']['nama'] }}</h3>
     </div>
     <div class="content">
         @include('stisla-templates::common.errors')
@@ -19,7 +19,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        @livewire('edit-soal', ['id' => $id])
+                        @include('soals.table')
+                        {{-- @livewire('edit-soal', ['id' => $id]) --}}
                     </div>
                 </div>
             </div>
@@ -28,22 +29,6 @@
 </section>
 
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        $('.pertanyaan').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 200,
-            focus: true
-        });
-        $('.pilihan').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 50,
-            focus: true
-        });
-    });
-</script>
 <script type="text/javascript">
     $("input[type='checkbox']").click(function(e) {
         var checked = $(this).attr("checked");
@@ -60,4 +45,4 @@
 </script>
 @endpush
 
-@stop
+@endsection

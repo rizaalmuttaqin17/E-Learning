@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\SoalDataTable;
 use App\DataTables\UjianDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateUjianRequest;
@@ -237,7 +238,7 @@ class UjianController extends AppBaseController
         }
     }
 
-    public function editSoal($id)
+    public function editSoal($id, SoalDataTable $soalDataTable)
     {
         $ujian = $this->ujianRepository->find($id);
         $soal = Soal::where('id_ujian', $id)->get();
@@ -246,6 +247,8 @@ class UjianController extends AppBaseController
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.edit', compact('soal', 'id', 'matkul'))->with('ujian', $ujian);
+        return $soalDataTable->render('ujians.edit_soal', compact('soal', 'ujian', 'matkul'));
+
+        // return view('ujians.edit_soal', compact('soal', 'id', 'matkul'))->with('ujian', $ujian);
     }
 }

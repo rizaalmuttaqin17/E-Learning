@@ -91,7 +91,7 @@ class UjianDataTable extends DataTable
             }],
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
             'jml_pg' => new Column(['title' => 'Jumlah Soal', 'data' => 'jml_pg']),
-            'start' => new Column(['title' => __('models/ujians.fields.tanggal_ujian'), 'data' => 'start', 'class'=>'text-center']),
+            'start' => new Column(['title' => __('models/ujians.fields.start'), 'data' => 'start', 'class'=>'text-center']),
             'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];
     }

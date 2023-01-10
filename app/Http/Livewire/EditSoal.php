@@ -36,6 +36,7 @@ class EditSoal extends Component
         } else if($this->totalSoal < $jumlahSoal) {
             $soal = $ujian->soals()->take($this->totalSoal)->paginate(1);
         }
+
         return $soal;
     }
 
@@ -63,6 +64,7 @@ class EditSoal extends Component
 
     public function render()
     {
+        $this->dispatchBrowserEvent('soal');
         return view('livewire.edit-soal', [
             'ujian'     =>  Ujian::findOrFail($this->idUjian),
             'soal'      =>  $this->soal(),
