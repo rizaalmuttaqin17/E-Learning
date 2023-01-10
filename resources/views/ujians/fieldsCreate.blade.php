@@ -37,13 +37,13 @@
 <!-- Jumlah Pilihan Ganda Ujian Field -->
 <div class="form-group col-sm-1">
     {!! Form::label('jml_pg', __('models/ujians.fields.jml_pg')) !!}
-    {!! Form::number('jml_pg', null, ['class' => 'form-control', 'min' => '1', 'max' => '100']) !!}
+    {!! Form::number('jml_pg', null, ['class' => 'form-control', 'min' => '0', 'max' => '100']) !!}
 </div>
 
 <!-- Jumlah Pilihan Ganda Ujian Field -->
 <div class="form-group col-sm-1">
     {!! Form::label('jml_essay', __('models/ujians.fields.jml_pg')) !!}
-    {!! Form::number('jml_essay', null, ['class' => 'form-control', 'min' => '1', 'max' => '100']) !!}
+    {!! Form::number('jml_essay', null, ['class' => 'form-control', 'min' => '0', 'max' => '100']) !!}
 </div>
 
 <!-- Durasi Ujian Field -->

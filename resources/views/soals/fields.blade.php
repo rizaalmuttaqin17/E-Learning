@@ -5,28 +5,13 @@
     <select name="id_tipe_soal" id="id_tipe_soal" class="id_tipe_soal form-control">
         <option value="2" selected>Essay</option>
     </select>
-</div>
-
-<!-- Id Ujian Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('id_ujian', __('models/soals.fields.id_ujian').':') !!}
-    <select name="id_ujian" id="id_ujian" class="id_ujian form-control">
-        @foreach ($ujian as $item)
-            <option value="{{ $item['id'] }}">{{ $item['matkul']['nama'] }} - {{ $item['tipe_ujian'] }} {{ $item['semester'] }}</option>
-        @endforeach
-    </select>
+    <input type="text" name="id_ujian" id="id_ujian" value="{{ $soal['id_ujian'] }}">
 </div>
 
 <!-- Pertanyaan Field -->
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('pertanyaan', __('models/soals.fields.pertanyaan').':') !!}
-    {!! Form::textarea('pertanyaan', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Nilai Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('nilai', __('models/soals.fields.nilai').':') !!}
-    {!! Form::number('nilai', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('pertanyaan', null, ['class' => 'form-control pertanyaan']) !!}
 </div>
 
 <!-- Submit Field -->

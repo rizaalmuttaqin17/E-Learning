@@ -119,7 +119,7 @@ class SoalController extends AppBaseController
             Flash::error(__('messages.not_found', ['model' => __('models/soals.singular')]));
             return redirect(route('soals.index'));
         }
-        $ujian = Ujian::all();
+        $ujian = Ujian::with('matkul')->get()->pluck('matkul.nama', 'id');
         $tipeSoal = TipeSoal::pluck('nama', 'id');
 
         return view('soals.edit', compact('ujian', 'tipeSoal'))->with('soal', $soal);
@@ -135,19 +135,32 @@ class SoalController extends AppBaseController
      */
     public function update($id, UpdateSoalRequest $request)
     {
-        $soal = $this->soalRepository->find($id);
-
-        if (empty($soal)) {
-            Flash::error(__('messages.not_found', ['model' => __('models/soals.singular')]));
-
-            return redirect(route('soals.index'));
+        $input = $request->all();
+        if($request['id_tipe_soal'] == 1){
+            $soal = $this->soalRepository->update($request->all(), $id);
+            if($request['pilihan'] != null){
+                for($i=0; $i<COUNT($request['pilihan']); $i++){
+                    $pilih = Pilihan::select('id')->where('pilihan', $request['pilihan'][$i])->first();
+                    $pilihan = Pilihan::where('id', $pilih['id']);
+                    // $pilihan = Pilihan::find($pilih);
+                    // return $pilihan;
+                    // $pilihan['id_soal'] = $id;
+                    // $pilihan['pilihan'] = $request['pilihan'][$i];
+                    if(array_key_exists($i, $request['benar']) == true) {
+                        $pilihan['benar'] = "true";
+                    } else {
+                        $pilihan['benar'] = "false";
+                    }
+                    $pilihan->update(['id_soal' => $id, 'pilihan' => $request['pilihan'][$i], 'benar' => $request['benar']]);
+                    // $pilihan->save();
+                }
+            }
+        } else {
+            $soal = $this->soalRepository->create($input);
         }
 
-        $soal = $this->soalRepository->update($request->all(), $id);
-
         Flash::success(__('messages.updated', ['model' => __('models/soals.singular')]));
-
-        return redirect(route('soals.index'));
+        return redirect(route('ujians.edit-soal', $id));
     }
 
     /**

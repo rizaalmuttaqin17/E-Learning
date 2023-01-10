@@ -22,14 +22,14 @@ class UjianDataTable extends DataTable
             $dataTable = new EloquentDataTable($query);
             return $dataTable
             ->addColumn('action', 'ujians.datatables_actions')
-            ->editColumn('jml_pg', 'ujians.jml_soal')
+            ->editColumn('jml_pg', 'ujians.table_jml_soal')
             ->editColumn('start', function($query){
                 return TanggalID($query['start']).'<br><span class="badge badge-info">Sampai</span><br>'.TanggalID($query['end']);
             })
             ->editColumn('id_mata_kuliah', function($query){
                 return "<u>".$query['matkul']['nama']."</u>";
             })
-            ->editColumn('status', 'ujians.status')
+            ->editColumn('status', 'ujians.table_status')
             ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jml_pg', 'start']);
     }
 

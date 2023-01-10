@@ -22,11 +22,12 @@ class SoalDataTable extends DataTable
         return $dataTable
         ->addColumn('action', 'soals.datatables_actions')
         ->editColumn('id_ujian', function($query){
-            return $query['ujian']['matkul']['nama'] ." - ". $query['ujian']['tipe_ujian'] ." ". $query['ujian']['semester'];
+            return $query['ujian']['matkul']['nama'];
         })
         ->editColumn('id_tipe_soal', function($query){
             return $query['tipeSoal']['nama'];
-        });
+        })
+        ->rawColumns(['pertanyaan', 'action']);
     }
 
     /**
@@ -37,7 +38,7 @@ class SoalDataTable extends DataTable
      */
     public function query(Soal $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('id_ujian', $this->attributes['id']);
     }
 
     /**
@@ -50,17 +51,12 @@ class SoalDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px', 'printable' => false, 'title' => __('crud.action')])
+            ->addAction(['width' => '120px', 'printable' => true, 'title' => __('crud.action')])
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
-                    [
-                       'extend' => 'create',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-plus"></i> ' .__('auth.app.create').''
-                    ],
                     [
                        'extend' => 'export',
                        'className' => 'btn btn-default btn-sm no-corner',
@@ -70,11 +66,6 @@ class SoalDataTable extends DataTable
                        'extend' => 'print',
                        'className' => 'btn btn-default btn-sm no-corner',
                        'text' => '<i class="fa fa-print"></i> ' .__('auth.app.print').''
-                    ],
-                    [
-                       'extend' => 'reset',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reset').''
                     ],
                     [
                        'extend' => 'reload',

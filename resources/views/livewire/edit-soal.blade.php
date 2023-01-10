@@ -14,10 +14,7 @@
     <div class="card-body">
         <div class="row">
             <div class="form-group col-sm-12">
-                {!! Form::textarea('pertanyaan[]',
-                isset($item['pertanyaan'])&&!is_null($item['pertanyaan'])?$item['pertanyaan']:null, ['class' =>
-                'form-control
-                pertanyaan', 'id'=>'pertanyaan']) !!}
+                {!! Form::textarea('pertanyaan[]', isset($item['pertanyaan'])&&!is_null($item['pertanyaan'])?$item['pertanyaan']:null, ['class' => 'form-control pertanyaan', 'id'=>'pertanyaan']) !!}
                 @if ($item['id_tipe_soal'] == 1)
                 @foreach($item['pilihan'] as $pilihan)
                 {!! Form::label('pilihan[]', __('models/soals.fields.pilihan'.$loop->index.'')) !!}

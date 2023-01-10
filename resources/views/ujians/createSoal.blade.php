@@ -38,24 +38,5 @@
         </div>
     </section>
 
-@push('scripts')
-<script>
-    $(document).ready(function () {
-        $('#pertanyaan').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 200,
-            focus: true
-        });
-        $('.pilihan').summernote({
-            tabsize: 3,
-            dialogsInBody: true,
-            height: 100,
-            focus: true
-        });
-    });
-</script>
-@endpush
-
 @endsection
 

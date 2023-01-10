@@ -173,6 +173,7 @@ class UjianController extends AppBaseController
         $input = $request->all();
         // return $request['benar'];
         $ujian = $this->ujianRepository->find($id);
+        $jumlahSoal = $ujian['jml_pg'] + $ujian['jml_essay'];
         
         if($request['id_tipe_soal'] == 1){
             $soal = new Soal;
@@ -186,21 +187,18 @@ class UjianController extends AppBaseController
                 $pilihan['id_soal'] = $soals['id'];
                 $pilihan['pilihan'] = $request['pilihan'][$i];
                 if(array_key_exists($i, $request['benar']) == true) {
-                    // return $request['benar'];
                     $pilihan['benar'] = "true";
                 } else {
-                    // return $request['benar'];
                     $pilihan['benar'] = "false";
                 }
                 $pilihan->save();
             }
-            if($ujian['soals']->count() == $ujian['jumlah_soal']){
+            if($ujian['soals']->count() >= $jumlahSoal){
                 Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
                 return redirect(route('ujians.index'));
             } else {
-                $matkul = MataKuliah::pluck('nama', 'id');
                 Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return view('ujians.createSoal', compact('matkul', 'ujian'));
+                return redirect(route('ujians.createSoal', $id));
             }
         } else {
             $soal = $this->soalRepository->create($input);
@@ -247,7 +245,7 @@ class UjianController extends AppBaseController
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return $soalDataTable->render('ujians.edit_soal', compact('soal', 'ujian', 'matkul'));
+        return $soalDataTable->with('id', $id)->render('ujians.edit_soal', compact('soal', 'ujian', 'matkul', 'id'));
 
         // return view('ujians.edit_soal', compact('soal', 'id', 'matkul'))->with('ujian', $ujian);
     }
