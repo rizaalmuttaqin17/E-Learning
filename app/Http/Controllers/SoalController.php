@@ -13,6 +13,7 @@ use App\Models\Pilihan;
 use App\Models\Soal;
 use App\Models\TipeSoal;
 use App\Models\Ujian;
+use RealRashid\SweetAlert\Facades\Alert;
 use Response;
 
 class SoalController extends AppBaseController
@@ -136,13 +137,14 @@ class SoalController extends AppBaseController
     public function update($id, UpdateSoalRequest $request)
     {
         $input = $request->all();
+        // return $request['pilihanId'];
         if($request['id_tipe_soal'] == 1){
             $soal = $this->soalRepository->update($request->all(), $id);
             if($request['pilihan'] != null){
                 for($i=0; $i<COUNT($request['pilihan']); $i++){
                     $pilih = Pilihan::select('id')->where('pilihan', $request['pilihan'][$i])->first();
-                    $pilihan = Pilihan::where('id', $pilih['id'])->get();
-                    // $pilihan = Pilihan::find($pilih);
+                    // $pilihan = Pilihan::where('id', $pilih)->first();
+                    $pilihan = Pilihan::find($request['pilihanId'][$i]);
                     // return $pilihan;
                     // $pilihan['id_soal'] = $id;
                     // $pilihan['pilihan'] = $request['pilihan'][$i];
@@ -151,7 +153,10 @@ class SoalController extends AppBaseController
                     } else {
                         $pilihan['benar'] = "false";
                     }
-                    $pilihan->update(['id_soal' => $id, 'pilihan' => $request['pilihan'][$i], 'benar' => $request['benar']]);
+                    $pilihan->update([
+                        'id_soal' => $id, 
+                        'pilihan' => $request['pilihan'][$i], 
+                        'benar' => $pilihan['benar']]);
                     // $pilihan->save();
                 }
             }
@@ -159,7 +164,7 @@ class SoalController extends AppBaseController
             $soal = $this->soalRepository->create($input);
         }
 
-        Flash::success(__('messages.updated', ['model' => __('models/soals.singular')]));
+        Alert::success('Sukses', 'Soal Berhasil di Ubah');
         return redirect(route('ujians.edit-soal', $id));
     }
 

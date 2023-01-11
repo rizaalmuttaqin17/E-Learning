@@ -25,7 +25,7 @@
                                 <h4 style="color: unset">Pertanyaan Ke {{ $ujian['soals']->count() + 1 }}</h4>
                             </div>
                             <div class="card-body ">
-                            {!! Form::model($ujian, ['route' => ['ujians.updateSoal', $ujian->id], 'method' => 'patch', 'autocomplete' => 'off']) !!}
+                            {!! Form::model($ujian, ['route' => ['ujians.saveSoal', $ujian->id], 'method' => 'patch', 'autocomplete' => 'off']) !!}
                                 <div class="row">
                                     @include('ujians.fieldSoal')
                                 </div>

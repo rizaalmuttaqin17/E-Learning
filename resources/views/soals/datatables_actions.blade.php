@@ -3,7 +3,7 @@
     <a href="{{ route('soals.show', $id) }}" class='btn btn-light btn-sm'>
         <i class="fa fa-eye"></i>
     </a>
-    <a href="{{ route('soals.edit', $id) }}" class='btn btn-light btn-sm'>
+    <a href="{{ route('ujians.edit-soal-ujian', $id) }}" class='btn btn-light btn-sm'>
         <i class="fa fa-edit"></i>
     </a>
     {!! Form::button('<i class="fa fa-trash"></i>', [

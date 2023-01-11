@@ -38,8 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('mataKuliahs', App\Http\Controllers\MataKuliahController::class);
     Route::post('ujians/changeStatus/{id}', [App\Http\Controllers\UjianController::class, 'changeStatus'])->name('ujians.changeStatus');
     Route::get('ujians/createSoal/{id}', [App\Http\Controllers\UjianController::class, 'createSoal'])->name('ujians.createSoal');
-    Route::patch('ujians/updateSoal/{id}', [App\Http\Controllers\UjianController::class, 'updateSoal'])->name('ujians.updateSoal');
+    Route::patch('ujians/save-soal/{id}', [App\Http\Controllers\UjianController::class, 'saveSoal'])->name('ujians.saveSoal');
     Route::get('ujians/mahasiswa-ujian/{id}', [App\Http\Controllers\UjianController::class, 'ujiansMahasiswa'])->name('ujians.mahasiswa-ujian');
     Route::post('ujians/kode-ujian/{id}', [App\Http\Controllers\UjianController::class, 'kodeUjian'])->name('ujians.kode-ujian');
     Route::get('ujians/edit-soal/{id}', [App\Http\Controllers\UjianController::class, 'editSoal'])->name('ujians.edit-soal');
+    Route::get('ujians/edit-soal-ujian/{id}', [App\Http\Controllers\UjianController::class, 'soalEdit'])->name('ujians.edit-soal-ujian');
+    Route::patch('ujians/update-soal/{id}', [App\Http\Controllers\UjianController::class, 'updateSoal'])->name('ujians.updateSoal');
+
 });

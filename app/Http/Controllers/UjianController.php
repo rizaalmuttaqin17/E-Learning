@@ -14,6 +14,7 @@ use App\Models\Jawaban;
 use App\Models\MataKuliah;
 use App\Models\Pilihan;
 use App\Models\Soal;
+use App\Models\TipeSoal;
 use App\Models\Ujian;
 use Illuminate\Http\Request;
 use DB;
@@ -168,7 +169,7 @@ class UjianController extends AppBaseController
         return view('ujians.createSoal', compact('matkul', 'ujian', 'soalPG', 'soalEssay'));
     }
 
-    public function updateSoal($id, Request $request)
+    public function saveSoal($id, Request $request)
     {
         $input = $request->all();
         // return $request['benar'];
@@ -246,7 +247,53 @@ class UjianController extends AppBaseController
             return redirect(route('ujians.index'));
         }
         return $soalDataTable->with('id', $id)->render('ujians.edit_soal', compact('soal', 'ujian', 'matkul', 'id'));
+    }
 
-        // return view('ujians.edit_soal', compact('soal', 'id', 'matkul'))->with('ujian', $ujian);
+    public function soalEdit($id){
+        $soal = Soal::find($id);
+        if (empty($soal)) {
+            Alert::error('Error', 'Data Tidak Ditemukan');
+            return redirect()->back();
+        }
+        $ujian = Ujian::with('matkul')->get()->pluck('matkul.nama', 'id');
+        $tipeSoal = TipeSoal::pluck('nama', 'id');
+
+        return view('soals.edit', compact('ujian', 'tipeSoal'))->with('soal', $soal);
+    }
+
+    public function updateSoal($id, Request $request){
+        $input = $request->all();
+        if($request['id_tipe_soal'] == 1){
+            $soal = Soal::findOrFail($id)->update([
+                'id_ujian' => $request['id_ujian'],
+                'id_tipe_soal' => $request['id_tipe_soal'],
+                'pertanyaan' => $request['pertanyaan'],
+                'penjelasan' => $request['penjelasan'],
+            ]);
+            for($i=0; $i<COUNT($request['pilihan']); $i++){
+                if($request['pilihan'] != null){
+                    $pilihan = Pilihan::find($request['pilihanId'][$i]);
+                    if(array_key_exists($i, $request['benar']) == true) {
+                        $pilihan['benar'] = "true";
+                    } else {
+                        $pilihan['benar'] = "false";
+                    }
+                    $pilihan->update([
+                        'id_soal' => $id, 
+                        'pilihan' => $request['pilihan'][$i], 
+                        'benar' => $pilihan['benar']
+                    ]);
+                }
+            }
+        } else {
+            $soal = Soal::findOrFail($id)->update([
+                'id_ujian' => $request['id_ujian'],
+                'id_tipe_soal' => $request['id_tipe_soal'],
+                'pertanyaan' => $request['pertanyaan'],
+                'penjelasan' => $request['penjelasan'],
+            ]);
+        }
+        Alert::success('Sukses', 'Soal Berhasil di Ubah');
+        return redirect(route('ujians.edit-soal', $id));
     }
 }

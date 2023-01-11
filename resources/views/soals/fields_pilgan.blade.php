@@ -20,9 +20,8 @@
         @foreach($soal['pilihan'] as $pilihan)
         <div class="col-sm- col-lg-5">
             {!! Form::label('pilihan[]', __('models/soals.fields.pilihan'.$loop->index.'')) !!}
-            {!! Form::textarea('pilihan['.$loop->index.']',
-            isset($pilihan['pilihan'])&&!is_null($pilihan['pilihan'])?$pilihan['pilihan']:null, ['class' =>
-            'form-control pilihan']) !!}
+            {!! Form::text('pilihanId['.$loop->index.']', $pilihan['id'], ['class' => 'form-control', 'hidden']) !!}
+            {!! Form::textarea('pilihan['.$loop->index.']', isset($pilihan['pilihan'])&&!is_null($pilihan['pilihan'])?$pilihan['pilihan']:null, ['class' => 'form-control pilihan']) !!}
         </div>
         <div class="col-sm-1 col-lg-1 text-center align-self-center">
             {!! Form::label('benar', 'Benar?') !!}
@@ -47,5 +46,5 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit(__('crud.save'), ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('soals.index') }}" class="btn btn-light">@lang('crud.cancel')</a>
+    <a href="{{ url()->previous() }}" class="btn btn-light">@lang('crud.cancel')</a>
 </div>
