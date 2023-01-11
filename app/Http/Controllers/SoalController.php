@@ -141,7 +141,7 @@ class SoalController extends AppBaseController
             if($request['pilihan'] != null){
                 for($i=0; $i<COUNT($request['pilihan']); $i++){
                     $pilih = Pilihan::select('id')->where('pilihan', $request['pilihan'][$i])->first();
-                    $pilihan = Pilihan::where('id', $pilih['id']);
+                    $pilihan = Pilihan::where('id', $pilih['id'])->get();
                     // $pilihan = Pilihan::find($pilih);
                     // return $pilihan;
                     // $pilihan['id_soal'] = $id;
