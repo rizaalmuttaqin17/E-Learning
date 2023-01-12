@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\JawabanDataTable;
 use App\DataTables\SoalDataTable;
 use App\DataTables\UjianDataTable;
 use App\Http\Requests;
@@ -166,7 +167,9 @@ class UjianController extends AppBaseController
         $soalPG = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 1)->get();
         $soalEssay = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 2)->get();
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.createSoal', compact('matkul', 'ujian', 'soalPG', 'soalEssay'));
+
+        $soal = Soal::where('id_ujian', $id)->first();
+        return view('ujians.soal.createSoal', compact('matkul', 'soal', 'ujian', 'soalPG', 'soalEssay'));
     }
 
     public function saveSoal($id, Request $request)
@@ -174,8 +177,28 @@ class UjianController extends AppBaseController
         $input = $request->all();
         // return $request['benar'];
         $ujian = $this->ujianRepository->find($id);
-        $jumlahSoal = $ujian['jml_pg'] + $ujian['jml_essay'];
-        
+        $soalPG = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 1)->get();
+        $soalEssay = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 2)->get();
+        $content = $request['pertanyaan'];
+        $dom = new \DomDocument();
+        @$dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $image) {
+            $imageSrc = $image->getAttribute('src');
+            if (preg_match('/data:image/', $imageSrc)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $imageSrc, $mime);
+                $mimeType = $mime['mime'];
+                $filename = uniqid();
+                $filePath = "/uploads/$filename.$mimeType";
+                Image::make($imageSrc)
+                    ->encode($mimeType, 100)
+                    ->save(public_path($filePath));
+                $newImageSrc = asset($filePath);
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $newImageSrc);
+            }
+        }
+        $content = $dom->saveHTML();
         if($request['id_tipe_soal'] == 1){
             $soal = new Soal;
             $soal['id_ujian'] = $id;
@@ -194,7 +217,7 @@ class UjianController extends AppBaseController
                 }
                 $pilihan->save();
             }
-            if($ujian['soals']->count() >= $jumlahSoal){
+            if($soalPG->count() >= $ujian['jml_pg']){
                 Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
                 return redirect(route('ujians.index'));
             } else {
@@ -202,7 +225,14 @@ class UjianController extends AppBaseController
                 return redirect(route('ujians.createSoal', $id));
             }
         } else {
-            $soal = $this->soalRepository->create($input);
+            $soal = Soal::create($input);
+            if($soalEssay->count() >= $ujian['jml_essay']){
+                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
+                return redirect(route('ujians.index'));
+            } else {
+                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
+                return redirect(route('ujians.createSoal', $id));
+            }
         }
     }
 
@@ -228,11 +258,17 @@ class UjianController extends AppBaseController
 
     public function kodeUjian($id, Request $request){
         $ujian = Ujian::where('id', $id)->first();
-        // return $request['kode_ujian'];
-        if($ujian['kode'] == $request['kode_ujian']){
-            return redirect(route('ujians.mahasiswa-ujian', $id));
+        $idSoal = Soal::where('id_ujian', $id)->select('id')->get();
+        $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $idSoal)->first();
+        if($jawaban == null){
+            if($ujian['kode'] == $request['kode_ujian']){
+                return redirect(route('ujians.mahasiswa-ujian', $id));
+            } else {
+                Alert::error('Gagal', 'Kode Ujian Yang Anda Masukkan Salah');
+                return redirect()->back();
+            }
         } else {
-            Alert::error('Gagal', 'Kode Ujian Yang Anda Masukkan Salah');
+            Alert::warning('Peringatan', 'Anda telah mengikuti ujian ini!');
             return redirect()->back();
         }
     }
@@ -295,5 +331,17 @@ class UjianController extends AppBaseController
         }
         Alert::success('Sukses', 'Soal Berhasil di Ubah');
         return redirect(route('ujians.edit-soal', $id));
+    }
+
+    public function showPeserta($id, JawabanDataTable $jawabanDataTable)
+    {
+        $ujian = $this->ujianRepository->find($id);
+        $soal = Soal::where('id_ujian', $id)->get();
+        if (empty($ujian)) {
+            Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
+            return redirect(route('ujians.index'));
+        }
+        // return view('ujians.show_peserta')->with('ujian', $ujian);
+        return $jawabanDataTable->with('id', $id)->render('ujians.show_peserta', compact('ujian', 'soal'));
     }
 }

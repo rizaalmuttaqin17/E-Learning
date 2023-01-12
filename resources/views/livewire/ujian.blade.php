@@ -22,15 +22,7 @@
             @foreach ($row as $pilihan)
             {!! Form::text('id_user', Auth::id(), ['hidden']) !!}
             <div class="form-check">
-                {{-- @if($jawaban == null) --}}
-                {{-- <button type="button" class="{{ in_array($pilihan['id'], $jawabanTerpilih) ? 'btn btn-success border border-secondary rounded' : 'btn btn-light border border-secondary rounded' }}" wire:click="answer({{ $question['id'] }}, '{{ $pilihan['id'] }}')">
-                    <p class="text-left"><b>{{ $pilihan['pilihan'] }} </b></p>
-                </button> --}}
                 <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" wire:click="answer({{ $question['id'] }}, '{{ $pilihan['id'] }}')" name="answer" value="{{ $pilihan['id'] }}" {{ in_array($question['id'].'-'.$pilihan['id'], $jawabanTerpilih) ? 'checked=checked' : '' }}>
-                {{-- <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" name="answer" value="{{ $pilihan['id'] }}"> --}}
-                {{-- @else
-                <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" name="answer" value="{{ $pilihan['id'] }}" {{ $jawaban['id_soal'] == $pilihan['id'] ? "checked=checked" : ''}}>
-                @endif --}}
                 <label class="form-check-label" for="answer{{ $pilihan['id'] }}">{{ $pilihan['pilihan'] }}</label>
             </div>
             @endforeach
@@ -40,11 +32,6 @@
         
     </div>
     @endforeach
-
-    {{-- @foreach ($selectedAnswers as $item)
-        {{ $item }}
-    @endforeach --}}
-    
     <div class="d-flex justify-content-center">
         {{$soal->links('layouts.pagination', ['soal'=>$soal])}}
         {{-- {{$soal->links()}} --}}

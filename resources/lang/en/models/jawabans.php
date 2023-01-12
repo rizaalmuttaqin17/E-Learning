@@ -6,7 +6,8 @@ return array (
   'fields' => 
   array (
     'id' => 'Id',
-    'id_pilihan' => 'Soal',
+    'id_pilihan' => 'Pilihan',
+    'id_soal' => 'Soal',
     'id_user' => 'Mahasiswa',
     'jawaban' => 'Jawaban',
     'nilai_jwb' => 'Nilai Jawaban',

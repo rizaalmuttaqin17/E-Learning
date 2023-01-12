@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Jawaban;
+use App\Models\Pilihan;
+use App\Models\Soal;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
@@ -19,7 +21,23 @@ class JawabanDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'jawabans.datatables_actions');
+        return $dataTable
+        ->addColumn('action', 'jawabans.datatables_actions')
+        ->editColumn('id_user', function($q){
+            return $q['users']['name'];
+        })
+        ->editColumn('id_soal', function($q){
+            return $q['soals']['pertanyaan'];
+        })
+        ->editColumn('id_pilihan', function($q){
+            if($q['id_pilihan'] != null){
+                $pilihan = Pilihan::where('id_soal', $q['id_soal'])->where('benar', true)->first();
+                return $q['pilihan']['pilihan']."</br><span class='badge badge-info'>Jawaban Benar : ".$pilihan['pilihan']."</span>";
+            } else {
+                return $q['jawaban'];
+            }
+        })
+        ->rawColumns(['action', 'id_user', 'id_soal', 'id_pilihan']);
     }
 
     /**
@@ -30,7 +48,8 @@ class JawabanDataTable extends DataTable
      */
     public function query(Jawaban $model)
     {
-        return $model->newQuery();
+        $soals = Soal::select('id')->where('id_ujian', $this->attributes['id'])->get();
+        return $model->newQuery()->whereIn('id_soal', $soals);
     }
 
     /**
@@ -50,24 +69,9 @@ class JawabanDataTable extends DataTable
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
                     [
-                       'extend' => 'create',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-plus"></i> ' .__('auth.app.create').''
-                    ],
-                    [
-                       'extend' => 'export',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
-                    ],
-                    [
                        'extend' => 'print',
                        'className' => 'btn btn-default btn-sm no-corner',
                        'text' => '<i class="fa fa-print"></i> ' .__('auth.app.print').''
-                    ],
-                    [
-                       'extend' => 'reset',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reset').''
                     ],
                     [
                        'extend' => 'reload',
@@ -92,10 +96,10 @@ class JawabanDataTable extends DataTable
             'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            'id_pilihan' => new Column(['title' => __('models/jawabans.fields.id_pilihan'), 'data' => 'id_pilihan']),
             'id_user' => new Column(['title' => __('models/jawabans.fields.id_user'), 'data' => 'id_user']),
-            'jawaban' => new Column(['title' => __('models/jawabans.fields.jawaban'), 'data' => 'jawaban']),
-            'nilai_jwb' => new Column(['title' => __('models/jawabans.fields.nilai_jwb'), 'data' => 'nilai_jwb'])
+            'id_soal' => new Column(['title' => __('models/jawabans.fields.id_soal'), 'data' => 'id_soal']),
+            'id_pilihan' => new Column(['title' => __('models/jawabans.fields.id_pilihan'), 'data' => 'id_pilihan']),
+            'nilai' => new Column(['title' => __('models/jawabans.fields.nilai_jwb'), 'data' => 'nilai'])
         ];
     }
 

@@ -33,14 +33,18 @@ class Ujian extends Component
         $jawaban = Jawaban::select('id_soal')->where('id_user', Auth()->id())->whereIn('id_soal', $idSoal)->first();
         $jumlahSoal = $ujian['jml_pg']+$ujian['jml_essay'];
 
-        $this->totalSoal = $soalUjian->count();
-
-        if($this->totalSoal >= $jumlahSoal){
-            $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
-        } else if($this->totalSoal < $jumlahSoal) {
-            $soal = $ujian->soals()->take($this->totalSoal)->paginate(1);
+        if($jawaban == null){
+            $this->totalSoal = $soalUjian->count();
+            if($this->totalSoal >= $jumlahSoal){
+                $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
+            } else if($this->totalSoal < $jumlahSoal) {
+                $soal = $ujian->soals()->take($this->totalSoal)->inRandomOrder(1)->paginate(1);
+            }
+            return $soal;
+        } else {
+            Alert::warning('Peringatan', 'Anda sudah mengikuti ujian ini!');
+            return redirect(url()->previous());
         }
-        return $soal;
     }
 
     public function answer($idSoals, $answer){
@@ -49,17 +53,27 @@ class Ujian extends Component
 
     public function saveJawaban(){
         $ujian = Ujians::findOrFail($this->idUjian);
-        $soalUjian = $ujian['soals'];
-
+        
         if(!empty($this->jawabanTerpilih)){
-                foreach($this->jawabanTerpilih as $jawabs){
-                    $jawabans = explode('-', $jawabs);
+            foreach($this->jawabanTerpilih as $jawabs){
+                $jawabans = explode('-', $jawabs);
+                $idSoal = explode($jawabs, '-');
+                $soalUjian = Soal::where('id_ujian', $this->idUjian)->where('id', $idSoal)->first();
+                if($soalUjian['id_tipe_ujian'] == 1){
                     $jawab = Jawaban::updateOrCreate([
                         'id_user' => Auth()->id(),
                         'id_soal' => array_shift($jawabans),
-                        'id_pilihan' => array_shift($jawabans)
+                        'id_pilihan' => array_shift($jawabans),
+                        'nilai' => 100/$ujian['jml_pg']
+                    ]);
+                } else {
+                    $jawab = Jawaban::updateOrCreate([
+                        'id_user' => Auth()->id(),
+                        'id_soal' => array_shift($jawabans),
+                        'id_pilihan' => array_shift($jawabans),
                     ]);
                 }
+            }
         }
         Alert::success('Selesai', 'Selamat Anda Telah Menyelesaikan Ujian Ini!');
         return redirect(route('ujians.index'));

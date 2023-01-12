@@ -8,8 +8,7 @@
         </li>
         @else
         <li class="page-item">
-            <a class="page-link" href="{{ $soal->previousPageUrl() }}" rel="prev"
-                aria-label="@lang('pagination.previous')">&lsaquo;</a>
+            <button type="button" class="page-link" wire:click="previousPage('page')" rel="next" aria-label="@lang('pagination.previous')">&lsaquo;</button>
         </li>
         @endif
 
@@ -41,8 +40,7 @@
         {{-- Next Page Link --}}
         @if ($soal->hasMorePages())
         <li class="page-item">
-            <a class="page-link" href="{{ $soal->nextPageUrl() }}" rel="next"
-                aria-label="@lang('pagination.next')">&rsaquo;</a>
+            <button type="button" class="page-link" wire:click="nextPage('page')" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</button>
         </li>
         @else
         <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">

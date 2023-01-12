@@ -21,13 +21,16 @@ class SoalDataTable extends DataTable
 
         return $dataTable
         ->addColumn('action', 'soals.datatables_actions')
+        ->addColumn('pilihan', function($query){
+            return $query['pilihan']['pilihan'];
+        })
         ->editColumn('id_ujian', function($query){
             return $query['ujian']['matkul']['nama'];
         })
         ->editColumn('id_tipe_soal', function($query){
             return $query['tipeSoal']['nama'];
         })
-        ->rawColumns(['pertanyaan', 'action']);
+        ->rawColumns(['pertanyaan', 'action', 'pilihan']);
     }
 
     /**
@@ -93,6 +96,7 @@ class SoalDataTable extends DataTable
             'pertanyaan' => new Column(['title' => __('models/soals.fields.pertanyaan'), 'data' => 'pertanyaan']),
             'id_tipe_soal' => new Column(['title' => __('models/soals.fields.id_tipe_soal'), 'data' => 'id_tipe_soal']),
             'id_ujian' => new Column(['title' => __('models/soals.fields.id_ujian'), 'data' => 'id_ujian']),
+            'pilihan' => new Column(['title' => __('models/pilihan.fields.pilihan')]),
         ];
     }
 

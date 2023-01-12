@@ -19,7 +19,7 @@
                             <div class="card-header">
                                 <h4>Pilih Tipe Soal</h4>
                             </div>
-                            <div class="card-body ">
+                            <div class="card-body">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="pilgan-tab" data-toggle="tab" href="#pilgan" role="tab" aria-controls="pilgan" aria-selected="true">Pilihan Ganda</a>

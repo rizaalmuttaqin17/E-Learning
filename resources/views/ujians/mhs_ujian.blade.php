@@ -19,9 +19,9 @@ Ujian {{ $ujian['matkul']['nama'] }}
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card">
+                    {{-- <div class="card"> --}}
                         @livewire('ujian', ['id' => $id])
-                    </div>
+                    {{-- </div> --}}
                 </div>
             </div>
         </div>

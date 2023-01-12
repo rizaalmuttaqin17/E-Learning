@@ -21,7 +21,7 @@ class JawabanRepository extends BaseRepository
         'id_soal',
         'id_user',
         'jawaban',
-        'nilai_jwb'
+        'nilai'
     ];
 
     /**

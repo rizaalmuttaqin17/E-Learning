@@ -41,7 +41,7 @@ class Jawaban extends Model
         'id_soal',
         'id_user',
         'jawaban',
-        'nilai_jwb'
+        'nilai'
     ];
 
     /**
@@ -55,7 +55,7 @@ class Jawaban extends Model
         'id_soal' => 'integer',
         'id_user' => 'integer',
         'jawaban' => 'string',
-        'nilai_jwb' => 'integer'
+        'nilai' => 'integer'
     ];
 
     /**
@@ -68,7 +68,7 @@ class Jawaban extends Model
         'id_soal' => 'nullable',
         'id_user' => 'nullable',
         'jawaban' => 'nullable|string|max:145',
-        'nilai_jwb' => 'nullable|integer',
+        'nilai' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'

@@ -7,7 +7,9 @@
     <div class="section-header">
         <h1>@lang('models/ujians.plural')</h1>
         <div class="section-header-breadcrumb">
+            @role('Admin|Dosen')
             <a href="{{ route('ujians.create')}}" class="btn btn-primary form-btn">@lang('crud.add_new')<i class="fas fa-plus"></i></a>
+            @endrole
         </div>
     </div>
     <div class="section-body">
