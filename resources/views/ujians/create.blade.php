@@ -19,7 +19,7 @@
                            <div class="card-body ">
                                 {!! Form::open(['route' => 'ujians.store']) !!}
                                     <div class="row">
-                                        @include('ujians.fieldsCreate')
+                                        @include('ujians.fields')
                                     </div>
                                 {!! Form::close() !!}
                            </div>

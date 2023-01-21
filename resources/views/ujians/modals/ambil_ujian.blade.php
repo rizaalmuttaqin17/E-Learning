@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary" id="btnPrSave" data-loading-text="<span class='spinner-border spinner-border-sm'></span> Processing..."tabindex="5">Simpan
+                    <button type="submit" class="btn btn-primary" id="btnPrSave" data-loading-text="<span class='spinner-border spinner-border-sm'></span> Processing..."tabindex="5">Submit
                     </button>
                     <button type="button" class="btn btn-light ml-1 edit-cancel-margin margin-left-5" data-dismiss="modal">Batal</button>
                 </div>

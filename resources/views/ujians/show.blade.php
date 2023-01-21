@@ -20,14 +20,18 @@
         </ul>
     </div>
     <div class="card-footer">
-        @if (now() > $ujian->start && now() < $ujian->end)
-        {{-- <a href="{{ route('ujians.show', $id) }}" data-target="#ambilUjian" data-toggle="modal" class='btn btn-outline-info btn-sm'><i class="fa fa-eye"></i> Ujian</a> --}}
-        <a href="" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true" data-target="#ambilUjian" data-toggle="modal">START</a>
-        <a href="{{ route('ujians.index') }}" class="btn btn-light btn-lg btn-block" role="button" aria-pressed="true">@lang('crud.cancel')</a>
-        @elseif (now() < $ujian->start)
-        <a onclick="goBack()" class="btn btn-warning btn-lg btn-block" role="button" aria-pressed="true">UJIAN BELUM DIBUKA - KEMBALI</a>
-        @elseif(now() > $ujian->end)
-        <a onclick="goBack()" class="btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">UJIAN SUDAH DITUTUP - KEMBALI</a>
+        @if ($soal == null)
+            <a onclick="goBack()" class="btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">UJIAN BELUM SIAP - KEMBALI</a>
+        @else
+            @if (now() > $ujian->start && now() < $ujian->end)
+            {{-- <a href="{{ route('ujians.show', $id) }}" data-target="#ambilUjian" data-toggle="modal" class='btn btn-outline-info btn-sm'><i class="fa fa-eye"></i> Ujian</a> --}}
+            <a href="" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true" data-target="#ambilUjian" data-toggle="modal">START</a>
+            <a href="{{ route('ujians.index') }}" class="btn btn-light btn-lg btn-block" role="button" aria-pressed="true">@lang('crud.cancel')</a>
+            @elseif (now() < $ujian->start)
+            <a onclick="goBack()" class="btn btn-warning btn-lg btn-block" role="button" aria-pressed="true">UJIAN BELUM DIBUKA - KEMBALI</a>
+            @elseif(now() > $ujian->end)
+            <a onclick="goBack()" class="btn btn-danger btn-lg btn-block" role="button" aria-pressed="true">UJIAN SUDAH DITUTUP - KEMBALI</a>
+            @endif
         @endif
     </div>
 </div>

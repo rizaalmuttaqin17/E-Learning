@@ -13,23 +13,23 @@
     @foreach ($soal as $question)
     <div class="card-body">
         <b>Soal No. {{ $soal->currentPage() }}</b>
-        <p>{!! $question['pertanyaan'] !!}</p>
-        <br>
-        <i>Pilih salah satu jawaban dibawah ini:</i> 
-        <br>
-        @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
-        <div class="col-md-6">
-            @foreach ($row as $pilihan)
-            {!! Form::text('id_user', Auth::id(), ['hidden']) !!}
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" wire:click="answer({{ $question['id'] }}, '{{ $pilihan['id'] }}')" name="answer" value="{{ $pilihan['id'] }}" {{ in_array($question['id'].'-'.$pilihan['id'], $jawabanTerpilih) ? 'checked=checked' : '' }}>
-                <label class="form-check-label" for="answer{{ $pilihan['id'] }}">{{ $pilihan['pilihan'] }}</label>
+        <p>{!! $question['pertanyaan'] !!}</p><br>
+        @if ($question['id_tipe_soal'] == 2)
+            <textarea id="jawaban{{ $question['id'] }}" name="jawaban" class="form-control jawaban" wire:click.defer="answer({{ $question['id'] }}, 'jawaban')" cols="30" rows="10">tess</textarea>
+        @else
+            <i>Pilih salah satu jawaban dibawah ini:</i> <br>
+            @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
+            <div class="col-md-6">
+                @foreach ($row as $pilihan)
+                {!! Form::text('id_user', Auth::id(), ['hidden']) !!}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" wire:click="answer({{ $question['id'] }}, '{{ $pilihan['id'] }}')" name="answer" value="{{ $pilihan['id'] }}" {{ in_array($question['id'].'-'.$pilihan['id'], $jawabanTerpilih) ? 'checked=checked' : '' }}>
+                    <label class="form-check-label" for="answer{{ $pilihan['id'] }}">{!! $pilihan['pilihan'] !!}</label>
+                </div>
+                @endforeach
             </div>
             @endforeach
-            <!-- Submit Field -->
-        </div>
-        @endforeach
-        
+        @endif
     </div>
     @endforeach
     <div class="d-flex justify-content-center">

@@ -22,12 +22,16 @@ class UjianDataTable extends DataTable
             $dataTable = new EloquentDataTable($query);
             return $dataTable
             ->addColumn('action', 'ujians.datatables_actions')
+            ->editColumn('id_mata_kuliah', function($query){
+                if(Auth::user()->hasRole('Admin|Dosen')){
+                    return "<u>".$query['matkul']['nama']."</u><br>Kode Ujian : ".$query['kode']."";
+                } else {
+                    return "<u>".$query['matkul']['nama'];
+                }
+            })
             ->editColumn('jml_pg', 'ujians.table_jml_soal')
             ->editColumn('start', function($query){
                 return TanggalID($query['start']).'<br><span class="badge badge-info">Sampai</span><br>'.TanggalID($query['end']);
-            })
-            ->editColumn('id_mata_kuliah', function($query){
-                return "<u>".$query['matkul']['nama']."</u>";
             })
             ->editColumn('status', 'ujians.table_status')
             ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jml_pg', 'start']);
@@ -92,7 +96,6 @@ class UjianDataTable extends DataTable
             'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
             'jml_pg' => new Column(['title' => 'Jumlah Soal', 'data' => 'jml_pg']),
             'start' => new Column(['title' => __('models/ujians.fields.start'), 'data' => 'start', 'class'=>'text-center']),
-            'status' => new Column(['title' => __('models/ujians.fields.status'), 'data' => 'status'])
         ];
     }
 

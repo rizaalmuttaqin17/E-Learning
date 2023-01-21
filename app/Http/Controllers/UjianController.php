@@ -18,10 +18,11 @@ use App\Models\Soal;
 use App\Models\TipeSoal;
 use App\Models\Ujian;
 use Illuminate\Http\Request;
-use DB;
 use Illuminate\Support\Facades\Auth;
-use Response;
+use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use DB;
+use Response;
 
 class UjianController extends AppBaseController
 {
@@ -65,9 +66,9 @@ class UjianController extends AppBaseController
     public function store(CreateUjianRequest $request)
     {
         $input = $request->all();
-        if($request['selesai'] == null){
-            $input['selesai'] = 'false';
-        }
+        $input['id_user'] = Auth::id();
+        $input['kode'] = substr(str_shuffle(md5(time())),0, 5);
+        // return $request;
         $ujian = $this->ujianRepository->create($input);
         Flash::success(__('messages.saved', ['model' => __('models/ujians.singular')]));
         return redirect(route('ujians.index'));
@@ -83,12 +84,12 @@ class UjianController extends AppBaseController
     public function show($id)
     {
         $ujian = $this->ujianRepository->find($id);
-
+        $soal = Soal::where('id_ujian', $id)->first();
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.show')->with('ujian', $ujian);
+        return view('ujians.show', compact('soal'))->with('ujian', $ujian);
     }
 
     /**
@@ -169,13 +170,22 @@ class UjianController extends AppBaseController
         $matkul = MataKuliah::pluck('nama', 'id');
 
         $soal = Soal::where('id_ujian', $id)->first();
-        return view('ujians.soal.createSoal', compact('matkul', 'soal', 'ujian', 'soalPG', 'soalEssay'));
+        $soalTotal = $soalPG->count() + $soalEssay->count();
+        $soalUjian = $ujian['jml_pg'] + $ujian['jml_essay'];
+        if($soalTotal == $soalUjian){
+            Alert::warning('Jumlah soal terpenuhi!','Apakah anda yakin ingin menambah soal?')
+            ->showConfirmButton('Ya', '')
+            ->showCancelButton('<a href="'.route('ujians.index').'" style="text-decoration:none; color:white">Tidak</a>', '#aaaaaa');
+            return view('ujians.soal.createSoal', compact('matkul', 'soal', 'ujian', 'soalPG', 'soalEssay'));
+        } else {
+            return view('ujians.soal.createSoal', compact('matkul', 'soal', 'ujian', 'soalPG', 'soalEssay'));
+        }
     }
 
     public function saveSoal($id, Request $request)
     {
         $input = $request->all();
-        // return $request['benar'];
+        // return $input;
         $ujian = $this->ujianRepository->find($id);
         $soalPG = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 1)->get();
         $soalEssay = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 2)->get();
@@ -217,22 +227,12 @@ class UjianController extends AppBaseController
                 }
                 $pilihan->save();
             }
-            if($soalPG->count() >= $ujian['jml_pg']){
-                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return redirect(route('ujians.index'));
-            } else {
-                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return redirect(route('ujians.createSoal', $id));
-            }
+            toast('Soal Telah Tersimpan!','success');
+            return redirect(route('ujians.createSoal', $id));
         } else {
             $soal = Soal::create($input);
-            if($soalEssay->count() >= $ujian['jml_essay']){
-                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return redirect(route('ujians.index'));
-            } else {
-                Flash::success(__('messages.updated', ['model' => __('models/ujians.singular')]));
-                return redirect(route('ujians.createSoal', $id));
-            }
+            toast('Soal Telah Tersimpan!','success');
+            return redirect(route('ujians.createSoal', $id));
         }
     }
 

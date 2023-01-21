@@ -17,6 +17,7 @@ class Ujian extends Component
 
     public $idUjian;
     public $idSoals;
+    public $jawaban;
     public $totalSoal;
     public $jawabanTerpilih = [];
     protected $listeners = ['endTimer' => 'saveJawaban'];
@@ -36,9 +37,9 @@ class Ujian extends Component
         if($jawaban == null){
             $this->totalSoal = $soalUjian->count();
             if($this->totalSoal >= $jumlahSoal){
-                $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
+                $soal = $ujian->soals()->take($ujian->jumlah_soal)->paginate(1);
             } else if($this->totalSoal < $jumlahSoal) {
-                $soal = $ujian->soals()->take($this->totalSoal)->inRandomOrder(1)->paginate(1);
+                $soal = $ujian->soals()->take($this->totalSoal)->paginate(1);
             }
             return $soal;
         } else {
@@ -58,8 +59,8 @@ class Ujian extends Component
             foreach($this->jawabanTerpilih as $jawabs){
                 $jawabans = explode('-', $jawabs);
                 $idSoal = explode($jawabs, '-');
-                $soalUjian = Soal::where('id_ujian', $this->idUjian)->where('id', $idSoal)->first();
-                if($soalUjian['id_tipe_ujian'] == 1){
+                $soalUjian = Soal::where('id', $this->idSoals)->first();
+                if($soalUjian['id_tipe_soal'] == 1){
                     $jawab = Jawaban::updateOrCreate([
                         'id_user' => Auth()->id(),
                         'id_soal' => array_shift($jawabans),
@@ -69,8 +70,8 @@ class Ujian extends Component
                 } else {
                     $jawab = Jawaban::updateOrCreate([
                         'id_user' => Auth()->id(),
-                        'id_soal' => array_shift($jawabans),
-                        'id_pilihan' => array_shift($jawabans),
+                        'id_soal' => array_shift($idSoal),
+                        'jawaban' => array_shift($jawabans),
                     ]);
                 }
             }

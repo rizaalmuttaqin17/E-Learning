@@ -27,4 +27,22 @@ Ujian {{ $ujian['matkul']['nama'] }}
         </div>
     </div>
 </section>
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('.jawaban').summernote({
+            tabsize: 5,
+            dialogsInBody: true,
+            height: 200,
+            focus: true,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+            ],
+        });
+    });
+</script>
+@endpush
 @stop

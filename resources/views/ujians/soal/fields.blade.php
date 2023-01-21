@@ -5,7 +5,7 @@
     <select name="id_tipe_soal" id="id_tipe_soal" class="id_tipe_soal form-control">
         <option value="2" selected>Essay</option>
     </select>
-    <input type="text" name="id_ujian" id="id_ujian" value="{{ $soal['id_ujian'] }}">
+    <input type="text" name="id_ujian" id="id_ujian" value="{{ $ujian['id'] }}">
 </div>
 
 <!-- Pertanyaan Field -->

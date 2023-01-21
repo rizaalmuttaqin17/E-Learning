@@ -18,12 +18,14 @@ class UjianRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'id_mata_kuliah',
-        'tipe_ujian',
-        'sifat_ujian',
-        'tanggal_ujian',
-        'percobaan',
+        'id_user',
+        'kode',
+        'nama',
+        'start',
+        'end',
         'jml_pg',
         'jml_essay',
+        'percobaan',
         'status',
         'nilai',
         'durasi'

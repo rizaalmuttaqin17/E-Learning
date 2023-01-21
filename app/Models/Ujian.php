@@ -33,13 +33,15 @@ class Ujian extends Model
 
     public $fillable = [
         'id_mata_kuliah',
-        'tipe_ujian',
-        'sifat_ujian',
-        'tanggal_ujian',
-        'percobaan',
+        'id_user',
+        'kode',
+        'nama',
+        'start',
+        'end',
         'jml_pg',
         'jml_essay',
         'status',
+        'percobaan',
         'nilai',
         'durasi'
     ];
@@ -52,12 +54,12 @@ class Ujian extends Model
     protected $casts = [
         'id' => 'integer',
         'id_mata_kuliah' => 'integer',
-        'tipe_ujian' => 'string',
-        'sifat_ujian' => 'string',
-        'percobaan' => 'integer',
+        'id_user' => 'integer',
+        'kode' => 'string',
+        'nama' => 'string',
+        'percobaan' => 'string',
         'jml_pg' => 'integer',
         'jml_essay' => 'integer',
-        'tanggal_ujian' => 'date',
         'status' => 'integer',
         'nilai' => 'integer',
     ];
@@ -69,11 +71,12 @@ class Ujian extends Model
      */
     public static $rules = [
         'id_mata_kuliah' => 'nullable',
-        'tipe_ujian' => 'nullable|string',
-        'sifat_ujian' => 'nullable|string|max:45',
-        'tanggal_ujian' => 'nullable',
+        'id_user' => 'nullable',
+        'kode' => 'nullable|string',
+        'nama' => 'nullable|string|max:45',
         'jml_pg' => 'nullable|integer',
         'jml_essay' => 'nullable|integer',
+        'percobaan' => 'nullable|string',
         'status' => 'nullable|integer',
         'nilai' => 'nullable|integer',
         'created_at' => 'nullable',
