@@ -17,7 +17,8 @@ class Ujian extends Component
 
     public $idUjian;
     public $idSoals;
-    public $jawaban;
+    public $jawaban = [];
+    public $benar;
     public $totalSoal;
     public $jawabanTerpilih = [];
     protected $listeners = ['endTimer' => 'saveJawaban'];
@@ -37,9 +38,9 @@ class Ujian extends Component
         if($jawaban == null){
             $this->totalSoal = $soalUjian->count();
             if($this->totalSoal >= $jumlahSoal){
-                $soal = $ujian->soals()->take($ujian->jumlah_soal)->paginate(1);
+                $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
             } else if($this->totalSoal < $jumlahSoal) {
-                $soal = $ujian->soals()->take($this->totalSoal)->paginate(1);
+                $soal = $ujian->soals()->take($this->totalSoal)->inRandomOrder(1)->paginate(1);
             }
             return $soal;
         } else {
@@ -58,20 +59,25 @@ class Ujian extends Component
         if(!empty($this->jawabanTerpilih)){
             foreach($this->jawabanTerpilih as $jawabs){
                 $jawabans = explode('-', $jawabs);
-                $idSoal = explode($jawabs, '-');
-                $soalUjian = Soal::where('id', $this->idSoals)->first();
+                $soalUjian = Soal::where('id', $jawabans[0])->first();
                 if($soalUjian['id_tipe_soal'] == 1){
+                    $pilihan = Pilihan::where('id', $jawabans[1])->first();
+                    if($pilihan['benar'] == "true"){
+                        $this->benar = 100/$ujian['jml_pg'];
+                    } else {
+                        $this->benar = 0;
+                    }
                     $jawab = Jawaban::updateOrCreate([
                         'id_user' => Auth()->id(),
-                        'id_soal' => array_shift($jawabans),
-                        'id_pilihan' => array_shift($jawabans),
-                        'nilai' => 100/$ujian['jml_pg']
+                        'id_soal' => $jawabans[0],
+                        'id_pilihan' => $jawabans[1],
+                        'nilai' => $this->benar
                     ]);
                 } else {
                     $jawab = Jawaban::updateOrCreate([
                         'id_user' => Auth()->id(),
-                        'id_soal' => array_shift($idSoal),
-                        'jawaban' => array_shift($jawabans),
+                        'id_soal' => $jawabans[0],
+                        'jawaban' => $jawabans[1],
                     ]);
                 }
             }

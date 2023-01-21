@@ -227,11 +227,11 @@ class UjianController extends AppBaseController
                 }
                 $pilihan->save();
             }
-            toast('Soal Telah Tersimpan!','success');
+            toast('Soal Tersimpan!','success');
             return redirect(route('ujians.createSoal', $id));
         } else {
             $soal = Soal::create($input);
-            toast('Soal Telah Tersimpan!','success');
+            toast('Soal Tersimpan!','success');
             return redirect(route('ujians.createSoal', $id));
         }
     }

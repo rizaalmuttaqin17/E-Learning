@@ -15,7 +15,9 @@
         <b>Soal No. {{ $soal->currentPage() }}</b>
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
-            <textarea id="jawaban{{ $question['id'] }}" name="jawaban" class="form-control jawaban" wire:click.defer="answer({{ $question['id'] }}, 'jawaban')" cols="30" rows="10">tess</textarea>
+        <div wire:ignore>
+            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" cols="30" rows="10"></textarea>
+        </div>
         @else
             <i>Pilih salah satu jawaban dibawah ini:</i> <br>
             @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
@@ -42,7 +44,24 @@
         @endif
     </div>
 </div>
-
+<script>
+    // document.addEventListener('livewire:load', function () {
+        $(document).ready(function () {
+        $('.jawaban').summernote({
+            tabsize: 5,
+            dialogsInBody: true,
+            height: 200,
+            focus: true,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+            ],
+        });
+    // });
+    });
+</script>
 <script>
     var add_minutes =  function (dt, minutes) {
     return new Date(dt.getTime() + minutes*60000);
