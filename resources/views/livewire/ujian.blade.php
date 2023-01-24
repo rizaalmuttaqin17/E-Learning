@@ -16,7 +16,7 @@
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
         <div wire:ignore>
-            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" cols="30" rows="10"></textarea>
+            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:model="jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" rows="10" cols="30" ></textarea>
         </div>
         @else
             <i>Pilih salah satu jawaban dibawah ini:</i> <br>

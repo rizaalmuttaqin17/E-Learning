@@ -2,12 +2,15 @@
 
 namespace App\DataTables;
 
+use App\Models\Jawaban;
 use App\Models\Soal;
+use App\Models\User;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
+use Carbon\Carbon;
 
-class SoalDataTable extends DataTable
+class UserJawabanDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,26 +23,25 @@ class SoalDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         return $dataTable
-        ->addColumn('action', 'soals.datatables_actions')
-        ->addColumn('pertanyaan', 'soals.table_pertanyaan')
-        ->editColumn('id_ujian', function($query){
-            return $query['ujian']['matkul']['nama'];
+        ->addColumn('action', 'ujians.table_actions')
+        ->editColumn('name', function($query){
+            return $query['name']."</br><span class='badge badge-info'>".$query['email']."</span>";
         })
-        ->editColumn('id_tipe_soal', function($query){
-            return $query['tipeSoal']['nama'];
-        })
-        ->rawColumns(['pertanyaan', 'action', 'pilihan']);
+        ->rawColumns(['name','action']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Soal $model
+     * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Soal $model)
+    public function query(User $model)
     {
-        return $model->newQuery()->where('id_ujian', $this->attributes['id']);
+        $soals = Soal::select('id')->where('id_ujian', $this->attributes['id'])->get();
+        $jawaban = Jawaban::select('id_user')->whereIn('id_soal', $soals)->get();
+        
+        return $model->newQuery()->whereIn('id', $jawaban);
     }
 
     /**
@@ -52,26 +54,21 @@ class SoalDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px', 'printable' => true, 'title' => __('crud.action')])
+            ->addAction(['width' => '120px', 'printable' => false, 'title' => __('crud.action')])
             ->parameters([
                 'dom'       => 'Bfrtip',
                 'stateSave' => true,
                 'order'     => [[0, 'desc']],
                 'buttons'   => [
                     [
-                       'extend' => 'export',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
+                        'extend' => 'export',
+                        'className' => 'btn btn-icon btn-warning btn-sm',
+                        'text' => '<i class="fa fa-download"></i> ' .__('auth.app.export').''
                     ],
                     [
-                       'extend' => 'print',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-print"></i> ' .__('auth.app.print').''
-                    ],
-                    [
-                       'extend' => 'reload',
-                       'className' => 'btn btn-default btn-sm no-corner',
-                       'text' => '<i class="fa fa-refresh"></i> ' .__('auth.app.reload').''
+                        'extend' => 'reload',
+                        'className' => 'btn btn-icon btn-success btn-sm',
+                        'text' => '<i class="fa fa-undo"></i> ' .__('auth.app.reload').''
                     ],
                 ],
                  'language' => [
@@ -91,9 +88,8 @@ class SoalDataTable extends DataTable
             'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            'pertanyaan' => new Column(['title' => __('models/soals.fields.pertanyaan'), 'data' => 'pertanyaan']),
-            'id_tipe_soal' => new Column(['title' => __('models/soals.fields.id_tipe_soal'), 'data' => 'id_tipe_soal']),
-            'id_ujian' => new Column(['title' => __('models/soals.fields.id_ujian'), 'data' => 'id_ujian']),
+            'name' => new Column(['title' => __('models/users.fields.name'), 'data' => 'name']),
+            'no_induk' => new Column(['title' => __('models/users.fields.no_induk'), 'data' => 'no_induk']),
         ];
     }
 
@@ -104,6 +100,6 @@ class SoalDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'soals_datatable_' . time();
+        return 'users_datatable_' . time();
     }
 }

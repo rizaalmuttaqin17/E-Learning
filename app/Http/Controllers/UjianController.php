@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\JawabanDataTable;
 use App\DataTables\SoalDataTable;
 use App\DataTables\UjianDataTable;
+use App\DataTables\UserJawabanDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateUjianRequest;
 use App\Http\Requests\UpdateUjianRequest;
@@ -333,7 +334,7 @@ class UjianController extends AppBaseController
         return redirect(route('ujians.edit-soal', $id));
     }
 
-    public function showPeserta($id, JawabanDataTable $jawabanDataTable)
+    public function showPeserta($id, UserJawabanDataTable $userJawabanDataTable)
     {
         $ujian = $this->ujianRepository->find($id);
         $soal = Soal::where('id_ujian', $id)->get();
@@ -341,7 +342,16 @@ class UjianController extends AppBaseController
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        // return view('ujians.show_peserta')->with('ujian', $ujian);
-        return $jawabanDataTable->with('id', $id)->render('ujians.show_peserta', compact('ujian', 'soal'));
+        return $userJawabanDataTable->with('id', $id)->render('ujians.show_peserta', compact('ujian', 'soal'));
+    }
+
+    public function showUjianPeserta($id, JawabanDataTable $jawabanDataTable)
+    {
+        // return $id;
+        /* if (empty($ujian)) {
+            Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
+            return redirect(route('ujians.index'));
+        } */
+        return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta');
     }
 }

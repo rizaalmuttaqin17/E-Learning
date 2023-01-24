@@ -58,10 +58,10 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function beritas()
+    /* public function beritas()
     {
-        return $this->hasMany(\App\Models\Beritum::class, 'id_user');
-    }
+        return $this->hasMany(\App\Models\Berita::class, 'id_user');
+    } */
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

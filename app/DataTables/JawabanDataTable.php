@@ -32,7 +32,7 @@ class JawabanDataTable extends DataTable
         ->editColumn('id_pilihan', function($q){
             if($q['id_pilihan'] != null){
                 $pilihan = Pilihan::where('id_soal', $q['id_soal'])->where('benar', true)->first();
-                return $q['pilihan']['pilihan']."</br><span class='badge badge-info'>Jawaban Benar : ".$pilihan['pilihan']."</span>";
+                return $q['pilihan']['pilihan']."Benar : <span class='badge badge-info m-0'>".$pilihan['pilihan']."</span>";
             } else {
                 return $q['jawaban'];
             }
@@ -48,8 +48,7 @@ class JawabanDataTable extends DataTable
      */
     public function query(Jawaban $model)
     {
-        $soals = Soal::select('id')->where('id_ujian', $this->attributes['id'])->get();
-        return $model->newQuery()->whereIn('id_soal', $soals);
+        return $model->newQuery()->where('id_user', $this->attributes['id']);
     }
 
     /**
