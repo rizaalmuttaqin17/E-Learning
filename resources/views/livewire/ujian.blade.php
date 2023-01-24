@@ -15,9 +15,17 @@
         <b>Soal No. {{ $soal->currentPage() }}</b>
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
-        <div wire:ignore>
-            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:model="jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" rows="10" cols="30" ></textarea>
-        </div>
+        <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)"></textarea>
+        @if(COUNT($jawabanTerpilih)>0)
+            @foreach($jawabanTerpilih as $item)
+                @php $jawaban = explode('-', $item); @endphp
+            @if(in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ?$jawaban[1]:'' != "")
+                <script>
+                    document.getElementById("answer{{ $question['id'] }}").value = "{{ in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : '' }}";
+                </script>
+            @endif
+            @endforeach
+        @endif
         @else
             <i>Pilih salah satu jawaban dibawah ini:</i> <br>
             @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
@@ -44,6 +52,7 @@
         @endif
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 <script>
     // document.addEventListener('livewire:load', function () {
         $(document).ready(function () {
