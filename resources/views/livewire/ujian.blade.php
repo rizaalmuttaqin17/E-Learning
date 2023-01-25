@@ -15,7 +15,8 @@
         <b>Soal No. {{ $soal->currentPage() }}</b>
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
-        <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)"></textarea>
+        <trix-editor></trix-editor>
+        {{-- <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)"></textarea> --}}
         @if(COUNT($jawabanTerpilih)>0)
             @foreach($jawabanTerpilih as $item)
                 @php $jawaban = explode('-', $item); @endphp
