@@ -20,6 +20,8 @@ class Ujian extends Component
     public $jawaban = [];
     public $benar;
     public $totalSoal;
+    public $totalPG;
+    public $totalEssay;
     public $jawabanTerpilih = [];
     protected $listeners = ['endTimer' => 'saveJawaban'];
 
@@ -30,18 +32,13 @@ class Ujian extends Component
 
     public function soal(){
         $ujian = Ujians::findOrFail($this->idUjian);
-        $soalUjian = $ujian['soals'];
         $idSoal = Soal::where('id_ujian', $this->idUjian)->select('id')->get();
+        $soalPG = Soal::select('id')->where(['id_ujian' => $this->idUjian, 'id_tipe_soal' => 1])->take($ujian['jml_pg'])->get();
+        $soalEssay = Soal::select('id')->where(['id_ujian' => $this->idUjian, 'id_tipe_soal' => 2])->take($ujian['jml_essay'])->get();
         $jawaban = Jawaban::select('id_soal')->where('id_user', Auth()->id())->whereIn('id_soal', $idSoal)->first();
-        $jumlahSoal = $ujian['jml_pg']+$ujian['jml_essay'];
-
+        
         if($jawaban == null){
-            $this->totalSoal = $soalUjian->count();
-            if($this->totalSoal >= $jumlahSoal){
-                $soal = $ujian->soals()->take($ujian->jumlah_soal)->inRandomOrder(1)->paginate(1);
-            } else if($this->totalSoal < $jumlahSoal) {
-                $soal = $ujian->soals()->take($this->totalSoal)->inRandomOrder(1)->paginate(1);
-            }
+            $soal = Soal::whereIn('id', $soalEssay)->orWhereIn('id', $soalPG)->inRandomOrder(1)->paginate(1);
             return $soal;
         } else {
             Alert::warning('Peringatan', 'Anda sudah mengikuti ujian ini!');

@@ -10,13 +10,14 @@
             </div>
         </div>
     </div>
-    @foreach ($soal as $question)
+    @foreach ($soal->onEachSide(1) as $question)
     <div class="card-body">
         <b>Soal No. {{ $soal->currentPage() }}</b>
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
-        <trix-editor></trix-editor>
-        {{-- <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)"></textarea> --}}
+        <i>Isi Jawabanmu di Bawah sini : </i> <br>
+        {{-- <trix-editor></trix-editor> --}}
+        <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" cols="100" rows="7" style="height: 250px"></textarea>
         @if(COUNT($jawabanTerpilih)>0)
             @foreach($jawabanTerpilih as $item)
                 @php $jawaban = explode('-', $item); @endphp
@@ -28,7 +29,7 @@
             @endforeach
         @endif
         @else
-            <i>Pilih salah satu jawaban dibawah ini:</i> <br>
+            <i>Pilih Salah Satu Jawaban dibawah Ini : </i> <br>
             @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
             <div class="col-md-6">
                 @foreach ($row as $pilihan)
@@ -53,25 +54,6 @@
         @endif
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-<script>
-    // document.addEventListener('livewire:load', function () {
-        $(document).ready(function () {
-        $('.jawaban').summernote({
-            tabsize: 5,
-            dialogsInBody: true,
-            height: 200,
-            focus: true,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-            ],
-        });
-    // });
-    });
-</script>
 <script>
     var add_minutes =  function (dt, minutes) {
     return new Date(dt.getTime() + minutes*60000);
