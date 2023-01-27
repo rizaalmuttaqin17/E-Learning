@@ -6,6 +6,7 @@ return array (
   'fields' => 
   array (
     'id' => 'Id',
+    'id_prodi' => 'Program Studi',
     'name' => 'Name',
     'email' => 'Email',
     'email_verified_at' => 'Email Verified At',

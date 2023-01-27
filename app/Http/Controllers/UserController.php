@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\UserRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\ProgramStudi;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +46,8 @@ class UserController extends AppBaseController
     {
         $sRoles= Role::orderBy('name')->get();
         $roles=[];
-        return view('users.create', compact('sRoles', 'roles'));
+        $prodi = ProgramStudi::pluck('nama', 'id');
+        return view('users.create', compact('sRoles', 'roles', 'prodi'));
     }
 
     /**
@@ -75,6 +77,7 @@ class UserController extends AppBaseController
             $user = $this->userRepository->create($input);
             $user->syncRoles($roles);
             $user->password = Hash::make($input['password']);
+            $user['id_prodi'] = $input['id_prodi'];
             $user['tempat_lahir'] = $input['tempat_lahir'];
             $user['tanggal_lahir'] = $input['tanggal_lahir'];
             $user['agama'] = $input['agama'];
@@ -100,12 +103,13 @@ class UserController extends AppBaseController
     public function show($id)
     {
         $user = $this->userRepository->find($id);
+        $prodi = ProgramStudi::pluck('nama', 'id');
 
         if (empty($user)) {
             Flash::error(__('messages.not_found', ['model' => __('models/users.singular')]));
             return redirect(route('users.index'));
         }
-        return view('users.show')->with('user', $user);
+        return view('users.show', compact('prodi'))->with('user', $user);
     }
 
     /**
@@ -118,6 +122,7 @@ class UserController extends AppBaseController
     public function edit($id)
     {
         $user = $this->userRepository->find($id);
+        $prodi = ProgramStudi::pluck('nama', 'id');
 
         if (empty($user)) {
             Flash::error(__('messages.not_found', ['model' => __('models/users.singular')]));
@@ -126,7 +131,7 @@ class UserController extends AppBaseController
         $sRoles=Role::orderBy('name')->get();
         $roles=$user->roles->pluck('id')->toArray();
 
-        return view('users.edit', compact('sRoles', 'roles'))->with('user', $user);
+        return view('users.edit', compact('sRoles', 'roles', 'prodi'))->with('user', $user);
     }
 
     /**
@@ -176,6 +181,7 @@ class UserController extends AppBaseController
             if(isset($input['password'])){
                 $user->password = bcrypt($input['password']);
             }
+            $user['id_prodi'] = $input['id_prodi'];
             $user['tempat_lahir'] = $input['tempat_lahir'];
             $user['tanggal_lahir'] = $input['tanggal_lahir'];
             $user['agama'] = $input['agama'];

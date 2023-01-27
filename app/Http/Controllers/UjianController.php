@@ -15,6 +15,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Jawaban;
 use App\Models\MataKuliah;
 use App\Models\Pilihan;
+use App\Models\ProgramStudi;
 use App\Models\Soal;
 use App\Models\TipeSoal;
 use App\Models\Ujian;
@@ -54,7 +55,8 @@ class UjianController extends AppBaseController
     public function create()
     {
         $matkul = MataKuliah::pluck('nama', 'id');
-        return view('ujians.create', compact('matkul'));
+        $prodi = ProgramStudi::pluck('nama', 'id');
+        return view('ujians.create', compact('matkul', 'prodi'));
     }
 
     /**
@@ -69,6 +71,16 @@ class UjianController extends AppBaseController
         $input = $request->all();
         $input['id_user'] = Auth::id();
         $input['kode'] = substr(str_shuffle(md5(time())),0, 5);
+
+        if(is_numeric($input['id_mata_kuliah']) == true){
+            $request['id_mata_kuliah'] = $input['id_mata_kuliah'];
+        } else {
+            $matkul = new MataKuliah;
+            $matkul['nama'] = $input['id_mata_kuliah'];
+            $matkul->save();
+            $matkuls = MataKuliah::select('id', 'nama')->where('nama', $input['id_mata_kuliah'])->first();
+            $input['id_mata_kuliah'] = $matkuls['id'];
+        }
         // return $request;
         $ujian = $this->ujianRepository->create($input);
         Flash::success(__('messages.saved', ['model' => __('models/ujians.singular')]));
@@ -86,11 +98,13 @@ class UjianController extends AppBaseController
     {
         $ujian = $this->ujianRepository->find($id);
         $soal = Soal::where('id_ujian', $id)->first();
+        $prodi = ProgramStudi::pluck('nama', 'id');
+
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.show', compact('soal'))->with('ujian', $ujian);
+        return view('ujians.show', compact('soal', 'prodi'))->with('ujian', $ujian);
     }
 
     /**
@@ -105,12 +119,13 @@ class UjianController extends AppBaseController
         $ujian = $this->ujianRepository->find($id);
         $matkul = MataKuliah::pluck('nama', 'id');
         $soal = Soal::where('id_ujian', $id)->get();
+        $prodi = ProgramStudi::pluck('nama', 'id');
 
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.edit', compact('matkul', 'soal'))->with('ujian', $ujian);
+        return view('ujians.edit', compact('matkul', 'soal', 'prodi'))->with('ujian', $ujian);
     }
 
     /**
@@ -128,6 +143,16 @@ class UjianController extends AppBaseController
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
+        }
+
+        if(is_numeric($request['id_mata_kuliah']) == true){
+            $request['id_mata_kuliah'] = $request['id_mata_kuliah'];
+        } else {
+            $matkul = new MataKuliah;
+            $matkul['nama'] = $request['id_mata_kuliah'];
+            $matkul->save();
+            $matkuls = MataKuliah::select('id', 'nama')->where('nama', $request['id_mata_kuliah'])->first();
+            $request['id_mata_kuliah'] = $matkuls['id'];
         }
 
         $ujian = $this->ujianRepository->update($request->all(), $id);
@@ -353,5 +378,14 @@ class UjianController extends AppBaseController
             return redirect(route('ujians.index'));
         } */
         return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta');
+    }
+
+    public function nilaiSoal($id, Request $request, JawabanDataTable $jawabanDataTable)
+    {
+        $jawaban = Jawaban::find($id);
+        $jawaban->update([
+            'nilai' => $request['nilai'], 
+        ]);
+        return redirect()->back();
     }
 }

@@ -1,7 +1,7 @@
 <!-- Kode Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('kode', __('models/fakultas.fields.kode').':') !!}
-    {!! Form::text('kode', null, ['class' => 'form-control']) !!}
+    {!! Form::number('kode', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Nama Field -->

@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Jawaban extends Model
 {
     use SoftDeletes;
-
     use HasFactory;
 
     public $table = 'jawaban';

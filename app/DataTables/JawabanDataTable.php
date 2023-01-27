@@ -98,7 +98,7 @@ class JawabanDataTable extends DataTable
             'id_user' => new Column(['title' => __('models/jawabans.fields.id_user'), 'data' => 'id_user']),
             'id_soal' => new Column(['title' => __('models/jawabans.fields.id_soal'), 'data' => 'id_soal']),
             'id_pilihan' => new Column(['title' => __('models/jawabans.fields.id_pilihan'), 'data' => 'id_pilihan']),
-            'nilai' => new Column(['title' => __('models/jawabans.fields.nilai_jwb'), 'data' => 'nilai'])
+            'nilai' => new Column(['title' => __('models/jawabans.fields.nilai'), 'data' => 'nilai'])
         ];
     }
 

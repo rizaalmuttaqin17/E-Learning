@@ -34,6 +34,7 @@ class Ujian extends Model
     public $fillable = [
         'id_mata_kuliah',
         'id_user',
+        'id_prodi',
         'kode',
         'nama',
         'start',
@@ -55,6 +56,7 @@ class Ujian extends Model
         'id' => 'integer',
         'id_mata_kuliah' => 'integer',
         'id_user' => 'integer',
+        'id_prodi' => 'integer',
         'kode' => 'string',
         'nama' => 'string',
         'percobaan' => 'string',
@@ -72,6 +74,7 @@ class Ujian extends Model
     public static $rules = [
         'id_mata_kuliah' => 'nullable',
         'id_user' => 'nullable',
+        'id_prodi' => 'nullable',
         'kode' => 'nullable|string',
         'nama' => 'nullable|string|max:45',
         'jml_pg' => 'nullable|integer',
@@ -98,5 +101,13 @@ class Ujian extends Model
     public function soals()
     {
         return $this->hasMany(\App\Models\Soal::class, 'id_ujian');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function prodi()
+    {
+        return $this->hasMany(\App\Models\ProgramStudi::class, 'id_prodi');
     }
 }

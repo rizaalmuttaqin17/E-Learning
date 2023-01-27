@@ -19,6 +19,7 @@ class UjianRepository extends BaseRepository
     protected $fieldSearchable = [
         'id_mata_kuliah',
         'id_user',
+        'id_prodi',
         'kode',
         'nama',
         'start',

@@ -95,14 +95,14 @@ class ProgramStudiController extends AppBaseController
     public function edit($id)
     {
         $programStudi = $this->programStudiRepository->find($id);
-
+        $fakultas = Fakultas::pluck('nama', 'id');
         if (empty($programStudi)) {
             Flash::error(__('messages.not_found', ['model' => __('models/programStudis.singular')]));
 
             return redirect(route('programStudis.index'));
         }
 
-        return view('program_studis.edit')->with('programStudi', $programStudi);
+        return view('program_studis.edit', compact('fakultas'))->with('programStudi', $programStudi);
     }
 
     /**

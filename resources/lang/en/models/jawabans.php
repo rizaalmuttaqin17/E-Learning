@@ -10,7 +10,7 @@ return array (
     'id_soal' => 'Soal',
     'id_user' => 'Mahasiswa',
     'jawaban' => 'Jawaban',
-    'nilai_jwb' => 'Nilai Jawaban',
+    'nilai' => 'Nilai Jawaban',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'deleted_at' => 'Deleted At',

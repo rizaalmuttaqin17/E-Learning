@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    @foreach ($soal->onEachSide(1) as $question)
+    @foreach ($soal as $question)
     <div class="card-body">
         <b>Soal No. {{ $soal->currentPage() }}</b>
         <p>{!! $question['pertanyaan'] !!}</p><br>
@@ -29,10 +29,10 @@
             @endforeach
         @endif
         @else
-            <i>Pilih Salah Satu Jawaban dibawah Ini : </i> <br>
+            <i>Pilih Salah Satu Jawaban dibawah Ini : </i> <br><br>
             @foreach ($question['pilihan']->split($question['pilihan']->count()/2) as $row)
             <div class="col-md-6">
-                @foreach ($row as $pilihan)
+                @foreach ($row->shuffle() as $pilihan)
                 {!! Form::text('id_user', Auth::id(), ['hidden']) !!}
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="answer{{ $pilihan['id'] }}" wire:click="answer({{ $question['id'] }}, '{{ $pilihan['id'] }}')" name="answer" value="{{ $pilihan['id'] }}" {{ in_array($question['id'].'-'.$pilihan['id'], $jawabanTerpilih) ? 'checked=checked' : '' }}>

@@ -20,6 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
+        'id_prodi',
         'email',
         'agama',
         'no_induk',
@@ -69,5 +70,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function jawaban()
     {
         return $this->hasMany(\App\Models\Jawaban::class, 'id_user');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function prodi()
+    {
+        return $this->hasMany(\App\Models\ProgramStudi::class, 'id_prodi');
     }
 }

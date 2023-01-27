@@ -29,13 +29,13 @@
     </ul>
 </li>
 
-<li class="{{ Request::is('mataKuliahs*') ? 'active' : '' }}">
-    <a href="{{ route('mataKuliahs.index') }}"><span>@lang('models/mataKuliahs.plural')</span></a>
-</li>
 
 <li class="dropdown">
     <a href="#" class="nav-link has-dropdown"><i class="fas fa-cogs"></i><span>Settings</span></a>
     <ul class="dropdown-menu">
+        <li class="{{ Request::is('mataKuliahs*') ? 'active' : '' }}">
+            <a href="{{ route('mataKuliahs.index') }}"><span>@lang('models/mataKuliahs.plural')</span></a>
+        </li>
         <li class="{{ Request::is('fakultas*') ? 'active' : '' }}">
             <a href="{{ route('fakultas.index') }}"><span>@lang('models/fakultas.plural')</span></a>
         </li>

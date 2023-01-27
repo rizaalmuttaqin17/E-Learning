@@ -4,11 +4,11 @@
         {{-- Previous Page Link --}}
         @if ($soal->onFirstPage())
         <li class="disabled page-item" aria-disabled="true" aria-label="@lang('pagination.previous')">
-            <span class="page-link" aria-hidden="true">&lsaquo;</span>
+            <span class="page-link" aria-hidden="true">&lsaquo; Prev</span>
         </li>
         @else
         <li class="page-item">
-            <button type="button" class="page-link" wire:click="previousPage('page')" rel="next" aria-label="@lang('pagination.previous')">&lsaquo;</button>
+            <button type="button" class="page-link" wire:click="previousPage('page')" rel="next" aria-label="@lang('pagination.previous')">&lsaquo; Prev</button>
         </li>
         @endif
 
@@ -27,7 +27,7 @@
         <li class="page-item disabled"><span class="page-link">{{ $page }}</span></li>
         @else
         <li class="page-item">
-            <button type="button" wire:click="gotoPage({{ $page }}, 'page')" class="page-link" aria-label="Go to page 2">
+            <button type="button" wire:click="gotoPage({{ $page }}, 'page')" class="page-link" aria-label="Go to page {{ $page }}">
                 {{ $page }}
             </button>
             {{-- <a class="page-link" href="{{ $url }}">{{ $page }}</a> --}}
@@ -40,11 +40,11 @@
         {{-- Next Page Link --}}
         @if ($soal->hasMorePages())
         <li class="page-item">
-            <button type="button" class="page-link" wire:click="nextPage('page')" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</button>
+            <button type="button" class="page-link" wire:click="nextPage('page')" rel="next" aria-label="@lang('pagination.next')">Next &rsaquo;</button>
         </li>
         @else
         <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-            <span class="page-link" aria-hidden="true">&rsaquo;</span>
+            <span class="page-link" aria-hidden="true">Next &rsaquo;</span>
         </li>
         @endif
     </ul>

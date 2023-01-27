@@ -18,6 +18,7 @@ class UserRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'name',
+        'id_prodi',
         'email',
         'email_verified_at',
         'password',

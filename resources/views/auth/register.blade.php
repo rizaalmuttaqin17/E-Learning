@@ -26,39 +26,59 @@ Register
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="no_induk">NIM/NIDK/NIDN :</label><span class="text-danger">*</span>
-                        <input id="no_induk" type="number"
-                            class="form-control{{ $errors->has('no_induk') ? ' is-invalid' : '' }}" name="no_induk"
-                            tabindex="1" value="{{ old('no_induk') }}" required autofocus>
+                        <input id="no_induk" type="number" class="form-control{{ $errors->has('no_induk') ? ' is-invalid' : '' }}" name="no_induk" tabindex="1" value="{{ old('no_induk') }}" required autofocus>
                         <div class="invalid-feedback">
                             {{ $errors->first('no_induk') }}
                         </div>
                     </div>
                 </div>
+
+                <!-- Prodi Field -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('id_prodi', __('models/users.fields.id_prodi').':') !!}<span class="text-danger">*</span>
+                        {!! Form::select('id_prodi', $prodi, null, ['class' => 'form-control', 'placeholder'=>'Pilih Program Studi', 'required']) !!}
+                    </div>
+                </div>
+
                 <!-- Agama Field -->
-                <div class="form-group col-sm-6">
-                    {!! Form::label('agama', __('models/users.fields.agama').':') !!}<span class="text-danger">*</span>
-                    {!! Form::select('agama', array('Islam' => 'Islam', 'Protestan'=>'Protestan',
-                    'Katholik'=>'Katholik', 'Hindu'=>'Hindu', 'Buddha'=>'Buddha', 'Khonghucu'=>'Khonghucu'), null,
-                    ['class' => 'form-control', 'placeholder'=>'Pilih Agama', 'required']) !!}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('agama', __('models/users.fields.agama').':') !!}<span class="text-danger">*</span>
+                        {!! Form::select('agama', array('Islam' => 'Islam', 'Protestan'=>'Protestan', 'Katholik'=>'Katholik', 'Hindu'=>'Hindu', 'Buddha'=>'Buddha', 'Khonghucu'=>'Khonghucu'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Agama', 'required']) !!}
+                    </div>
                 </div>
 
                 <!-- Jenis Kelamin Field -->
-                <div class="form-group col-sm-6">
-                    {!! Form::label('jenis_kelamin', 'Jenis Kelamin') !!}<span class="text-danger">*</span>
-                    {!! Form::select('jenis_kelamin', array('L' => 'Laki-Laki', 'P'=>'Perempuan'), null, ['class' =>
-                    'form-control', 'placeholder'=>'Pilih Jenis Kelamin', 'required']) !!}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('jenis_kelamin', 'Jenis Kelamin') !!}<span class="text-danger">*</span>
+                        {!! Form::select('jenis_kelamin', array('L' => 'Laki-Laki', 'P'=>'Perempuan'), null, ['class' => 'form-control', 'placeholder'=>'Pilih Jenis Kelamin', 'required']) !!}
+                    </div>
+                </div>
+
+                <!-- Telepon Field -->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('telepon', __('models/users.fields.telepon').':') !!}<span class="text-danger">*</span>
+                        {!! Form::number('telepon', null, ['class' => 'form-control', 'placeholder'=>'Ex : 08xxxxx', 'required']) !!}
+                    </div>
                 </div>
 
                 <!-- Tempat Lahir Field -->
-                <div class="form-group col-sm-6">
-                    {!! Form::label('tempat_lahir', __('models/users.fields.tempat_lahir').':') !!}<span class="text-danger">*</span>
-                    {!! Form::text('tempat_lahir', null, ['class' => 'form-control', 'required']) !!}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('tempat_lahir', __('models/users.fields.tempat_lahir').':') !!}<span class="text-danger">*</span>
+                        {!! Form::text('tempat_lahir', null, ['class' => 'form-control', 'required']) !!}
+                    </div>
                 </div>
 
                 <!-- Tanggal Lahir Field -->
-                <div class="form-group col-sm-6">
-                    {!! Form::label('tanggal_lahir', __('models/users.fields.tanggal_lahir').':') !!}<span class="text-danger">*</span>
-                    {!! Form::date('tanggal_lahir', null, ['class' => 'form-control datepicker','id'=>'tanggal_lahir', 'required']) !!}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        {!! Form::label('tanggal_lahir', __('models/users.fields.tanggal_lahir').':') !!}<span class="text-danger">*</span>
+                        {!! Form::date('tanggal_lahir', null, ['class' => 'form-control datepicker','id'=>'tanggal_lahir', 'required', 'autofocus']) !!}
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -72,6 +92,7 @@ Register
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password" class="control-label">Password : </label><span

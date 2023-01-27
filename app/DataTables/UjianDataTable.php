@@ -50,7 +50,7 @@ class UjianDataTable extends DataTable
         } else if(Auth::user()->hasRole('Dosen')){
             return $model->where('id_user', Auth::id())->newQuery();
         } else {
-            return $model->newQuery();
+            return $model->where('id_prodi', Auth::user()->id_prodi)->orWhere('id_prodi', null)->newQuery();
         }
     }
 

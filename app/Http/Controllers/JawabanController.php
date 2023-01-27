@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateJawabanRequest;
 use App\Repositories\JawabanRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Soal;
+use App\Models\User;
 use Response;
 
 class JawabanController extends AppBaseController
@@ -52,11 +54,8 @@ class JawabanController extends AppBaseController
     public function store(CreateJawabanRequest $request)
     {
         $input = $request->all();
-
         $jawaban = $this->jawabanRepository->create($input);
-
         Flash::success(__('messages.saved', ['model' => __('models/jawabans.singular')]));
-
         return redirect(route('jawabans.index'));
     }
 
@@ -73,7 +72,6 @@ class JawabanController extends AppBaseController
 
         if (empty($jawaban)) {
             Flash::error(__('messages.not_found', ['model' => __('models/jawabans.singular')]));
-
             return redirect(route('jawabans.index'));
         }
 
@@ -90,14 +88,14 @@ class JawabanController extends AppBaseController
     public function edit($id)
     {
         $jawaban = $this->jawabanRepository->find($id);
-
+        $soal = Soal::where('id', $jawaban['id_soal'])->first();
+        $user = User::where('id', $jawaban['id_user'])->first();
         if (empty($jawaban)) {
             Flash::error(__('messages.not_found', ['model' => __('models/jawabans.singular')]));
-
             return redirect(route('jawabans.index'));
         }
 
-        return view('jawabans.edit')->with('jawaban', $jawaban);
+        return view('jawabans.edit', compact('soal', 'user'))->with('jawaban', $jawaban);
     }
 
     /**
@@ -108,21 +106,18 @@ class JawabanController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateJawabanRequest $request)
+    public function update($id, UpdateJawabanRequest $request, JawabanDataTable $jawabanDataTable)
     {
         $jawaban = $this->jawabanRepository->find($id);
-
-        if (empty($jawaban)) {
+        // return $request;
+        /* if (empty($jawaban)) {
             Flash::error(__('messages.not_found', ['model' => __('models/jawabans.singular')]));
-
             return redirect(route('jawabans.index'));
-        }
-
+        } */
         $jawaban = $this->jawabanRepository->update($request->all(), $id);
 
         Flash::success(__('messages.updated', ['model' => __('models/jawabans.singular')]));
-
-        return redirect(route('jawabans.index'));
+        return redirect()->back();
     }
 
     /**
@@ -138,14 +133,12 @@ class JawabanController extends AppBaseController
 
         if (empty($jawaban)) {
             Flash::error(__('messages.not_found', ['model' => __('models/jawabans.singular')]));
-
             return redirect(route('jawabans.index'));
         }
 
         $this->jawabanRepository->delete($id);
 
         Flash::success(__('messages.deleted', ['model' => __('models/jawabans.singular')]));
-
         return redirect(route('jawabans.index'));
     }
 }
