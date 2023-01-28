@@ -22,7 +22,7 @@ class JawabanDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         return $dataTable
-        ->addColumn('action', 'jawabans.datatables_actions')
+        ->addColumn('action', 'ujians.table_nilai_actions')
         ->editColumn('id_user', function($q){
             return $q['users']['name'];
         })
@@ -32,7 +32,7 @@ class JawabanDataTable extends DataTable
         ->editColumn('id_pilihan', function($q){
             if($q['id_pilihan'] != null){
                 $pilihan = Pilihan::where('id_soal', $q['id_soal'])->where('benar', true)->first();
-                return $q['pilihan']['pilihan']."Benar : <span class='badge badge-info m-0'>".$pilihan['pilihan']."</span>";
+                return $q['pilihan']['pilihan']."Benar : ".$pilihan['pilihan'];
             } else {
                 return $q['jawaban'];
             }

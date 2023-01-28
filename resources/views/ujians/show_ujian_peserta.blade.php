@@ -16,8 +16,8 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header">
+                <h3>Ujian {{ $ujian['matkul']['nama'] }}</h3>
             </div>
-        
             <div class="card-body">
                 {!! $dataTable->table(['width' => '100%', 'class' => 'table table-striped table-bordered']) !!}
             

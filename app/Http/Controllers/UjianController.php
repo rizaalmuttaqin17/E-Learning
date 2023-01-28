@@ -100,11 +100,19 @@ class UjianController extends AppBaseController
         $soal = Soal::where('id_ujian', $id)->first();
         $prodi = ProgramStudi::pluck('nama', 'id');
 
+        $idSoal = Soal::where('id_ujian', $id)->select('id')->get();
+        $soalPG = Soal::where('id_ujian', $id)->where('id_tipe_soal', 1)->select('id')->get();
+        $soalEssay = Soal::where('id_ujian', $id)->where('id_tipe_soal', 2)->select('id')->get();
+        $jawaban = Jawaban::select('id_soal')->where('id_user', Auth::id())->whereIn('id_soal', $idSoal)->get();
+        $jawabans = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $idSoal)->get();
+        $jawabanPG = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalPG)->get();
+        $jawabanEssay = Jawaban::where('id_user', Auth::id())->whereIn('id_soal', $soalEssay)->get();
+
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return view('ujians.show', compact('soal', 'prodi'))->with('ujian', $ujian);
+        return view('ujians.show', compact('soal', 'prodi', 'jawaban', 'jawabans', 'jawabanPG', 'jawabanEssay'))->with('ujian', $ujian);
     }
 
     /**
@@ -372,12 +380,11 @@ class UjianController extends AppBaseController
 
     public function showUjianPeserta($id, JawabanDataTable $jawabanDataTable)
     {
-        // return $id;
-        /* if (empty($ujian)) {
-            Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
-            return redirect(route('ujians.index'));
-        } */
-        return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta');
+        $jawaban = Jawaban::where('id_user', $id)->first();
+        $soal = Soal::where('id', $jawaban['id_soal'])->first();
+        $ujian = Ujian::where('id', $soal['id_ujian'])->first();
+        // return $ujian;
+        return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta', compact('ujian'));
     }
 
     public function nilaiSoal($id, Request $request, JawabanDataTable $jawabanDataTable)
@@ -386,6 +393,7 @@ class UjianController extends AppBaseController
         $jawaban->update([
             'nilai' => $request['nilai'], 
         ]);
+        toast('Nilai Berhasil Tersimpan!','success');
         return redirect()->back();
     }
 }
