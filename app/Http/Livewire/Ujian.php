@@ -60,7 +60,7 @@ class Ujian extends Component
                 if($soalUjian['id_tipe_soal'] == 1){
                     $pilihan = Pilihan::where('id', $jawabans[1])->first();
                     if($pilihan['benar'] == "true"){
-                        $this->benar = 100/$ujian['jml_pg'];
+                        $this->benar = 100;
                     } else {
                         $this->benar = 0;
                     }

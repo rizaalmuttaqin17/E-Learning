@@ -11,7 +11,7 @@
             <img alt="image" src="{{ asset('assets-elearning/img/logo/unu_kt.png') }}"
                 class="rounded-circle mr-1 thumbnail-rounded user-thumbnail ">
             <div class="d-sm-none d-lg-inline-block">
-                Hi, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
+                Hi, {{\Illuminate\Support\Facades\Auth::user()->name}} ({{\Illuminate\Support\Facades\Auth::user()->roles()->pluck('name')->first()}})</div>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right">

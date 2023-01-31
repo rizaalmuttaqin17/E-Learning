@@ -32,14 +32,15 @@ Peserta Ujian
                     <li class="list-group-item">Ujian ditutup : {{ TanggalID($ujian->end) }}</li>
                 </ul>
             </div>
-            {!! $dataTable->table(['width' => '100%', 'class' => 'table table-striped table-bordered']) !!}
-
             <div class="card-footer">
             </div>
         </div>
         <div class="card">
-            <div class="card-header">List Mahasiswa Yang Mengikuti Ujian</div>
+            <div class="card-header">
+                <h4><i class="fas fa-exam"></i>List Peserta Selesai Ujian</h4>
+            </div>
             <div class="card-body">
+                {!! $dataTable->table(['width' => '100%', 'class' => 'table table-striped table-bordered']) !!}
                 @push('scripts')
                 @include('layouts.datatables_js')
                 {!! $dataTable->scripts() !!}

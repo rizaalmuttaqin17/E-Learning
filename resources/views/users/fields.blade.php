@@ -1,13 +1,19 @@
 <!-- Name Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-4">
     {!! Form::label('name', __('models/users.fields.name').':') !!}
     {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 <!-- Email Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-4">
     {!! Form::label('email', __('models/users.fields.email').':') !!}
     {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+</div>
+
+<!-- Jenis Kelamin Field -->
+<div class="form-group col-sm-4">
+    {!! Form::label('id_prodi', 'Program Studi') !!}
+    {!! Form::select('id_prodi', $prodi, null, ['class' => 'form-control', 'placeholder'=>'Pilih Program Studi', 'required']) !!}
 </div>
 
 <!-- Agama Field -->
