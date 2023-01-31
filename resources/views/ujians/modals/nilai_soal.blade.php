@@ -1,4 +1,4 @@
-<div id="isiNilai" class="modal fade" tabindex="-1" role="dialog">
+<div id="isiNilai{{ $model['id'] }}" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <!-- Modal content-->
         <div class="modal-content">
@@ -6,7 +6,7 @@
                 <h5 class="modal-title">Isi Nilai Soal</h5>
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
-            {!! Form::open(['route' => ['ujians.nilai-soal', $id, 'method'=>'post']]) !!}
+            {!! Form::open(['route' => ['ujians.nilai-soal', $model['id'], 'method'=>'post']]) !!}
             <div class="modal-body">
                 {{csrf_field()}}
                 <div class="row">
@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group col-sm-12" style="display: inline-grid;">
                         <label for="jawaban">Jawaban</label>
-                        <textarea name="jawaban" id="jawaban" class="form-control" cols="30" rows="10" disabled>{!! $jawaban !!}</textarea>
+                        <textarea name="jawaban" id="jawaban" class="form-control" cols="30" rows="10" disabled>{!! $model['jawaban'] !!}</textarea>
                     </div>
                     <div class="form-group col-sm-6" style="display: inline-grid;">
                         <label for="peserta">Peserta</label>
