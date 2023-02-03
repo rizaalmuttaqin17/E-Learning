@@ -11,11 +11,11 @@
 <!-- Pertanyaan Field -->
 <div class="form-group col-sm-12 col-lg-12">
     {!! Form::label('pertanyaan', __('models/soals.fields.pertanyaan').':') !!}
-    {!! Form::textarea('pertanyaan', null, ['class' => 'form-control pertanyaan']) !!}
+    {!! Form::textarea('pertanyaan', isset($soal['pertanyaan'])&&!is_null($soal['pertanyaan'])?$soal['pertanyaan']:null, ['class' => 'form-control pertanyaan']) !!}
 </div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit(__('crud.save'), ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('soals.index') }}" class="btn btn-light">@lang('crud.cancel')</a>
+    <a href="{{ route('ujians.edit-soal', $soal['id_ujian']) }}" class="btn btn-light">@lang('crud.cancel')</a>
 </div>

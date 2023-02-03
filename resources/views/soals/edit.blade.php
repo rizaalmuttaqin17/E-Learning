@@ -38,7 +38,7 @@
                                     {!! Form::close() !!}
                                 </div>
                                 @elseif($soal['id_tipe_soal'] == 2)
-                                <div class="tab-pane fade" id="essay" role="tabpanel" aria-labelledby="essay-tab">
+                                <div class="tab-pane fade show active" id="essay" role="tabpanel" aria-labelledby="essay-tab">
                                     {!! Form::model($soal, ['route' => ['ujians.updateSoal', $soal->id], 'method' => 'patch']) !!}
                                     <div class="row">
                                         <div class="col-lg-12">

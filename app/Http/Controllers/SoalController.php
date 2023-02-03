@@ -189,6 +189,6 @@ class SoalController extends AppBaseController
 
         Flash::success(__('messages.deleted', ['model' => __('models/soals.singular')]));
 
-        return redirect(route('soals.index'));
+        return redirect()->back();
     }
 }

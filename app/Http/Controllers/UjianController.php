@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 use DB;
 use Response;
+use Image;
 
 class UjianController extends AppBaseController
 {
@@ -219,10 +220,6 @@ class UjianController extends AppBaseController
     public function saveSoal($id, Request $request)
     {
         $input = $request->all();
-        // return $input;
-        $ujian = $this->ujianRepository->find($id);
-        $soalPG = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 1)->get();
-        $soalEssay = Soal::select('id')->where('id_ujian', $id)->where('id_tipe_soal', 2)->get();
         $content = $request['pertanyaan'];
         $dom = new \DomDocument();
         @$dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -233,8 +230,12 @@ class UjianController extends AppBaseController
                 preg_match('/data:image\/(?<mime>.*?)\;/', $imageSrc, $mime);
                 $mimeType = $mime['mime'];
                 $filename = uniqid();
-                $filePath = "/uploads/$filename.$mimeType";
+                $filePath = "uploads/$filename.$mimeType";
                 Image::make($imageSrc)
+                    ->resize(800, 800, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
                     ->encode($mimeType, 100)
                     ->save(public_path($filePath));
                 $newImageSrc = asset($filePath);
@@ -333,6 +334,30 @@ class UjianController extends AppBaseController
 
     public function updateSoal($id, Request $request){
         $input = $request->all();
+        $content = $request['pertanyaan'];
+        $dom = new \DomDocument();
+        @$dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $image) {
+            $imageSrc = $image->getAttribute('src');
+            if (preg_match('/data:image/', $imageSrc)) {
+                preg_match('/data:image\/(?<mime>.*?)\;/', $imageSrc, $mime);
+                $mimeType = $mime['mime'];
+                $filename = uniqid();
+                $filePath = "uploads/$filename.$mimeType";
+                Image::make($imageSrc)
+                    ->resize(800, 800, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->encode($mimeType, 100)
+                    ->save(public_path($filePath));
+                $newImageSrc = asset($filePath);
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $newImageSrc);
+            }
+        }
+        $content = $dom->saveHTML();
         if($request['id_tipe_soal'] == 1){
             $soal = Soal::findOrFail($id)->update([
                 'id_ujian' => $request['id_ujian'],

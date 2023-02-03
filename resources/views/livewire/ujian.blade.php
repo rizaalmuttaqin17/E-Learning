@@ -18,6 +18,18 @@
         <i>Isi Jawabanmu di Bawah sini : </i> <br>
         {{-- <trix-editor></trix-editor> --}}
         <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" cols="100" rows="7" style="height: 250px"></textarea>
+        <div wire:ignore>
+            <script>
+                $(document).ready(function () {
+                    $('.jawaban').summernote({
+                        tabsize: 5,
+                        dialogsInBody: true,
+                        height: 200,
+                        focus: true
+                    });
+                });
+            </script>
+        </div>
         @if(COUNT($jawabanTerpilih)>0)
             @foreach($jawabanTerpilih as $item)
                 @php $jawaban = explode('-', $item); @endphp
@@ -54,6 +66,7 @@
         @endif
     </div>
 </div>
+
 <script>
     var add_minutes =  function (dt, minutes) {
     return new Date(dt.getTime() + minutes*60000);
