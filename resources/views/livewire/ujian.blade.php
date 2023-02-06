@@ -16,26 +16,28 @@
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
         <i>Isi Jawabanmu di Bawah sini : </i> <br>
-        {{-- <trix-editor></trix-editor> --}}
-        <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" cols="100" rows="7" style="height: 250px"></textarea>
         <div wire:ignore>
-            <script>
-                $(document).ready(function () {
-                    $('.jawaban').summernote({
-                        tabsize: 5,
-                        dialogsInBody: true,
-                        height: 200,
-                        focus: true
-                    });
-                });
-            </script>
+            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" style="height: 250px"></textarea>
         </div>
         @if(COUNT($jawabanTerpilih)>0)
             @foreach($jawabanTerpilih as $item)
                 @php $jawaban = explode('-', $item); @endphp
-            @if(in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ?$jawaban[1]:'' != "")
+            @if(in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1]:'' != "")
                 <script>
-                    document.getElementById("answer{{ $question['id'] }}").value = "{{ in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : '' }}";
+                    // document.getElementById("answer{{ $question['id'] }}").value = "{{ in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : '' }}";
+                    $("#answer{{ $question['id'] }}").val("{!! in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : "" !!}");
+                </script>
+                <script>
+                    ClassicEditor
+                        .create(document.querySelector('.jawaban'))
+                        .then(editor => {
+                            editor.model.document.on('change:data', () => {
+                            @this.set('jawaban', editor.getData());
+                            })
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 </script>
             @endif
             @endforeach

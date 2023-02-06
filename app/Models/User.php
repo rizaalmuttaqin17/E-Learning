@@ -79,4 +79,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(\App\Models\ProgramStudi::class, 'id_prodi');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function ujians()
+    {
+        return $this->hasMany(\App\Models\Ujian::class, 'id_user');
+    }
 }

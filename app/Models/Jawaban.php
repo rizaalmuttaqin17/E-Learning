@@ -66,7 +66,7 @@ class Jawaban extends Model
         'id_pilihan' => 'nullable',
         'id_soal' => 'nullable',
         'id_user' => 'nullable',
-        'jawaban' => 'nullable|string|max:145',
+        'jawaban' => 'nullable|string',
         'nilai' => 'nullable|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',

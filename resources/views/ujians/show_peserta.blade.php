@@ -22,7 +22,6 @@ Peserta Ujian
                 <h4><i class="fas fa-exam"></i>Ujian {{ $ujian['matkul']['nama'] }}</h4>
                 @endif
             </div>
-
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Durasi Ujian : {{ $ujian['durasi'] }} Menit</li>
@@ -49,5 +48,22 @@ Peserta Ujian
         </div>
     </div>
 </div>
-
+@push('scripts')
+<script type="text/javascript">
+    function confirmDelete() {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                $('#form_id').submit();
+            } 
+        });
+    }
+</script>
+@endpush
 @endsection

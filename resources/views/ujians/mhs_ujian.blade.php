@@ -27,5 +27,4 @@ Ujian {{ $ujian['matkul']['nama'] }}
         </div>
     </div>
 </section>
-
 @stop

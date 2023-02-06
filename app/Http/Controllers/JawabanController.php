@@ -139,6 +139,6 @@ class JawabanController extends AppBaseController
         $this->jawabanRepository->delete($id);
 
         Flash::success(__('messages.deleted', ['model' => __('models/jawabans.singular')]));
-        return redirect(route('jawabans.index'));
+        return redirect()->back();
     }
 }

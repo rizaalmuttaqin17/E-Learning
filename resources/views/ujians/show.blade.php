@@ -51,13 +51,14 @@
     </div>
 </div>
 @role('Mahasiswa')
+@if ($jawabans != null)
 <div class="card">
     <div class="card-header">List Jawaban Kamu</div>
     <div class="card-body">
         @if ($jawabans == null)
             Tidak Ada Data
         @else
-            <div class="table-responsive">
+            <div class="table table-striped">
                 <table class="table" id="jawaban-table">
                     <thead class=" text-center">
                         <tr>
@@ -89,6 +90,7 @@
         @endif
     </div>
 </div>
+@endif
 @endrole
 <script type="text/javascript">
     function goBack() {

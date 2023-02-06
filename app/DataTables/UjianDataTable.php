@@ -22,8 +22,10 @@ class UjianDataTable extends DataTable
             $dataTable = new EloquentDataTable($query);
             return $dataTable
             ->addColumn('action', 'ujians.datatables_actions')
-            ->editColumn('id_mata_kuliah', function($query){
-                if(Auth::user()->hasRole('Admin|Dosen')){
+            ->editColumn('matkul.nama', function($query){
+                if(Auth::user()->hasRole('Admin')){
+                    return "<u>".$query['matkul']['nama']."</u><br>Kode Ujian : ".$query['kode']."<br>Pembuat : <u>". $query['users']['name'] . "</u>";
+                } else if(Auth::user()->hasRole('Dosen')){
                     return "<u>".$query['matkul']['nama']."</u><br>Kode Ujian : ".$query['kode']."";
                 } else {
                     return "<u>".$query['matkul']['nama'];
@@ -34,7 +36,7 @@ class UjianDataTable extends DataTable
                 return TanggalID($query['start']).'<br><span class="badge badge-info">Sampai</span><br>'.TanggalID($query['end']);
             })
             ->editColumn('status', 'ujians.table_status')
-            ->rawColumns(['action', 'status', 'id_mata_kuliah', 'jml_pg', 'start']);
+            ->rawColumns(['action', 'status', 'matkul.nama', 'jml_pg', 'start']);
     }
 
     /**
@@ -46,11 +48,11 @@ class UjianDataTable extends DataTable
     public function query(Ujian $model)
     {
         if(Auth::user()->hasRole('Admin')){
-            return $model->newQuery();
+            return $model->newQuery()->with('matkul', 'users');
         } else if(Auth::user()->hasRole('Dosen')){
-            return $model->where('id_user', Auth::id())->newQuery();
+            return $model->where('id_user', Auth::id())->newQuery()->with('matkul');
         } else {
-            return $model->where('id_prodi', Auth::user()->id_prodi)->orWhere('id_prodi', null)->newQuery();
+            return $model->where('id_prodi', Auth::user()->id_prodi)->orWhere('id_prodi', null)->newQuery()->with('matkul');
         }
     }
 
@@ -93,7 +95,7 @@ class UjianDataTable extends DataTable
             'id' => ['title' => 'No.', 'orderable' => false, 'searchable' => false, 'render' => function() {
                 return 'function(data,type,fullData,meta){return meta.settings._iDisplayStart+meta.row+1;}';
             }],
-            'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'id_mata_kuliah']),
+            'id_mata_kuliah' => new Column(['title' => __('models/ujians.fields.id_mata_kuliah'), 'data' => 'matkul.nama']),
             'jml_pg' => new Column(['title' => 'Jumlah Soal', 'data' => 'jml_pg']),
             'start' => new Column(['title' => __('models/ujians.fields.start'), 'data' => 'start', 'class'=>'text-center']),
         ];

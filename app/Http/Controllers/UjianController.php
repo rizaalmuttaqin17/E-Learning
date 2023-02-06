@@ -409,7 +409,12 @@ class UjianController extends AppBaseController
         $soal = Soal::where('id', $jawaban['id_soal'])->first();
         $ujian = Ujian::where('id', $soal['id_ujian'])->first();
         // return $ujian;
-        return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta', compact('ujian'));
+        if($jawaban != null){
+            return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta', compact('ujian'));
+        } else {
+            Alert::warning('Warning', 'Belum ada peserta pada ujian ini!');
+            return redirect()->back();
+        }
     }
 
     public function nilaiSoal($id, Request $request, JawabanDataTable $jawabanDataTable)

@@ -110,4 +110,12 @@ class Ujian extends Model
     {
         return $this->hasMany(\App\Models\ProgramStudi::class, 'id_prodi');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function users()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'id_user');
+    }
 }
