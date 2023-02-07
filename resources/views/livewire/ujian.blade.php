@@ -16,28 +16,14 @@
         <p>{!! $question['pertanyaan'] !!}</p><br>
         @if ($question['id_tipe_soal'] == 2)
         <i>Isi Jawabanmu di Bawah sini : </i> <br>
-        <div wire:ignore>
-            <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" style="height: 250px"></textarea>
-        </div>
+        <textarea id="answer{{ $question['id'] }}" name="answer" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" style="height: 250px; white-space: break-spaces;"></textarea>
         @if(COUNT($jawabanTerpilih)>0)
-            @foreach($jawabanTerpilih as $item)
-                @php $jawaban = explode('-', $item); @endphp
+        @foreach($jawabanTerpilih as $item)
+        @php $jawaban = explode('-', $item); @endphp
             @if(in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1]:'' != "")
                 <script>
-                    // document.getElementById("answer{{ $question['id'] }}").value = "{{ in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : '' }}";
-                    $("#answer{{ $question['id'] }}").val("{!! in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : "" !!}");
-                </script>
-                <script>
-                    ClassicEditor
-                        .create(document.querySelector('.jawaban'))
-                        .then(editor => {
-                            editor.model.document.on('change:data', () => {
-                            @this.set('jawaban', editor.getData());
-                            })
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
+                    $("#answer{{ $question['id'] }}").val("{!! in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? nl2br($jawaban[1]) : "" !!}").html();
+                    console.log("{!! in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : "" !!}");
                 </script>
             @endif
             @endforeach
