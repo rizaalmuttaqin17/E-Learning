@@ -19,6 +19,7 @@ use App\Models\ProgramStudi;
 use App\Models\Soal;
 use App\Models\TipeSoal;
 use App\Models\Ujian;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -396,21 +397,24 @@ class UjianController extends AppBaseController
     {
         $ujian = $this->ujianRepository->find($id);
         $soal = Soal::where('id_ujian', $id)->get();
+        $soals = Soal::select('id')->where('id_ujian', $id)->get();
+        $jawaban = Jawaban::select('id_user')->whereIn('id_soal', $soals)->get();
+        $user = User::whereIn('id', $jawaban)->get();
         if (empty($ujian)) {
             Flash::error(__('messages.not_found', ['model' => __('models/ujians.singular')]));
             return redirect(route('ujians.index'));
         }
-        return $userJawabanDataTable->with('id', $id)->render('ujians.show_peserta', compact('ujian', 'soal'));
+        return $userJawabanDataTable->with('id', $id)->render('ujians.show_peserta', compact('ujian', 'soal', 'user'));
     }
 
-    public function showUjianPeserta($id, JawabanDataTable $jawabanDataTable)
+    public function showUjianPeserta($id, $idUjian, JawabanDataTable $jawabanDataTable)
     {
-        $jawaban = Jawaban::where('id_user', $id)->first();
-        $soal = Soal::where('id', $jawaban['id_soal'])->first();
-        $ujian = Ujian::where('id', $soal['id_ujian'])->first();
+        $jawaban = Jawaban::select('id_soal')->where('id_user', $id)->get();
+        $soal = Soal::where('id_ujian', $idUjian)->whereIn('id', $jawaban)->get();
+        $ujian = Ujian::where('id', $idUjian)->first();
         // return $ujian;
         if($jawaban != null){
-            return $jawabanDataTable->with('id', $id)->render('ujians.show_ujian_peserta', compact('ujian'));
+            return $jawabanDataTable->with(['id' => $id, 'idUjian' => $idUjian])->render('ujians.show_ujian_peserta', compact('ujian'));
         } else {
             Alert::warning('Warning', 'Belum ada peserta pada ujian ini!');
             return redirect()->back();

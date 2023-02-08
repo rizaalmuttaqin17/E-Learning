@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Jawaban;
 use App\Models\Pilihan;
 use App\Models\Soal;
+use App\Models\Ujian;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Column;
@@ -48,7 +49,8 @@ class JawabanDataTable extends DataTable
      */
     public function query(Jawaban $model)
     {
-        return $model->newQuery()->where('id_user', $this->attributes['id']);
+        $soal = Soal::select('id')->where('id_ujian', $this->attributes['idUjian'])->get();
+        return $model->newQuery()->where('id_user', $this->attributes['id'])->whereIn('id_soal', $soal);
     }
 
     /**

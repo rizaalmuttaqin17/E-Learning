@@ -17,8 +17,7 @@ class Ujian extends Component
 
     public $idUjian;
     public $idSoals;
-    public $jawaban = [];
-    public $tes;
+    public $jawab = [];
     public $benar;
     public $totalSoal;
     public $totalPG;
