@@ -39,6 +39,7 @@ class Ujian extends Component
         
         if($jawaban == null){
             $soal = Soal::whereIn('id', $soalEssay)->orWhereIn('id', $soalPG)->inRandomOrder(1)->paginate(1);
+            $this->emit('reset');
             return $soal;
         } else {
             Alert::warning('Peringatan', 'Anda sudah mengikuti ujian ini!');

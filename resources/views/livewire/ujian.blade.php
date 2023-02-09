@@ -17,26 +17,33 @@
         @if ($question['id_tipe_soal'] == 2)
         <span class="badge badge-danger">Untuk sementara, gunakan (\n) dilarang menggunakan enter saat menjawab Essay!</span><br>
         <label for="answer{{ $question['id'] }}"><i>Isi Jawabanmu di Bawah sini : </i></label>
-        <textarea id="answer{{ $question['id'] }}" name="answer{{ $question['id'] }}" class="form-control jawaban" wire:change="answer({{ $question['id'] }}, $event.target.value)" style="height: 250px"></textarea>
+        <textarea id="answer{{ $question['id'] }}" class="form-control summernote" style="height: 250px" wire:change="answer({{ $question['id'] }}, $event.target.value)"></textarea>
         {{-- <trix-editor input="answer{{ $question['id'] }}" ></trix-editor> --}}
         {{-- @if(COUNT($jawabanTerpilih) > 0) --}}
+        @push('scripts')
+        <script>
+            Livewire.on('reset', () => {
+                $('.summernote').summernote({
+                tabsize: 3,
+                dialogsInBody: true,
+                height: 200,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['insert', ['picture', 'link', 'math']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                ],
+            });
+            });
+        </script>
+        @endpush
         @foreach($jawabanTerpilih as $item)
         @php $jawaban = explode('-', $item); @endphp
         @if(in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1]:'' != "")
         <script>
             $("#answer{{ $question['id'] }}").val("{{ in_array($question['id'].'-'.$jawaban[1], $jawabanTerpilih) ? $jawaban[1] : "" }}");
             console.log($("#answer{{ $question['id'] }}").val());
-            // var element = document.querySelector("trix-editor");
-            // addEventListener("trix-change", function(event) {
-            //     console.log(document.querySelector("trix-editor").value);
-            //     @this.set('jawab', element.getAttribute('value'))
-            // })
-            /* document.addEventListener('trix-blur', function (e) {
-                var doc = element.editor.getDocument();
-                console.log(document.querySelector("trix-editor").value);
-                element.editor.setSelectedRange([0, 0]);
-                element.editor.insertString($("#answer{{ $question['id'] }}").val());
-            }); */
         </script>
         @endif
         @endforeach
