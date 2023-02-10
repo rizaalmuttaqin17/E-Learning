@@ -36,10 +36,10 @@ class Ujian extends Component
         $soalPG = Soal::select('id')->where(['id_ujian' => $this->idUjian, 'id_tipe_soal' => 1])->take($ujian['jml_pg'])->get();
         $soalEssay = Soal::select('id')->where(['id_ujian' => $this->idUjian, 'id_tipe_soal' => 2])->take($ujian['jml_essay'])->get();
         $jawaban = Jawaban::select('id_soal')->where('id_user', Auth()->id())->whereIn('id_soal', $idSoal)->first();
+        $this->emit('reset');
         
         if($jawaban == null){
             $soal = Soal::whereIn('id', $soalEssay)->orWhereIn('id', $soalPG)->inRandomOrder(1)->paginate(1);
-            $this->emit('reset');
             return $soal;
         } else {
             Alert::warning('Peringatan', 'Anda sudah mengikuti ujian ini!');
